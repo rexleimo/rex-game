@@ -1,4 +1,6 @@
 # pnpm 11 在此文件读取构建设置（不再读 package.json 的 pnpm.* 字段）。
+packages:
+  - '.'
 # 本项目用 next/image unoptimized，不需要 sharp —— 明确拒绝其构建脚本，
 # 以消除 "Ignored build scripts: sharp" 警告与预检报错。
 # 若将来需要 sharp（如启用 next/image 优化），改为 true。
