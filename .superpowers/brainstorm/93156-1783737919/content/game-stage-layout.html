@@ -1,0 +1,55 @@
+<style>
+  .stage-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:24px; }
+  .stage-card { cursor:pointer; border:1px solid rgba(255,255,255,.12); border-radius:18px; overflow:hidden; background:#17130f; transition:transform .25s ease,border-color .25s ease; }
+  .stage-card:hover { transform:translateY(-4px); border-color:rgba(226,190,111,.8); }
+  .stage-card:focus-visible { outline:2px solid #e2be6f; outline-offset:3px; }
+  .stage-preview { min-height:300px; padding:14px; position:relative; overflow:hidden; color:#f8eedf; }
+  .stage-copy { padding:18px 18px 20px; background:#10100f; }
+  .stage-copy h3 { margin:0 0 7px; font-size:18px; }
+  .stage-copy p { margin:0; color:#a7a29a; font-size:13px; line-height:1.65; }
+  .stage-kicker { color:#d6b264; font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+  .primary-stage { background:#130f0d; }
+  .primary-head { display:flex; align-items:center; justify-content:space-between; padding-bottom:10px; border-bottom:1px solid rgba(222,182,99,.4); color:#deb663; font-size:9px; letter-spacing:.12em; }
+  .primary-stage-box { position:absolute; left:14px; right:79px; top:49px; bottom:17px; overflow:hidden; background:radial-gradient(90% 70% at 49% 20%,#63402a,#28160f 62%,#120d0b 100%); border:1px solid rgba(218,180,101,.42); }
+  .primary-stage-box::before { content:""; position:absolute; left:-24px; right:-24px; top:88px; height:100px; border-radius:50%; background:radial-gradient(ellipse at 50% 31%,#76503a,#372016 64%,#1e110d 77%); }
+  .primary-cup { position:absolute; z-index:1; width:66px; height:37px; border-radius:90% 90% 13% 13% / 100% 100% 16% 16%; background:linear-gradient(145deg,#c76e65,#76251e); box-shadow:0 11px 13px rgba(0,0,0,.46); }
+  .primary-cup.one { left:40px; top:103px; transform:rotate(25deg); } .primary-cup.two { right:38px; top:124px; transform:rotate(-25deg); background:linear-gradient(145deg,#d8b67e,#81503a); }
+  .primary-rail { position:absolute; top:49px; right:14px; width:55px; display:grid; gap:8px; }
+  .primary-rail div { min-height:43px; padding:7px 5px; border:1px solid rgba(255,255,255,.16); background:rgba(255,255,255,.04); font-size:8px; line-height:1.45; color:rgba(248,238,223,.72); }
+  .primary-rail b { display:block; color:#e0ba6c; font-size:8px; }
+  .console { background:linear-gradient(160deg,#251713,#100e0c); }
+  .console-head { display:flex; justify-content:space-between; font-size:9px; color:#deb663; letter-spacing:.12em; }
+  .console-meter { position:absolute; top:44px; left:15px; right:15px; height:31px; display:grid; grid-template-columns:1fr 1fr 1fr; border:1px solid rgba(222,182,99,.42); }
+  .console-meter div { padding:8px 6px; border-right:1px solid rgba(222,182,99,.28); color:rgba(248,238,223,.55); font-size:8px; } .console-meter div:last-child { border:0; } .console-meter b { color:#e5c276; }
+  .console-stage { position:absolute; left:15px; right:15px; top:89px; bottom:59px; border:1px solid rgba(222,182,99,.4); background:radial-gradient(ellipse at 50% 30%,#6c442e,#2a1710 62%,#140d0b 100%); }
+  .console-stage::before { content:""; position:absolute; left:-9px; right:-9px; bottom:-31px; height:75px; border-radius:50%; background:#402319; }
+  .console-cup { position:absolute; left:50%; top:55px; width:84px; height:44px; transform:translateX(-50%) rotate(-17deg); border-radius:90% 90% 13% 13% / 100% 100% 16% 16%; background:#be5c54; box-shadow:0 15px 12px rgba(0,0,0,.53); }
+  .console-bottom { position:absolute; left:15px; right:15px; bottom:16px; display:flex; justify-content:space-between; font-size:9px; color:rgba(248,238,223,.7); } .console-bottom b { color:#dfbd76; }
+  .performance { background:radial-gradient(92% 72% at 50% 29%,#6a422d,#28170f 55%,#120d0b 100%); }
+  .performance-nav { position:relative; z-index:2; display:flex; justify-content:space-between; color:#e4bf72; font-size:9px; letter-spacing:.13em; }
+  .performance-table { position:absolute; left:-30px; right:-30px; top:95px; height:144px; border-radius:50%; background:radial-gradient(ellipse at 50% 30%,#83543b,#432419 59%,#26140f 75%); box-shadow:inset 0 7px 23px rgba(0,0,0,.42),0 27px 35px rgba(0,0,0,.38); }
+  .performance-cup { position:absolute; z-index:1; width:91px; height:48px; border-radius:90% 90% 14% 14% / 100% 100% 18% 18%; background:#c5655c; box-shadow:0 14px 16px rgba(0,0,0,.5); } .performance-cup.one { left:43px; top:130px; transform:rotate(23deg); } .performance-cup.two { right:30px; top:145px; transform:rotate(-30deg); background:#d2ac7a; }
+  .performance-word { position:absolute; left:0; right:0; bottom:48px; text-align:center; font-family:Georgia,serif; font-size:23px; letter-spacing:.12em; } .performance-word small { display:block; margin-top:8px; font-family:inherit; font-size:9px; color:rgba(248,238,223,.62); letter-spacing:.08em; }
+  .performance-mini { position:absolute; right:14px; bottom:15px; padding:7px 8px; border:1px solid rgba(255,255,255,.18); background:rgba(20,14,11,.58); font-size:8px; color:#e5c273; }
+  @media (max-width:800px) { .stage-grid { grid-template-columns:1fr; } .stage-preview { min-height:255px; } }
+</style>
+
+<h2>投掷过程里，3D 舞台应当占多大比重？</h2>
+<p class="subtitle">所有方案都会保留“合十触发”和可点击投掷；区别在于状态信息与摄像头的存在感。</p>
+
+<div class="stage-grid">
+  <div class="stage-card" data-choice="primary-stage" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="stage-preview primary-stage"><div class="primary-head"><span>圣杯仪式 / 第 1 掷</span><span>返回目录</span></div><div class="primary-stage-box"><div class="primary-cup one"></div><div class="primary-cup two"></div></div><div class="primary-rail"><div><b>合十感应</b>已就绪</div><div><b>摄像头</b>本地处理</div><div><b>本次结果</b>等待投掷</div></div></div>
+    <div class="stage-copy"><span class="stage-kicker">B1 / 推荐</span><h3>主舞台 + 信息轨</h3><p>3D 桌面占主要面积；右侧的细轨收纳进度、摄像头与状态。页面有电影感，信息仍一眼可读。</p></div>
+  </div>
+  <div class="stage-card" data-choice="console" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="stage-preview console"><div class="console-head"><span>潮汕圣杯</span><span>进程 01 / 03</span></div><div class="console-meter"><div><b>01</b>静心</div><div><b>02</b>掷筊</div><div><b>03</b>解答</div></div><div class="console-stage"><div class="console-cup"></div></div><div class="console-bottom"><span>双手合十，准备投掷</span><b>启动摄像头</b></div></div>
+    <div class="stage-copy"><span class="stage-kicker">B2 / 引导优先</span><h3>仪式控制台</h3><p>状态、步骤和提示更完整，适合首次使用者；但 3D 画面会更像被装在一个控制面板里。</p></div>
+  </div>
+  <div class="stage-card" data-choice="performance" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="stage-preview performance"><div class="performance-nav"><span>REX GAME / 圣杯</span><span>01 / 03</span></div><div class="performance-table"></div><div class="performance-cup one"></div><div class="performance-cup two"></div><div class="performance-word">掷筊<small>双手合十，默念所愿</small></div><div class="performance-mini">摄像头已连接</div></div>
+    <div class="stage-copy"><span class="stage-kicker">B3 / 沉浸优先</span><h3>全景剧场</h3><p>游戏舞台几乎占满视野，所有信息只在边缘出现。视觉最强，但摄像头和辅助信息需要更谨慎地折叠。</p></div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:22px">点击一个游戏页结构；桌面与手机都会以同一原则自适应，手机不会让摄像头遮住舞台。</p>

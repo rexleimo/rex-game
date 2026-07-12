@@ -1,0 +1,9 @@
+{
+  "session": "(new)",
+  "status": "running",
+  "updated": "2026-07-12T13:07:43.105Z",
+  "space": "default",
+  "agent": "claude-code",
+  "registryPath": ".aios/context-db/index.json",
+  "sources": []
+}

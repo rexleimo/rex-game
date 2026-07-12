@@ -1,0 +1,104 @@
+'use client';
+
+import { useCallback, useState } from 'react';
+import { IntroScene } from './scenes/IntroScene';
+import { OfferingScene } from './scenes/OfferingScene';
+import { ResultScene } from './scenes/ResultScene';
+import { sfx } from './audio/SfxManager';
+
+/** 游戏阶段状态机 */
+export type Phase = 'intro' | 'offering' | 'result';
+
+/** 单次掷杯结果 */
+export type CupResult = 'sheng' | 'xiao' | 'yin';
+
+/** 心愿分类 */
+export type WishCategory = '感情' | '事业' | '学业' | '财运' | '健康' | '其他';
+
+export interface GameState {
+  /** 玩家心愿文本（玩家在合十静心时默念，不强制输入） */
+  wish: string;
+  wishCategory: WishCategory;
+  /** 三次掷杯结果 */
+  throws: CupResult[];
+}
+
+const INITIAL: GameState = { wish: '', wishCategory: '其他', throws: [] };
+
+/**
+ * 潮汕圣杯占卜 —— 游戏根组件。
+ * 流程：intro → offering(×3) → result
+ * （合十静心的 5 秒即「请愿」时刻，不再单设心愿输入页）
+ */
+export function JiaobeiGame() {
+  const [phase, setPhase] = useState<Phase>('intro');
+  const [state, setState] = useState<GameState>(INITIAL);
+
+  const go = useCallback((p: Phase) => setPhase(p), []);
+
+  const handleThrow = useCallback(
+    (result: CupResult) => {
+      setState((s) => {
+        const throws = [...s.throws, result];
+        // 三掷完成 → 结果页
+        if (throws.length >= 3) {
+          setTimeout(() => go('result'), 900);
+        }
+        return { ...s, throws };
+      });
+    },
+    [go],
+  );
+
+  const restart = useCallback(() => {
+    setState(INITIAL);
+    setPhase('intro');
+  }, []);
+
+  return (
+    <main className={`jiaobei jiaobei--${phase}`}>
+      <GameChrome phase={phase}>
+        {phase === 'intro' && (
+          <IntroScene
+            onStart={() => {
+              // 在用户手势内解锁音频，并播准备音
+              sfx.unlock();
+              sfx.playPrepare();
+              go('offering');
+            }}
+          />
+        )}
+        {phase === 'offering' && (
+          <OfferingScene
+            state={state}
+            onThrow={handleThrow}
+            onDone={() => go('result')}
+            onWishChange={(wish) => setState((s) => ({ ...s, wish }))}
+          />
+        )}
+        {phase === 'result' && <ResultScene state={state} onRestart={restart} />}
+      </GameChrome>
+    </main>
+  );
+}
+
+/** 游戏外壳：克制的展签导航 + 当前阶段。 */
+function GameChrome({ children, phase }: { children: React.ReactNode; phase: Phase }) {
+  const edition = phase === 'intro' ? '展品 / 序章' : phase === 'offering' ? '仪式进行中' : '落杯已定';
+
+  return (
+    <div className="chrome">
+      <header className="chrome__head">
+        <a className="chrome__back" href="/" aria-label="返回首页">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
+            <path d="M15 5l-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          返回展厅
+        </a>
+        <h1 className="chrome__title">潮汕圣杯</h1>
+        <span className="chrome__edition">{edition}</span>
+      </header>
+      <div className="chrome__body">{children}</div>
+    </div>
+  );
+}

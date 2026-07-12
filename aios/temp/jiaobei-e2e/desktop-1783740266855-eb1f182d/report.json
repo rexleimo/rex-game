@@ -1,0 +1,11 @@
+{
+  "mode": "desktop",
+  "runId": "desktop-1783740266855-eb1f182d",
+  "evidenceDir": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/desktop-1783740266855-eb1f182d",
+  "failure": {
+    "name": "Error",
+    "message": "Timed out waiting for [...document.querySelectorAll('button')].some((button) => button.innerText.includes('开始请愿'))",
+    "stack": "Error: Timed out waiting for [...document.querySelectorAll('button')].some((button) => button.innerText.includes('开始请愿'))\n    at waitFor (file:///Users/rex/codes/rex-game/aios/temp/jiaobei_cdp_e2e.mjs:100:9)\n    at async openGame (file:///Users/rex/codes/rex-game/aios/temp/jiaobei_cdp_e2e.mjs:218:3)\n    at async file:///Users/rex/codes/rex-game/aios/temp/jiaobei_cdp_e2e.mjs:311:5"
+  },
+  "browserErrors": []
+}

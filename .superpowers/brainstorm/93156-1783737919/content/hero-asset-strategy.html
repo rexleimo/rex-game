@@ -1,0 +1,52 @@
+<style>
+  .asset-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:24px; }
+  .asset-card { cursor:pointer; border:1px solid rgba(255,255,255,.12); border-radius:18px; overflow:hidden; background:#17130f; transition:transform .25s ease,border-color .25s ease; }
+  .asset-card:hover { transform:translateY(-4px); border-color:rgba(226,190,111,.8); }
+  .asset-card:focus-visible { outline:2px solid #e2be6f; outline-offset:3px; }
+  .asset-preview { min-height:250px; padding:15px; position:relative; overflow:hidden; color:#f8eedf; }
+  .asset-copy { padding:18px 18px 20px; background:#10100f; }
+  .asset-copy h3 { margin:0 0 7px; font-size:18px; }
+  .asset-copy p { margin:0; color:#a7a29a; font-size:13px; line-height:1.65; }
+  .asset-kicker { color:#d6b264; font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+  .render { background:radial-gradient(82% 72% at 64% 24%,rgba(166,66,53,.54),transparent 61%),linear-gradient(145deg,#2a1811,#100d0b 74%); }
+  .render-frame { position:absolute; inset:13px; border:1px solid rgba(222,187,106,.48); }
+  .render-label { position:relative; z-index:1; color:#dfba70; font-size:9px; letter-spacing:.13em; }
+  .render-table { position:absolute; left:-34px; right:-34px; bottom:-54px; height:187px; border-radius:50%; background:radial-gradient(ellipse at 50% 25%,#87583e,#45251a 61%,#26140f 79%); box-shadow:inset 0 7px 20px rgba(0,0,0,.44); }
+  .render-cup { position:absolute; z-index:1; right:36px; bottom:75px; width:151px; height:80px; border-radius:90% 90% 15% 15% / 100% 100% 19% 19%; background:linear-gradient(140deg,#d0796f,#7b261e 70%); box-shadow:0 23px 22px rgba(0,0,0,.48); transform:rotate(-20deg); }
+  .render-cup::after { content:""; position:absolute; left:12px; bottom:-19px; width:110px; height:25px; border-radius:0 0 60% 60%; background:#67231d; opacity:.75; }
+  .render-note { position:absolute; z-index:2; left:25px; bottom:38px; max-width:105px; font-family:Georgia,serif; font-size:17px; line-height:1.35; letter-spacing:.06em; }
+  .live { background:radial-gradient(80% 75% at 50% 12%,rgba(181,125,56,.23),transparent 67%),#14100d; }
+  .live-top { display:flex; justify-content:space-between; color:#deba70; font-size:9px; letter-spacing:.13em; }
+  .live-stage { position:absolute; left:17px; right:17px; top:50px; bottom:25px; overflow:hidden; border:1px solid rgba(222,187,106,.44); background:radial-gradient(ellipse at 50% 25%,#6c432d,#2b1710 64%,#150e0b); }
+  .live-stage::before { content:""; position:absolute; left:-27px; right:-27px; bottom:-37px; height:116px; border-radius:50%; background:#4b2a1d; }
+  .live-cup-a,.live-cup-b { position:absolute; z-index:1; width:75px; height:40px; border-radius:90% 90% 14% 14% / 100% 100% 18% 18%; box-shadow:0 14px 12px rgba(0,0,0,.47); }
+  .live-cup-a { left:41px; top:101px; background:#be5d55; transform:rotate(22deg); } .live-cup-b { right:32px; top:116px; background:#d2ab78; transform:rotate(-28deg); }
+  .live-state { position:absolute; z-index:2; left:10px; top:10px; padding:6px 7px; border:1px solid rgba(255,255,255,.15); background:rgba(23,15,11,.64); font-size:8px; }
+  .abstract { background:linear-gradient(145deg,#221510,#110e0c); }
+  .abstract-line { position:absolute; left:17px; right:17px; top:45px; height:1px; background:rgba(221,183,101,.52); }
+  .abstract-title { position:absolute; left:18px; top:69px; font-family:Georgia,serif; font-size:33px; line-height:1.16; letter-spacing:.08em; }
+  .abstract-arc { position:absolute; right:15px; bottom:18px; width:138px; height:139px; border:1px solid rgba(195,85,71,.7); border-left-color:transparent; border-bottom-color:transparent; border-radius:50%; transform:rotate(18deg); }
+  .abstract-arc::after { content:""; position:absolute; inset:19px; border:1px solid rgba(220,184,104,.55); border-right-color:transparent; border-bottom-color:transparent; border-radius:50%; }
+  .abstract-note { position:absolute; left:20px; bottom:28px; color:rgba(248,238,223,.58); font-size:10px; line-height:1.55; }
+  @media (max-width:800px) { .asset-grid { grid-template-columns:1fr; } .asset-preview { min-height:235px; } }
+</style>
+
+<h2>首页主视觉如何与真实 3D 筊杯保持一致？</h2>
+<p class="subtitle">现有封面里的杯体造型与游戏内真实几何不一致。下面三种策略都不需要人工建模，但对“真实感”的帮助不同。</p>
+
+<div class="asset-grid">
+  <div class="asset-card" data-choice="render-still" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="asset-preview render"><div class="render-frame"></div><div class="render-label">REX GAME / 当期展品</div><div class="render-table"></div><div class="render-cup"></div><div class="render-note">与游戏内<br>同一件器物</div></div>
+    <div class="asset-copy"><span class="asset-kicker">D1 / 推荐</span><h3>实际渲染静帧</h3><p>从 Babylon 的真实筊杯与桌面光照中导出一张稳定的宣传静帧，首页与游戏中的器物严格一致，加载也最快。</p></div>
+  </div>
+  <div class="asset-card" data-choice="live-stage" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="asset-preview live"><div class="live-top"><span>圣杯</span><span>待投掷</span></div><div class="live-stage"><div class="live-state">真实 3D 预览</div><div class="live-cup-a"></div><div class="live-cup-b"></div></div></div>
+    <div class="asset-copy"><span class="asset-kicker">D2 / 动态优先</span><h3>首页实时小舞台</h3><p>首页也加载一个静态 Babylon 场景，器物真实可见；但会增加首屏成本，并与进入游戏后的舞台产生重复。</p></div>
+  </div>
+  <div class="asset-card" data-choice="abstract" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="asset-preview abstract"><div class="abstract-line"></div><div class="abstract-title">一掷<br>见心</div><div class="abstract-arc"></div><div class="abstract-note">完全以文字和金漆线条<br>建立首页气质</div></div>
+    <div class="asset-copy"><span class="asset-kicker">D3 / 极简优先</span><h3>纯文字器形</h3><p>不使用任何首页器物图，只用字体与抽象半月线条；气质最克制，但“这是一款 3D 游戏”表达最弱。</p></div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:22px">点击一个主视觉策略。若选 D1，实施时会生成来自现有代码几何的静帧，不会要求团队建模。</p>

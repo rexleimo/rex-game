@@ -1,0 +1,11 @@
+{
+  "mode": "desktop",
+  "runId": "desktop-1783731877670-6a4649d7",
+  "evidenceDir": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/desktop-1783731877670-6a4649d7",
+  "failure": {
+    "name": "Error",
+    "message": "Timed out waiting for (() => {\n    const button = [...document.querySelectorAll('button')].find((candidate) => candidate.innerText.includes('掷 杯'));\n    return Boolean(button && !button.disabled && window.__JIAOBEI_E2E__);\n  })()",
+    "stack": "Error: Timed out waiting for (() => {\n    const button = [...document.querySelectorAll('button')].find((candidate) => candidate.innerText.includes('掷 杯'));\n    return Boolean(button && !button.disabled && window.__JIAOBEI_E2E__);\n  })()\n    at waitFor (file:///Users/rex/codes/rex-game/aios/temp/jiaobei_cdp_e2e.mjs:100:9)\n    at async openGame (file:///Users/rex/codes/rex-game/aios/temp/jiaobei_cdp_e2e.mjs:193:3)\n    at async file:///Users/rex/codes/rex-game/aios/temp/jiaobei_cdp_e2e.mjs:292:5"
+  },
+  "browserErrors": []
+}

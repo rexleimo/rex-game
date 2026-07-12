@@ -1,0 +1,56 @@
+<style>
+  .entry-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:24px; }
+  .entry-card { cursor:pointer; border:1px solid rgba(255,255,255,.12); border-radius:18px; overflow:hidden; background:#17130f; transition:transform .25s ease,border-color .25s ease; }
+  .entry-card:hover { transform:translateY(-4px); border-color:rgba(226,190,111,.8); }
+  .entry-card:focus-visible { outline:2px solid #e2be6f; outline-offset:3px; }
+  .entry-preview { min-height:282px; padding:15px; position:relative; overflow:hidden; color:#f8eedf; }
+  .entry-copy { padding:18px 18px 20px; background:#10100f; }
+  .entry-copy h3 { margin:0 0 7px; font-size:18px; }
+  .entry-copy p { margin:0; color:#a7a29a; font-size:13px; line-height:1.65; }
+  .entry-kicker { color:#d6b264; font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+  .feature { background:linear-gradient(145deg,#251612,#100e0d 70%); }
+  .feature::after { content:""; position:absolute; inset:8px; border:1px solid rgba(215,176,93,.42); pointer-events:none; }
+  .feature-nav { position:relative; z-index:1; display:flex; justify-content:space-between; font-size:9px; letter-spacing:.12em; color:#dfbd77; }
+  .feature-title { position:relative; z-index:1; margin-top:41px; max-width:170px; font-family:Georgia,serif; font-size:27px; line-height:1.2; letter-spacing:.05em; }
+  .feature-text { position:relative; z-index:1; margin-top:11px; max-width:145px; font-size:10px; line-height:1.6; color:rgba(248,238,223,.62); }
+  .feature-mark { position:absolute; z-index:1; left:15px; bottom:16px; border-bottom:1px solid #d9b363; padding-bottom:5px; color:#e9ca85; font-size:10px; letter-spacing:.1em; }
+  .feature-art { position:absolute; right:-26px; top:42px; width:168px; height:180px; background:radial-gradient(ellipse at 52% 41%,#9a443b 0 22%,#4f211d 24% 46%,transparent 47%),radial-gradient(ellipse at 48% 70%,rgba(218,181,111,.26),transparent 61%); transform:rotate(-9deg); }
+  .feature-art::before { content:""; position:absolute; left:23px; top:51px; width:108px; height:55px; border-radius:60% 60% 13% 13% / 100% 100% 16% 16%; background:linear-gradient(145deg,#d2776e,#70241d); box-shadow:0 16px 17px rgba(0,0,0,.42); }
+  .ritual { background:radial-gradient(93% 64% at 53% 7%,rgba(182,130,61,.24),transparent 65%),#15100d; }
+  .ritual-top { display:flex; justify-content:space-between; font-size:9px; letter-spacing:.12em; color:#dcbd76; }
+  .ritual-circle { position:absolute; left:50%; top:59px; width:135px; height:135px; transform:translateX(-50%); border:1px solid rgba(220,189,118,.62); border-radius:50%; box-shadow:0 0 0 11px rgba(220,189,118,.045),0 0 0 24px rgba(220,189,118,.025); }
+  .ritual-cup { position:absolute; left:50%; top:112px; width:94px; height:48px; transform:translateX(-50%) rotate(-18deg); border-radius:85% 85% 14% 14% / 100% 100% 18% 18%; background:linear-gradient(145deg,#bf6259,#7a271f); box-shadow:0 14px 18px rgba(0,0,0,.5); }
+  .ritual-title { position:absolute; left:0; right:0; bottom:46px; font-family:Georgia,serif; text-align:center; font-size:22px; letter-spacing:.09em; }
+  .ritual-action { position:absolute; left:50%; bottom:17px; transform:translateX(-50%); color:#18110b; background:#dfbd76; padding:8px 16px; white-space:nowrap; font-size:10px; font-weight:700; letter-spacing:.08em; }
+  .archive { background:#17120f; }
+  .archive-nav { display:flex; justify-content:space-between; padding-bottom:11px; border-bottom:1px solid rgba(223,189,118,.32); color:#d8b468; font-size:9px; letter-spacing:.13em; }
+  .archive-title { margin-top:23px; font-family:Georgia,serif; font-size:25px; letter-spacing:.07em; }
+  .archive-list { display:grid; gap:7px; margin-top:20px; }
+  .archive-game { display:grid; grid-template-columns:41px 1fr auto; gap:9px; align-items:center; padding:8px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.025); }
+  .archive-thumb { width:41px; height:31px; background:linear-gradient(145deg,#a64b44,#57221d); }
+  .archive-game:nth-child(2) .archive-thumb { background:#4d5039; }
+  .archive-game:nth-child(3) .archive-thumb { background:#353f49; }
+  .archive-game strong { font-size:10px; font-weight:600; }
+  .archive-game span { color:#d2ad65; font-size:10px; }
+  @media (max-width:800px) { .entry-grid { grid-template-columns:1fr; } .entry-preview { min-height:245px; } }
+</style>
+
+<h2>首页应该怎样把玩家带进仪式？</h2>
+<p class="subtitle">A「漆器展陈」已经确定。现在选择首页的内容结构，它将决定首屏的重点与未来扩展方式。</p>
+
+<div class="entry-grid">
+  <div class="entry-card" data-choice="feature" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="entry-preview feature"><div class="feature-nav"><span>REX GAME</span><span>2026.07</span></div><div class="feature-title">潮汕圣杯<br>一掷见心</div><div class="feature-text">只把一个游戏讲好；未来作品以细小的展览索引出现。</div><div class="feature-mark">进入圣杯仪式</div><div class="feature-art"></div></div>
+    <div class="entry-copy"><span class="entry-kicker">A1 / 推荐</span><h3>当期展品</h3><p>首页像一张展览海报：当前游戏占据主舞台，下面仅保留克制的“游戏目录”。最适合现在只有一款高品质游戏的状态。</p></div>
+  </div>
+  <div class="entry-card" data-choice="ritual" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="entry-preview ritual"><div class="ritual-top"><span>REX GAME</span><span>一问一答</span></div><div class="ritual-circle"></div><div class="ritual-cup"></div><div class="ritual-title">现在，开始请愿</div><div class="ritual-action">进入仪式</div></div>
+    <div class="entry-copy"><span class="entry-kicker">A2 / 转化优先</span><h3>直接入仪</h3><p>首页几乎不解释，用单一动线直接进入圣杯。节奏最快，但品牌与未来游戏的容纳空间最少。</p></div>
+  </div>
+  <div class="entry-card" data-choice="archive" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="entry-preview archive"><div class="archive-nav"><span>REX GAME / PLAY ARCHIVE</span><span>MENU</span></div><div class="archive-title">游戏目录</div><div class="archive-list"><div class="archive-game"><div class="archive-thumb"></div><strong>潮汕圣杯</strong><span>进入</span></div><div class="archive-game"><div class="archive-thumb"></div><strong>敬请期待</strong><span>准备中</span></div><div class="archive-game"><div class="archive-thumb"></div><strong>敬请期待</strong><span>准备中</span></div></div></div>
+    <div class="entry-copy"><span class="entry-kicker">A3 / 平台优先</span><h3>策展目录</h3><p>像一个游戏合集，结构最利于今后扩充；但当前会显得空，削弱圣杯这个已有精品的份量。</p></div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:22px">点击一个首页结构；也可以告诉我，例如“选 A1，但首屏按钮更直接”。</p>

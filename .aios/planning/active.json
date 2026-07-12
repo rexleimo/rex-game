@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "title": "潮汕圣杯占卜游戏 - 静态娱乐游戏站(Gitee Pages)",
+  "objective": "构建部署在 Gitee Pages 的静态娱乐游戏站 rex-game，支持多游戏扩展。首个游戏：潮汕圣杯占卜（跋杯/掷筊），需理解圣杯(一凸一平/同意)、笑杯(两平面/未定)、阴杯(两凸面/否定)三种杯象与乞愿流程。核心体验：摄像头识别双手合十请愿姿势触发 → Babylon.js 物理引擎模拟掷杯落地 → 判定杯象 → 给出解答，三掷判定。含摄像头降级方案。详见 docs/plans/2026-07-10-shantou-jiaobei-game.md",
+  "status": "active",
+  "relativePath": "docs/plans/2026-07-10-潮汕圣杯占卜游戏-静态娱乐游戏站-gitee-pages.md",
+  "absolutePath": "/Users/rex/codes/rex-game/docs/plans/2026-07-10-潮汕圣杯占卜游戏-静态娱乐游戏站-gitee-pages.md",
+  "client": "cli",
+  "source": "aios plan start",
+  "createdAt": "2026-07-10T04:59:56.350Z",
+  "updatedAt": "2026-07-10T04:59:56.350Z",
+  "route": "design",
+  "skills": [
+    "using-superpowers",
+    "brainstorming",
+    "writing-plans",
+    "verification-before-completion"
+  ],
+  "tasks": [
+    {
+      "id": "t1-understand",
+      "title": "Clarify objective: 构建部署在 Gitee Pages 的静态娱乐游戏站 rex-game，支持多游戏扩展。首个游戏：潮汕圣杯占卜（跋杯/掷筊），需理解圣杯(一凸一",
+      "status": "pending",
+      "acceptance": "Objective restated; constraints listed",
+      "dependsOn": []
+    },
+    {
+      "id": "t2-options",
+      "title": "Explore approaches and pick one",
+      "status": "pending",
+      "acceptance": "Chosen approach + rejected alternatives written in plan",
+      "dependsOn": [
+        "t1-understand"
+      ]
+    },
+    {
+      "id": "t3-plan",
+      "title": "Write executable task plan",
+      "status": "pending",
+      "acceptance": "Tasks have acceptance criteria",
+      "dependsOn": [
+        "t2-options"
+      ]
+    },
+    {
+      "id": "t4-verify-gate",
+      "title": "Define verification evidence",
+      "status": "pending",
+      "acceptance": "Tests/commands listed before implementation",
+      "dependsOn": [
+        "t3-plan"
+      ]
+    }
+  ],
+  "evidence": []
+}

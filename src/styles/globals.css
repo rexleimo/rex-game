@@ -1,0 +1,198 @@
+/* rex-game 全局样式 —— 潮汕金漆木雕 / 漆器描金 · 非遗高级感 */
+:root {
+  /* 漆底 · 金箔 · 朱砂 —— 潮汕金漆木雕意象 */
+  --c-primary: #a6332b;        /* 祭红 / 朱砂 */
+  --c-primary-dark: #872520;
+  --c-wood: #7a5230;
+  --c-gold: #c9a24b;           /* 古铜金箔 */
+  --c-gold-bright: #e4c479;    /* 亮金（漆底上的描线 / 文字） */
+  --c-bg: #17100b;             /* 漆黑褐 */
+  --c-bg-soft: #23160f;        /* 略浅漆底（凹陷面） */
+  --c-surface: #f4ecd8;        /* 宣纸米 */
+  --c-surface-2: #ece0c6;      /* 深一档纸 */
+  --c-text: #2a1b12;           /* 墨褐（近黑，非纯黑） */
+  --c-text-soft: #6e5a46;      /* 正文弱化 */
+  --c-text-faint: #8a7358;     /* 小标签 / 注 */
+  --c-text-invert: #f4ecd8;    /* 漆底上的浅字 */
+
+  /* 杯象三色（克制、和谐，去饱和） */
+  --c-sheng: #5f8a64;          /* 圣杯 · 竹青 */
+  --c-xiao: #b8863a;           /* 笑杯 · 赭黄 */
+  --c-yin: #455f79;            /* 阴杯 · 黛蓝 */
+
+  /* 描边 / 圆角 */
+  --line-gold: rgba(201, 162, 75, 0.55);
+  --line-gold-strong: rgba(201, 162, 75, 0.92);
+  --line-ink: rgba(42, 27, 18, 0.14);
+  --r: 14px;
+  --r-sm: 9px;
+
+  /* 柔和着色投影（取漆底色调，非纯黑） */
+  --shadow-soft: 0 8px 24px -12px rgba(17, 10, 6, 0.55), 0 2px 6px -3px rgba(17, 10, 6, 0.5);
+  --shadow-panel: 0 30px 70px -28px rgba(0, 0, 0, 0.62), 0 4px 14px -8px rgba(0, 0, 0, 0.5);
+  --shadow-inset-stage: inset 0 2px 22px rgba(0, 0, 0, 0.55);
+
+  /* 金箔渐变（描边 / 文字光泽） */
+  --foil: linear-gradient(135deg, #f2dc9a 0%, #d8b25a 34%, #b98a2f 62%, #ecca7c 100%);
+
+  --font-display: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  --font-body: 'Noto Sans SC', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--c-text-invert);
+  background: var(--c-bg);
+  /* 漆金晕光：顶部金、底部朱，取代生硬的角落色斑 */
+  background-image: radial-gradient(130% 85% at 50% -12%, rgba(201, 162, 75, 0.12), transparent 55%),
+    radial-gradient(95% 60% at 50% 118%, rgba(166, 51, 43, 0.16), transparent 60%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 宣纸颗粒：固定叠层，不吃指针，极低透明度打破数字化的平 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-gold-bright);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* 金箔文字（logo / 强调） */
+.foil-text {
+  background: var(--foil);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 回纹金线分隔（金漆木雕牌匾意象） */
+.fret {
+  height: 1px;
+  border: none;
+  background: linear-gradient(90deg, transparent, var(--line-gold-strong) 20%, var(--line-gold-strong) 80%, transparent);
+  opacity: 0.7;
+}
+
+/* 按钮：朱漆底 + 金箔描边 + 柔和投影 */
+.btn {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: 0.14em;
+  color: var(--c-surface);
+  background: var(--c-primary);
+  border: 1px solid var(--line-gold-strong);
+  border-radius: var(--r-sm);
+  padding: 0.7em 1.6em;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
+  user-select: none;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -12px rgba(17, 10, 6, 0.6), 0 2px 6px -3px rgba(17, 10, 6, 0.5);
+  background: var(--c-primary-dark);
+}
+.btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-soft);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+  transform: none;
+  box-shadow: var(--shadow-soft);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--c-text);
+  border-color: var(--line-ink);
+}
+.btn--ghost:hover {
+  background: rgba(42, 27, 18, 0.05);
+}
+/* 金箔按钮：漆金渐变 + 深墨字 */
+.btn--gold {
+  background: var(--foil);
+  color: #3a2410;
+  border-color: var(--line-gold-strong);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+.btn--gold:hover {
+  background: var(--foil);
+  filter: brightness(1.05);
+}
+
+/* 纸面板：宣纸底 + 金箔发丝描边 + 柔投影 */
+.panel {
+  background: linear-gradient(180deg, #f7f0de, #f0e6cd);
+  color: var(--c-text);
+  border: 1px solid var(--line-gold);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-panel);
+}
+
+/* 交错入场（尊重减弱动效偏好） */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

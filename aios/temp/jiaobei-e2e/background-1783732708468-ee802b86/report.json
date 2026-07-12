@@ -1,0 +1,461 @@
+{
+  "mode": "background",
+  "runId": "background-1783732708468-ee802b86",
+  "evidenceDir": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/background-1783732708468-ee802b86",
+  "beforeHidden": {
+    "visibility": "visible",
+    "hasFocus": true,
+    "result": null,
+    "stage": {
+      "left": 381.796875,
+      "top": 287.02349853515625,
+      "right": 898.203125,
+      "bottom": 609.0234985351562,
+      "width": 516.40625,
+      "height": 322
+    },
+    "camera": {
+      "left": 760.203125,
+      "top": 297.02349853515625,
+      "right": 888.203125,
+      "bottom": 393.02349853515625,
+      "width": 128,
+      "height": 96
+    },
+    "cameraInsideStage": false,
+    "video": {
+      "readyState": 4,
+      "currentTime": 433.850305,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "paused": false,
+      "streamActive": true,
+      "trackState": "live",
+      "trackEnabled": true
+    },
+    "timeline": {
+      "throwStartedAt": 281,
+      "resultVisibleAt": null,
+      "visibility": [
+        {
+          "state": "visible",
+          "at": 276.59999990463257
+        }
+      ]
+    },
+    "snapshot": {
+      "runId": "background-1783732708468-ee802b86",
+      "status": "throwing",
+      "attemptCount": 1,
+      "retryCount": 0,
+      "activePhysicsElapsedMs": 0,
+      "settlementSampleCount": 0,
+      "stillChecks": 0,
+      "pieces": [
+        {
+          "index": 0,
+          "landed": false,
+          "assistCount": 0,
+          "upDot": 0.875400924686315,
+          "position": {
+            "x": -0.76,
+            "y": 3.2,
+            "z": -0.24
+          },
+          "screenBounds": {
+            "left": 32.84306415389777,
+            "top": -340.1961769576351,
+            "right": 296.8543627935383,
+            "bottom": -55.077492990990365
+          }
+        },
+        {
+          "index": 1,
+          "landed": false,
+          "assistCount": 0,
+          "upDot": 0.8098483774543157,
+          "position": {
+            "x": 0.76,
+            "y": 3.3800000000000003,
+            "z": 0.24
+          },
+          "screenBounds": {
+            "left": 291.5518535564771,
+            "top": -419.14730517517586,
+            "right": 569.0840602564422,
+            "bottom": -104.67565605257846
+          }
+        }
+      ],
+      "events": [
+        {
+          "type": "throw-start",
+          "atMs": 281.2999999523163,
+          "sequence": 1
+        },
+        {
+          "type": "attempt-start",
+          "atMs": 287.6999999284744,
+          "attempt": 1,
+          "sequence": 2
+        }
+      ]
+    }
+  },
+  "hiddenStart": {
+    "visibility": "hidden",
+    "hasFocus": false,
+    "result": null,
+    "stage": {
+      "left": 381.796875,
+      "top": 286.36993408203125,
+      "right": 898.203125,
+      "bottom": 608.3699340820312,
+      "width": 516.40625,
+      "height": 322
+    },
+    "camera": {
+      "left": 760.203125,
+      "top": 296.36993408203125,
+      "right": 888.203125,
+      "bottom": 392.36993408203125,
+      "width": 128,
+      "height": 96
+    },
+    "cameraInsideStage": false,
+    "video": {
+      "readyState": 4,
+      "currentTime": 433.850305,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "paused": false,
+      "streamActive": true,
+      "trackState": "live",
+      "trackEnabled": true
+    },
+    "timeline": {
+      "throwStartedAt": 281,
+      "resultVisibleAt": null,
+      "visibility": [
+        {
+          "state": "visible",
+          "at": 276.59999990463257
+        },
+        {
+          "state": "hidden",
+          "at": 313.89999997615814
+        },
+        {
+          "state": "hidden",
+          "at": 315.09999990463257
+        }
+      ]
+    },
+    "snapshot": {
+      "runId": "background-1783732708468-ee802b86",
+      "status": "throwing",
+      "attemptCount": 1,
+      "retryCount": 0,
+      "activePhysicsElapsedMs": 27.100000023841858,
+      "settlementSampleCount": 1,
+      "stillChecks": 0,
+      "pieces": [
+        {
+          "index": 0,
+          "landed": false,
+          "assistCount": 0,
+          "upDot": 0.9592678823081816,
+          "position": {
+            "x": -0.7749059796333313,
+            "y": 3.224731206893921,
+            "z": -0.22054529190063477
+          },
+          "screenBounds": {
+            "left": 163.6002922674856,
+            "top": 83.67084801680829,
+            "right": 276.7445717664369,
+            "bottom": 207.66836254450038
+          }
+        },
+        {
+          "index": 1,
+          "landed": false,
+          "assistCount": 0,
+          "upDot": 0.8905319458157064,
+          "position": {
+            "x": 0.7752988338470459,
+            "y": 3.4099326133728027,
+            "z": 0.13968630135059357
+          },
+          "screenBounds": {
+            "left": 276.3777756357597,
+            "top": 15.576058456979341,
+            "right": 398.38565732677904,
+            "bottom": 163.3441221594321
+          }
+        }
+      ],
+      "events": [
+        {
+          "type": "throw-start",
+          "atMs": 281.2999999523163,
+          "sequence": 1
+        },
+        {
+          "type": "attempt-start",
+          "atMs": 287.6999999284744,
+          "attempt": 1,
+          "sequence": 2
+        }
+      ]
+    }
+  },
+  "whileHidden": {
+    "visibility": "hidden",
+    "hasFocus": false,
+    "result": null,
+    "stage": {
+      "left": 381.796875,
+      "top": 286.36993408203125,
+      "right": 898.203125,
+      "bottom": 608.3699340820312,
+      "width": 516.40625,
+      "height": 322
+    },
+    "camera": {
+      "left": 760.203125,
+      "top": 296.36993408203125,
+      "right": 888.203125,
+      "bottom": 392.36993408203125,
+      "width": 128,
+      "height": 96
+    },
+    "cameraInsideStage": false,
+    "video": {
+      "readyState": 4,
+      "currentTime": 438.150352,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "paused": false,
+      "streamActive": true,
+      "trackState": "live",
+      "trackEnabled": true
+    },
+    "timeline": {
+      "throwStartedAt": 281,
+      "resultVisibleAt": null,
+      "visibility": [
+        {
+          "state": "visible",
+          "at": 276.59999990463257
+        },
+        {
+          "state": "hidden",
+          "at": 313.89999997615814
+        },
+        {
+          "state": "hidden",
+          "at": 315.09999990463257
+        }
+      ]
+    },
+    "snapshot": {
+      "runId": "background-1783732708468-ee802b86",
+      "status": "throwing",
+      "attemptCount": 1,
+      "retryCount": 0,
+      "activePhysicsElapsedMs": 27.100000023841858,
+      "settlementSampleCount": 1,
+      "stillChecks": 0,
+      "pieces": [
+        {
+          "index": 0,
+          "landed": false,
+          "assistCount": 0,
+          "upDot": 0.9592678823081816,
+          "position": {
+            "x": -0.7749059796333313,
+            "y": 3.224731206893921,
+            "z": -0.22054529190063477
+          },
+          "screenBounds": {
+            "left": 163.6002922674856,
+            "top": 83.67084801680829,
+            "right": 276.7445717664369,
+            "bottom": 207.66836254450038
+          }
+        },
+        {
+          "index": 1,
+          "landed": false,
+          "assistCount": 0,
+          "upDot": 0.8905319458157064,
+          "position": {
+            "x": 0.7752988338470459,
+            "y": 3.4099326133728027,
+            "z": 0.13968630135059357
+          },
+          "screenBounds": {
+            "left": 276.3777756357597,
+            "top": 15.576058456979341,
+            "right": 398.38565732677904,
+            "bottom": 163.3441221594321
+          }
+        }
+      ],
+      "events": [
+        {
+          "type": "throw-start",
+          "atMs": 281.2999999523163,
+          "sequence": 1
+        },
+        {
+          "type": "attempt-start",
+          "atMs": 287.6999999284744,
+          "attempt": 1,
+          "sequence": 2
+        }
+      ]
+    }
+  },
+  "final": {
+    "visibility": "visible",
+    "hasFocus": true,
+    "result": "圣杯",
+    "stage": {
+      "left": 381.796875,
+      "top": 283.640625,
+      "right": 898.203125,
+      "bottom": 605.640625,
+      "width": 516.40625,
+      "height": 322
+    },
+    "camera": {
+      "left": 760.203125,
+      "top": 293.640625,
+      "right": 888.203125,
+      "bottom": 389.640625,
+      "width": 128,
+      "height": 96
+    },
+    "cameraInsideStage": false,
+    "video": {
+      "readyState": 4,
+      "currentTime": 439.65005,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "paused": false,
+      "streamActive": true,
+      "trackState": "live",
+      "trackEnabled": true
+    },
+    "timeline": {
+      "throwStartedAt": 281,
+      "resultVisibleAt": 6114.5,
+      "visibility": [
+        {
+          "state": "visible",
+          "at": 276.59999990463257
+        },
+        {
+          "state": "hidden",
+          "at": 313.89999997615814
+        },
+        {
+          "state": "hidden",
+          "at": 315.09999990463257
+        },
+        {
+          "state": "hidden",
+          "at": 4624
+        },
+        {
+          "state": "visible",
+          "at": 4628.199999928474
+        }
+      ]
+    },
+    "snapshot": {
+      "runId": "background-1783732708468-ee802b86",
+      "status": "settled",
+      "attemptCount": 1,
+      "retryCount": 0,
+      "activePhysicsElapsedMs": 1512.5,
+      "settlementSampleCount": 93,
+      "stillChecks": 3,
+      "pieces": [
+        {
+          "index": 0,
+          "landed": true,
+          "assistCount": 0,
+          "upDot": -0.9422489186425069,
+          "position": {
+            "x": 0.21902354061603546,
+            "y": 0.6286312937736511,
+            "z": -0.22237429022789001
+          },
+          "screenBounds": {
+            "left": 97.92461928491774,
+            "top": 134.0123817267985,
+            "right": 228.30888289363355,
+            "bottom": 258.61016598998555
+          }
+        },
+        {
+          "index": 1,
+          "landed": true,
+          "assistCount": 0,
+          "upDot": 0.999999999993493,
+          "position": {
+            "x": 1.9401392936706543,
+            "y": -0.0000013485737326845992,
+            "z": -0.11681605875492096
+          },
+          "screenBounds": {
+            "left": 264.85970345193994,
+            "top": 101.84568995235674,
+            "right": 387.60794584417795,
+            "bottom": 202.03564193323928
+          }
+        }
+      ],
+      "events": [
+        {
+          "type": "throw-start",
+          "atMs": 281.2999999523163,
+          "sequence": 1
+        },
+        {
+          "type": "attempt-start",
+          "atMs": 287.6999999284744,
+          "attempt": 1,
+          "sequence": 2
+        },
+        {
+          "type": "impact",
+          "atMs": 5210.299999952316,
+          "pieceIndex": 0,
+          "sequence": 3
+        },
+        {
+          "type": "impact",
+          "atMs": 5244.399999976158,
+          "pieceIndex": 1,
+          "sequence": 4
+        },
+        {
+          "type": "settled",
+          "atMs": 6113.699999928474,
+          "sequence": 5
+        }
+      ]
+    }
+  },
+  "actualHiddenMs": 4314.299999952316,
+  "visibilityDriver": "document-override",
+  "screenshots": {
+    "settledScreenshot": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/background-1783732708468-ee802b86/resumed-settled.png"
+  },
+  "errors": [],
+  "browserErrors": []
+}

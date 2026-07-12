@@ -1,0 +1,11 @@
+{
+  "mode": "desktop",
+  "runId": "desktop-1783732107087-00703a15",
+  "evidenceDir": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/desktop-1783732107087-00703a15",
+  "failure": {
+    "name": "Error",
+    "message": "Timed out waiting for document.visibilityState === \"visible\"",
+    "stack": "Error: Timed out waiting for document.visibilityState === \"visible\"\n    at waitFor (file:///Users/rex/codes/rex-game/aios/temp/jiaobei_cdp_e2e.mjs:100:9)\n    at async openGame (file:///Users/rex/codes/rex-game/aios/temp/jiaobei_cdp_e2e.mjs:197:3)\n    at async file:///Users/rex/codes/rex-game/aios/temp/jiaobei_cdp_e2e.mjs:301:5"
+  },
+  "browserErrors": []
+}

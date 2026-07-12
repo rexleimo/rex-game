@@ -1,0 +1,187 @@
+{
+  "mode": "mobile",
+  "runId": "mobile-1783735192348-8cd3a0a9",
+  "evidenceDir": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/mobile-1783735192348-8cd3a0a9",
+  "before": {
+    "visibility": "visible",
+    "hasFocus": true,
+    "result": null,
+    "stage": {
+      "left": 37.796875,
+      "top": 204.99359130859375,
+      "right": 352.203125,
+      "bottom": 526.9935913085938,
+      "width": 314.40625,
+      "height": 322
+    },
+    "camera": {
+      "left": 224.203125,
+      "top": 537.3842163085938,
+      "right": 352.203125,
+      "bottom": 633.3842163085938,
+      "width": 128,
+      "height": 96
+    },
+    "cameraInsideStage": false,
+    "video": {
+      "readyState": 4,
+      "currentTime": 339.59956,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "paused": false,
+      "streamActive": true,
+      "trackState": "live",
+      "trackEnabled": true
+    },
+    "timeline": {
+      "throwStartedAt": null,
+      "resultVisibleAt": null,
+      "visibility": [
+        {
+          "state": "visible",
+          "at": 622
+        }
+      ]
+    },
+    "snapshot": {
+      "runId": "mobile-1783735192348-8cd3a0a9",
+      "status": "idle",
+      "attemptCount": 0,
+      "retryCount": 0,
+      "activePhysicsElapsedMs": 0,
+      "settlementSampleCount": 0,
+      "stillChecks": 0,
+      "pieces": [],
+      "events": []
+    }
+  },
+  "final": {
+    "visibility": "visible",
+    "hasFocus": true,
+    "result": "圣杯",
+    "stage": {
+      "left": 37.796875,
+      "top": 206.96875,
+      "right": 352.203125,
+      "bottom": 528.96875,
+      "width": 314.40625,
+      "height": 322
+    },
+    "camera": {
+      "left": 224.203125,
+      "top": 539.359375,
+      "right": 352.203125,
+      "bottom": 635.359375,
+      "width": 128,
+      "height": 96
+    },
+    "cameraInsideStage": false,
+    "video": {
+      "readyState": 4,
+      "currentTime": 341.299757,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "paused": false,
+      "streamActive": true,
+      "trackState": "live",
+      "trackEnabled": true
+    },
+    "timeline": {
+      "throwStartedAt": 854.7999999523163,
+      "resultVisibleAt": 2335.7999999523163,
+      "visibility": [
+        {
+          "state": "visible",
+          "at": 622
+        }
+      ]
+    },
+    "snapshot": {
+      "runId": "mobile-1783735192348-8cd3a0a9",
+      "status": "settled",
+      "attemptCount": 1,
+      "retryCount": 0,
+      "activePhysicsElapsedMs": 1504.8999999761581,
+      "settlementSampleCount": 92,
+      "stillChecks": 3,
+      "pieces": [
+        {
+          "index": 0,
+          "landed": true,
+          "assistCount": 0,
+          "upDot": -0.9387345122117732,
+          "position": {
+            "x": 0.21233665943145752,
+            "y": 0.6309245824813843,
+            "z": -0.22173428535461426
+          },
+          "screenBounds": {
+            "left": 1.9411656184766113,
+            "top": 137.6785005524551,
+            "right": 112.53632101808748,
+            "bottom": 242.7235399934685
+          }
+        },
+        {
+          "index": 1,
+          "landed": true,
+          "assistCount": 0,
+          "upDot": 0.9999999999935061,
+          "position": {
+            "x": 1.9375977516174316,
+            "y": -0.000001348864202554978,
+            "z": -0.11967261880636215
+          },
+          "screenBounds": {
+            "left": 145.82223772108523,
+            "top": 109.19710953701158,
+            "right": 251.2166934839147,
+            "bottom": 196.05296451916854
+          }
+        }
+      ],
+      "events": [
+        {
+          "type": "throw-start",
+          "atMs": 855.2999999523163,
+          "sequence": 1
+        },
+        {
+          "type": "attempt-start",
+          "atMs": 862.3999999761581,
+          "attempt": 1,
+          "sequence": 2
+        },
+        {
+          "type": "impact",
+          "atMs": 1432,
+          "pieceIndex": 0,
+          "sequence": 3
+        },
+        {
+          "type": "impact",
+          "atMs": 1481.6999999284744,
+          "pieceIndex": 1,
+          "sequence": 4
+        },
+        {
+          "type": "settled",
+          "atMs": 2334.7999999523163,
+          "sequence": 5
+        }
+      ]
+    }
+  },
+  "resultVisibleAfterMs": 1481,
+  "videoProgress": {
+    "startedAt": 341.549963,
+    "currentTime": 341.600165
+  },
+  "screenshots": {
+    "readyScreenshot": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/mobile-1783735192348-8cd3a0a9/ready.png",
+    "throwingScreenshot": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/mobile-1783735192348-8cd3a0a9/throwing-900ms.png",
+    "settledScreenshot": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/mobile-1783735192348-8cd3a0a9/settled.png"
+  },
+  "errors": [],
+  "browserErrors": []
+}

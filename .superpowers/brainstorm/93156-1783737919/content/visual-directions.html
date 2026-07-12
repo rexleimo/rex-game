@@ -1,0 +1,77 @@
+<style>
+  .direction-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; margin-top:24px; }
+  .direction-card { cursor:pointer; border:1px solid rgba(255,255,255,.12); border-radius:18px; overflow:hidden; background:#17130f; transition:transform .25s ease,border-color .25s ease; }
+  .direction-card:hover { transform:translateY(-4px); border-color:rgba(226,190,111,.8); }
+  .direction-card:focus-visible { outline:2px solid #e2be6f; outline-offset:3px; }
+  .direction-preview { min-height:270px; padding:16px; position:relative; overflow:hidden; }
+  .direction-copy { padding:18px 18px 20px; background:#10100f; }
+  .direction-copy h3 { margin:0 0 7px; font-size:18px; }
+  .direction-copy p { margin:0; color:#a7a29a; font-size:13px; line-height:1.65; }
+  .kicker { color:#d6b264; font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+  .museum { background:radial-gradient(90% 66% at 78% 0%,rgba(143,39,28,.42),transparent 66%),linear-gradient(145deg,#21140f,#100e0c 72%); color:#f7eedb; }
+  .museum::before { content:""; position:absolute; inset:11px; border:1px solid rgba(223,183,91,.5); pointer-events:none; }
+  .museum-nav { display:flex; justify-content:space-between; font-size:10px; letter-spacing:.12em; color:#d9bc74; }
+  .museum-title { position:relative; z-index:1; margin-top:48px; max-width:190px; font-family:Georgia,serif; font-size:32px; line-height:1.12; letter-spacing:.05em; }
+  .museum-sub { margin-top:13px; max-width:172px; color:rgba(247,238,219,.65); font-size:11px; line-height:1.6; }
+  .museum-cup { position:absolute; right:20px; bottom:24px; width:118px; height:74px; background:linear-gradient(145deg,#c25e58,#78251d 70%); border-radius:80% 80% 14% 14% / 100% 100% 18% 18%; transform:rotate(-16deg); box-shadow:0 17px 22px rgba(0,0,0,.45); }
+  .museum-cup::after { content:""; position:absolute; left:10px; right:8px; bottom:-15px; height:21px; background:#5d241f; border-radius:0 0 70% 70%; opacity:.8; }
+  .museum-cta { position:absolute; left:18px; bottom:19px; color:#1a130c; background:#e2be6f; padding:9px 14px; font-size:11px; font-weight:700; letter-spacing:.08em; }
+  .paper { background:#ece3d0; color:#2a2118; }
+  .paper::before { content:""; position:absolute; inset:0; opacity:.28; background-image:repeating-linear-gradient(0deg,transparent 0 19px,rgba(100,76,46,.15) 20px); }
+  .paper-nav { position:relative; display:flex; align-items:center; justify-content:space-between; font-size:10px; letter-spacing:.13em; }
+  .paper-seal { width:29px; height:29px; display:grid; place-items:center; border:1px solid #a1372d; color:#a1372d; font-family:Georgia,serif; font-size:16px; }
+  .paper-heading { position:relative; margin-top:45px; padding-left:19px; border-left:3px solid #a1372d; font-family:Georgia,serif; font-size:27px; line-height:1.25; }
+  .paper-list { position:relative; display:grid; gap:7px; margin-top:23px; }
+  .paper-row { display:flex; justify-content:space-between; border-bottom:1px solid rgba(73,52,29,.25); padding:6px 0; font-size:10px; }
+  .paper-row b { color:#9a3027; }
+  .paper-chip { position:absolute; right:17px; bottom:18px; padding:8px 11px; border:1px solid #725436; background:#f6efdf; font-size:10px; }
+  .stage { background:radial-gradient(95% 72% at 50% 28%,#583221 0%,#2a1711 42%,#130e0c 83%); color:#f8ecdc; }
+  .stage-top { display:flex; align-items:center; justify-content:space-between; font-size:10px; letter-spacing:.12em; color:rgba(248,236,220,.72); }
+  .stage-live { color:#e0b765; border:1px solid rgba(224,183,101,.55); padding:5px 7px; }
+  .stage-table { position:absolute; left:-28px; right:-28px; top:84px; height:125px; border-radius:50%; background:radial-gradient(ellipse at 50% 32%,#6d4430 0%,#432419 55%,#26140f 72%); box-shadow:inset 0 6px 21px rgba(0,0,0,.42),0 23px 32px rgba(0,0,0,.34); }
+  .stage-cup-one,.stage-cup-two { position:absolute; width:84px; height:48px; background:#bc5852; border-radius:95% 95% 15% 15% / 100% 100% 23% 23%; box-shadow:0 12px 11px rgba(0,0,0,.45); }
+  .stage-cup-one { left:70px; top:114px; transform:rotate(24deg); }
+  .stage-cup-two { right:62px; top:137px; transform:rotate(-28deg); background:#d0ac7b; }
+  .stage-copy { position:absolute; left:18px; bottom:20px; }
+  .stage-copy strong { display:block; font-family:Georgia,serif; font-size:19px; letter-spacing:.08em; }
+  .stage-copy span { display:block; margin-top:5px; font-size:10px; color:rgba(248,236,220,.6); }
+  .stage-status { position:absolute; right:18px; bottom:22px; padding:7px 9px; background:rgba(25,19,15,.72); border:1px solid rgba(255,255,255,.16); font-size:10px; }
+  @media (max-width: 800px) { .direction-grid { grid-template-columns:1fr; } .direction-preview { min-height:230px; } }
+</style>
+
+<h2>整站应该呈现怎样的仪式感？</h2>
+<p class="subtitle">三个方向都保留圣杯游戏、真实 3D 杯体和摄像头功能；区别在于首页与游戏流程的视觉重心。</p>
+
+<div class="direction-grid">
+  <div class="direction-card" data-choice="museum" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="direction-preview museum">
+      <div class="museum-nav"><span>REX GAME</span><span>01 / 圣杯</span></div>
+      <div class="museum-title">潮汕圣杯<br>一掷见心</div>
+      <div class="museum-sub">像一个小型漆器展览，以留白、材质和器物来建立信任。</div>
+      <div class="museum-cup"></div>
+      <div class="museum-cta">进入仪式</div>
+    </div>
+    <div class="direction-copy"><span class="kicker">A / 推荐</span><h3>漆器展陈</h3><p>低调深色、器物特写和大量留白。首页像展览目录，进入游戏后才聚焦桌面与动作。</p></div>
+  </div>
+
+  <div class="direction-card" data-choice="paper" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="direction-preview paper">
+      <div class="paper-nav"><span>REX GAME / 问愿</span><span class="paper-seal">筊</span></div>
+      <div class="paper-heading">默念所愿<br>静候杯象</div>
+      <div class="paper-list"><div class="paper-row"><span>一 · 净手</span><b>准备</b></div><div class="paper-row"><span>二 · 合十</span><b>五秒</b></div><div class="paper-row"><span>三 · 掷筊</span><b>见答</b></div></div>
+      <div class="paper-chip">开始请愿</div>
+    </div>
+    <div class="direction-copy"><span class="kicker">B / 叙事优先</span><h3>祈愿书页</h3><p>以签文、步骤和祝词为主角。信息更清晰，但 3D 投掷的冲击力会相对克制。</p></div>
+  </div>
+
+  <div class="direction-card" data-choice="stage" onclick="toggleSelect(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelect(this)}">
+    <div class="direction-preview stage">
+      <div class="stage-top"><span>圣杯仪式</span><span class="stage-live">摄像头已就绪</span></div>
+      <div class="stage-table"></div><div class="stage-cup-one"></div><div class="stage-cup-two"></div>
+      <div class="stage-copy"><strong>双手合十</strong><span>保持片刻，开始投掷</span></div><div class="stage-status">第 1 次 / 共 3 次</div>
+    </div>
+    <div class="direction-copy"><span class="kicker">C / 动作优先</span><h3>仪式剧场</h3><p>把 3D 舞台放在每个关键状态的正中央，摄像头与状态信息融入边缘，沉浸感最强。</p></div>
+  </div>
+</div>
+
+<p class="subtitle" style="margin-top:22px">点击一张方向卡片进行选择；也可以在聊天框告诉我想混合哪些特点。</p>

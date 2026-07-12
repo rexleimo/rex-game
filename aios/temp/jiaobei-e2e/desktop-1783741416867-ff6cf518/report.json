@@ -1,0 +1,184 @@
+{
+  "mode": "desktop",
+  "runId": "desktop-1783741416867-ff6cf518",
+  "evidenceDir": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/desktop-1783741416867-ff6cf518",
+  "before": {
+    "visibility": "visible",
+    "hasFocus": true,
+    "result": null,
+    "stage": {
+      "left": 53.15625,
+      "top": 185.63388061523438,
+      "right": 966.609375,
+      "bottom": 736.6338806152344,
+      "width": 913.453125,
+      "height": 551
+    },
+    "camera": {
+      "left": 980.203125,
+      "top": 185.63388061523438,
+      "right": 1226.84375,
+      "bottom": 402.0870056152344,
+      "width": 246.640625,
+      "height": 216.453125
+    },
+    "cameraInsideStage": false,
+    "video": {
+      "readyState": 4,
+      "currentTime": 6563.600882,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "paused": false,
+      "streamActive": true,
+      "trackState": "live",
+      "trackEnabled": true
+    },
+    "timeline": {
+      "throwStartedAt": null,
+      "resultVisibleAt": null,
+      "visibility": [
+        {
+          "state": "visible",
+          "at": 292.09999990463257
+        }
+      ]
+    },
+    "snapshot": {
+      "runId": "desktop-1783741416867-ff6cf518",
+      "status": "idle",
+      "attemptCount": 0,
+      "retryCount": 0,
+      "activePhysicsElapsedMs": 0,
+      "settlementSampleCount": 0,
+      "stillChecks": 0,
+      "pieces": [],
+      "events": []
+    }
+  },
+  "final": {
+    "visibility": "visible",
+    "hasFocus": true,
+    "result": "圣杯",
+    "stage": {
+      "left": 53.15625,
+      "top": 183.859375,
+      "right": 966.609375,
+      "bottom": 734.859375,
+      "width": 913.453125,
+      "height": 551
+    },
+    "camera": {
+      "left": 980.203125,
+      "top": 183.859375,
+      "right": 1226.84375,
+      "bottom": 400.3125,
+      "width": 246.640625,
+      "height": 216.453125
+    },
+    "cameraInsideStage": false,
+    "video": {
+      "readyState": 4,
+      "currentTime": 6565.45117,
+      "videoWidth": 640,
+      "videoHeight": 480,
+      "paused": false,
+      "streamActive": true,
+      "trackState": "live",
+      "trackEnabled": true
+    },
+    "timeline": {
+      "throwStartedAt": 440.09999990463257,
+      "resultVisibleAt": 1939.8999999761581,
+      "visibility": [
+        {
+          "state": "visible",
+          "at": 292.09999990463257
+        }
+      ]
+    },
+    "snapshot": {
+      "runId": "desktop-1783741416867-ff6cf518",
+      "status": "settled",
+      "attemptCount": 1,
+      "retryCount": 0,
+      "activePhysicsElapsedMs": 1501.1000000238419,
+      "settlementSampleCount": 93,
+      "stillChecks": 3,
+      "pieces": [
+        {
+          "index": 0,
+          "landed": true,
+          "assistCount": 0,
+          "upDot": -0.9368312252335601,
+          "position": {
+            "x": 0.20884592831134796,
+            "y": 0.6321061849594116,
+            "z": -0.22142662107944489
+          },
+          "screenBounds": {
+            "left": 183.69872103366606,
+            "top": 230.25388641266994,
+            "right": 406.3383935113252,
+            "bottom": 443.04871356563314
+          }
+        },
+        {
+          "index": 1,
+          "landed": true,
+          "assistCount": 0,
+          "upDot": 0.9999999999934801,
+          "position": {
+            "x": 1.9364005327224731,
+            "y": -0.0000013485749832398142,
+            "z": -0.12017109245061874
+          },
+          "screenBounds": {
+            "left": 469.1802457076398,
+            "top": 174.84657701831546,
+            "right": 679.7545295539295,
+            "bottom": 346.7310384579361
+          }
+        }
+      ],
+      "events": [
+        {
+          "type": "throw-start",
+          "atMs": 440.5,
+          "sequence": 1
+        },
+        {
+          "type": "attempt-start",
+          "atMs": 446.7999999523163,
+          "attempt": 1,
+          "sequence": 2
+        },
+        {
+          "type": "impact",
+          "atMs": 1025.8999999761581,
+          "pieceIndex": 0,
+          "sequence": 3
+        },
+        {
+          "type": "impact",
+          "atMs": 1075.5999999046326,
+          "pieceIndex": 1,
+          "sequence": 4
+        },
+        {
+          "type": "settled",
+          "atMs": 1938.8999999761581,
+          "sequence": 5
+        }
+      ]
+    }
+  },
+  "resultVisibleAfterMs": 1499.8000000715256,
+  "videoProgress": null,
+  "screenshots": {
+    "readyScreenshot": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/desktop-1783741416867-ff6cf518/ready.png",
+    "throwingScreenshot": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/desktop-1783741416867-ff6cf518/throwing-900ms.png",
+    "settledScreenshot": "/Users/rex/codes/rex-game/aios/temp/jiaobei-e2e/desktop-1783741416867-ff6cf518/settled.png"
+  },
+  "errors": [],
+  "browserErrors": []
+}
