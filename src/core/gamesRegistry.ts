@@ -3,7 +3,7 @@
  * 新增游戏 = 加一条记录 + 创建 app/games/<id>/page.tsx。
  */
 
-export type GameId = 'shantou-jiaobei' | (string & {});
+export type GameId = 'shantou-jiaobei' | 'chaoshan-yingge' | (string & {});
 
 export interface GameMeta {
   id: GameId;
@@ -30,6 +30,15 @@ export const games: GameMeta[] = [
     href: '/games/shantou-jiaobei',
     badge: '新',
     accent: '#A6332B',
+  },
+  {
+    id: 'chaoshan-yingge',
+    name: '合槌成阵：潮汕英歌',
+    tagline: '听鼓落槌，随队而行——在节奏与队形中认识潮汕英歌。',
+    cover: '/assets/yingge/cover.svg',
+    href: '/games/chaoshan-yingge',
+    badge: '新作',
+    accent: '#9F251D',
   },
 ];
 

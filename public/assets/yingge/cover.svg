@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">合槌成阵：潮汕英歌</title>
+  <desc id="desc">纸张、朱红太阳和三名持槌英歌舞者构成的主视觉</desc>
+  <rect width="1200" height="630" fill="#d8c7a4"/>
+  <circle cx="860" cy="235" r="155" fill="#d7b45f"/>
+  <path d="M0 430h1200v200H0z" fill="#171411"/>
+  <path d="M0 430 150 330l160 100 150-88 170 88 165-110 190 110 105-76 110 76" fill="#171411"/>
+  <g fill="#9f251d" stroke="#171411" stroke-width="10">
+    <path d="M660 220h85l38 120-21 150H638l-16-150z"/>
+    <circle cx="702" cy="180" r="49" fill="#d4a16c"/>
+    <path d="m648 295-115 133M754 295l116 133" stroke="#d7b45f" stroke-width="20"/>
+    <path d="M880 274h67l31 94-18 122H862l-12-122z"/>
+    <circle cx="914" cy="240" r="38" fill="#d4a16c"/>
+    <path d="m870 332-90 102m155-103 92 105" stroke="#d7b45f" stroke-width="16"/>
+    <path d="M458 287h62l30 89-15 114h-96l-12-114z"/>
+    <circle cx="489" cy="253" r="36" fill="#d4a16c"/>
+    <path d="m446 342-84 92m145-92 84 95" stroke="#d7b45f" stroke-width="15"/>
+  </g>
+  <text x="56" y="95" fill="#171411" font-family="serif" font-size="28" font-weight="700" letter-spacing="7">REX GAME / 非遗互动展品 02</text>
+  <text x="54" y="255" fill="#9f251d" font-family="serif" font-size="130" font-weight="900">合槌</text>
+  <text x="54" y="375" fill="#171411" font-family="serif" font-size="130" font-weight="900">成阵</text>
+  <text x="60" y="560" fill="#e7d3aa" font-family="sans-serif" font-size="24" letter-spacing="8">CHAOSHAN YINGGE · RHYTHM OF THE PROCESSION</text>
+</svg>

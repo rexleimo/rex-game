@@ -1,9 +1,9 @@
 {
   "session": "(new)",
   "status": "running",
-  "updated": "2026-07-12T13:07:43.105Z",
+  "updated": "2026-07-17T08:43:43.483Z",
   "space": "default",
-  "agent": "claude-code",
+  "agent": "codex-cli",
   "registryPath": ".aios/context-db/index.json",
   "sources": []
 }

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const exhibit = games[0];
+  const nextExhibit = games[1];
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -61,7 +62,7 @@ export default function HomePage() {
       <header className="home-exhibit__rail rise">
         <Link className="home-exhibit__wordmark" href="/" aria-label="rex game 首页">REX GAME</Link>
         <span>浏览器中的民俗小游戏</span>
-        <span className="home-exhibit__edition">展品 01 / 01</span>
+        <span className="home-exhibit__edition">展品 01 / {String(games.length).padStart(2, '0')}</span>
       </header>
 
       <section className="home-exhibit__hero">
@@ -70,6 +71,11 @@ export default function HomePage() {
           <h1>潮汕圣杯，一掷见心</h1>
           <p className="home-exhibit__lead">将心愿默念于双手之间，等两片筊杯落定。每一次落杯，都是给自己的一段停顿。</p>
           <Link className="home-exhibit__cta" href={exhibit.href}>开始这一问 <span aria-hidden>→</span></Link>
+          {nextExhibit && (
+            <Link className="home-exhibit__cta" href={nextExhibit.href}>
+              玩英歌：合槌成阵<span aria-hidden>→</span>
+            </Link>
+          )}
           <p className="home-exhibit__privacy">无需下载。摄像头画面仅在本地浏览器内处理。</p>
         </div>
 
@@ -91,6 +97,11 @@ export default function HomePage() {
           <div><dt>交互</dt><dd>手势或手动掷杯</dd></div>
           <div><dt>提示</dt><dd>仅供娱乐，不构成建议</dd></div>
         </dl>
+        {nextExhibit && (
+          <Link className="home-exhibit__cta" href={nextExhibit.href}>
+            下一展品：合槌成阵 <span aria-hidden>→</span>
+          </Link>
+        )}
       </section>
 
       <footer className="home-exhibit__footer">REX GAME · 以轻巧的互动，留住片刻的好奇。</footer>
