@@ -1,0 +1,20 @@
+{
+  "name": "rex-game · 趣玩民俗小游戏站",
+  "short_name": "rex-game",
+  "description": "浏览器即开即玩的静态民俗小游戏站，首个游戏：潮汕圣杯占卜。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#17100b",
+  "theme_color": "#17100b",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

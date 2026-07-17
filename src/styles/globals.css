@@ -15,6 +15,25 @@
   --c-text-faint: #8a7358;     /* 小标签 / 注 */
   --c-text-invert: #f4ecd8;    /* 漆底上的浅字 */
 
+  /* 新增：文化深化色 */
+  --c-ink: #1a120b;            /* 墨黑 */
+  --c-cinnabar: #b22c25;       /* 印泥红 / 朱砂亮 */
+  --c-paper-aged: #e8dcc0;     /* 旧纸 */
+
+  /* 宣纸透明度阶梯，统一散落各地的 rgba */
+  --paper-10: rgba(244, 236, 216, 0.10);
+  --paper-20: rgba(244, 236, 216, 0.20);
+  --paper-35: rgba(244, 236, 216, 0.35);
+  --paper-45: rgba(244, 236, 216, 0.45);
+  --paper-50: rgba(244, 236, 216, 0.50);
+  --paper-58: rgba(244, 236, 216, 0.58);
+  --paper-64: rgba(244, 236, 216, 0.64);
+  --paper-68: rgba(244, 236, 216, 0.68);
+  --paper-70: rgba(244, 236, 216, 0.70);
+  --paper-75: rgba(244, 236, 216, 0.75);
+  --paper-78: rgba(244, 236, 216, 0.78);
+  --paper-84: rgba(244, 236, 216, 0.84);
+
   /* 杯象三色（克制、和谐，去饱和） */
   --c-sheng: #5f8a64;          /* 圣杯 · 竹青 */
   --c-xiao: #b8863a;           /* 笑杯 · 赭黄 */
@@ -35,8 +54,8 @@
   /* 金箔渐变（描边 / 文字光泽） */
   --foil: linear-gradient(135deg, #f2dc9a 0%, #d8b25a 34%, #b98a2f 62%, #ecca7c 100%);
 
-  --font-display: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-  --font-body: 'Noto Sans SC', system-ui, sans-serif;
+  --font-display: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', system-ui, sans-serif;
 }
 
 * {

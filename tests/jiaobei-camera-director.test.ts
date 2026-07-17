@@ -18,17 +18,17 @@ test('launch camera is above both cups and uses a true high angle', () => {
   assert.ok(cameraHeight(goal) > 3.38);
 });
 
-test('landed cups use the lower viewing angle', () => {
+test('landed cups preserve the establishing viewing angle', () => {
   const flight = computeCameraGoal(launchPair, 1.6, 0);
   const firstImpact = computeCameraGoal(launchPair, 1.6, 1);
   const landed = computeCameraGoal(launchPair, 1.6, 2);
 
-  assert.ok(Math.abs(landed.beta - 0.84) < 0.0001);
-  assert.ok(firstImpact.beta > flight.beta);
-  assert.ok(firstImpact.beta < landed.beta);
+  assert.ok(Math.abs(landed.beta - flight.beta) < 0.0001);
+  assert.ok(Math.abs(firstImpact.beta - flight.beta) < 0.0001);
+  assert.ok(Math.abs(landed.radius - flight.radius) < 0.0001);
 });
 
-test('camera target follows the live pair midpoint', () => {
+test('camera target only makes a bounded correction for the live pair midpoint', () => {
   const initial = computeCameraGoal(launchPair, 1.6, 0);
   const shifted = computeCameraGoal(launchPair.map((position) => ({
     x: position.x + 1.4,
@@ -36,12 +36,12 @@ test('camera target follows the live pair midpoint', () => {
     z: position.z + 0.6,
   })), 1.6, 0);
 
-  assert.ok(Math.abs((shifted.target.x - initial.target.x) - 1.4) < 0.0001);
-  assert.ok(Math.abs((shifted.target.z - initial.target.z) - 0.6) < 0.0001);
-  assert.ok(shifted.target.y < initial.target.y);
+  assert.ok(Math.abs(shifted.target.x - initial.target.x) <= 0.2);
+  assert.ok(Math.abs(shifted.target.z - initial.target.z) <= 0.12);
+  assert.equal(shifted.target.y, initial.target.y);
 });
 
-test('the shot widens as the cups spread apart', () => {
+test('the shot does not noticeably zoom as the cups spread apart', () => {
   const compact = computeCameraGoal([
     { x: -0.3, y: 1.2, z: 0 },
     { x: 0.3, y: 1.2, z: 0 },
@@ -51,7 +51,7 @@ test('the shot widens as the cups spread apart', () => {
     { x: 2.1, y: 1.2, z: 0.5 },
   ], 1.6, 0);
 
-  assert.ok(spread.radius > compact.radius);
+  assert.ok(Math.abs(spread.radius - compact.radius) < 0.4);
 });
 
 test('narrow viewports widen the shot and preserve right-side safety space', () => {

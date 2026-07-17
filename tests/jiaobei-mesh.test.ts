@@ -6,27 +6,78 @@ import { Scene } from '@babylonjs/core/scene.js';
 import { createJiaobeiVisual } from '../src/games/shantou-jiaobei/physics/JiaobeiMesh.ts';
 import { createThrowSetup } from '../src/games/shantou-jiaobei/physics/throwSetup.ts';
 
-test('procedural jiaobei has a curved lacquer face and a flat wooden base', () => {
+test('procedural jiaobei has a curved lacquer crown and an open crescent silhouette', () => {
   const engine = new NullEngine();
   const scene = new Scene(engine);
   const mesh = createJiaobeiVisual(scene, 0);
   const positions = mesh.getVerticesData('position');
 
-  assert.ok(positions && positions.length > 100, 'the cup needs a detailed silhouette');
-  assert.ok(
-    positions.every((_, index) => index % 3 !== 2 || positions[index] >= -0.0001),
-    'the cup outline must remain a half-moon instead of a full oval',
-  );
+  assert.ok(positions && positions.length > 600, 'the cup needs a detailed crescent silhouette');
+  const centerlineZ: number[] = [];
   let highestY = -Infinity;
-  for (let index = 1; index < positions.length; index += 3) highestY = Math.max(highestY, positions[index]);
-  let plateauVertices = 0;
-  for (let index = 1; index < positions.length; index += 3) {
-    if (positions[index] >= highestY - 0.0001) plateauVertices++;
+  let lowestX = Infinity;
+  let highestX = -Infinity;
+  let lowestZ = Infinity;
+  let highestZ = -Infinity;
+  for (let index = 0; index < positions.length; index += 3) {
+    const x = positions[index];
+    const y = positions[index + 1];
+    const z = positions[index + 2];
+    if (Math.abs(x) < 0.0001) centerlineZ.push(z);
+    highestY = Math.max(highestY, y);
+    lowestX = Math.min(lowestX, x);
+    highestX = Math.max(highestX, x);
+    lowestZ = Math.min(lowestZ, z);
+    highestZ = Math.max(highestZ, z);
   }
-  assert.ok(plateauVertices > 16, 'the curved face needs a subtle stable landing patch');
+  assert.ok(highestX - lowestX > 3.1, 'the cup needs a long blade profile');
+  assert.ok(highestZ - lowestZ > 0.75, 'the blade needs a clearly curved centerline');
+  assert.ok(
+    Math.min(...centerlineZ) > 0.5,
+    'the inner arc must leave an open crescent instead of filling a half-disc',
+  );
   assert.equal(mesh.material?.name, 'jiaobei_materials_0');
   assert.equal(mesh.metadata.convexLocalNormal.y, 1);
-  assert.ok(mesh.getBoundingInfo().boundingBox.extendSize.y > 0.15, 'the cup needs a visible convex face');
+  assert.equal(mesh.metadata.silhouette, 'crescent');
+  assert.ok(highestY > 0.35, 'the cup needs a visible convex crown');
+
+  mesh.dispose();
+  scene.dispose();
+  engine.dispose();
+});
+
+test('the visual silhouette tapers to blade tips instead of ending as a thick crescent block', () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  const mesh = createJiaobeiVisual(scene, 0);
+  const positions = mesh.getVerticesData('position');
+
+  assert.ok(positions, 'the cup needs vertex positions');
+  const rowSize = 9;
+  const lastRowStart = 48 * rowSize * 3;
+  const point = (offset: number) => [
+    positions[offset],
+    positions[offset + 1],
+    positions[offset + 2],
+  ];
+  const distance = (left: number[], right: number[]) => Math.hypot(
+    left[0] - right[0],
+    left[1] - right[1],
+    left[2] - right[2],
+  );
+  const firstTipWidth = distance(point(0), point((rowSize - 1) * 3));
+  const lastTipWidth = distance(
+    point(lastRowStart),
+    point(lastRowStart + (rowSize - 1) * 3),
+  );
+  const xs = positions.filter((_, index) => index % 3 === 0);
+  const zs = positions.filter((_, index) => index % 3 === 2);
+  const aspect = (Math.max(...xs) - Math.min(...xs)) / (Math.max(...zs) - Math.min(...zs));
+
+  assert.ok(firstTipWidth < 0.08, 'the heel must taper instead of exposing a broad end cap');
+  assert.ok(lastTipWidth < 0.08, 'the forward end must finish as a sharp blade tip');
+  assert.ok(aspect > 2.15, 'the silhouette must read as a long curved blade');
+  assert.equal(mesh.metadata.profile, 'curved-blade');
 
   mesh.dispose();
   scene.dispose();
@@ -63,35 +114,21 @@ test('render-facing normals point outward on both cup faces', () => {
   const mesh = createJiaobeiVisual(scene, 0);
   const positions = mesh.getVerticesData('position');
   const normals = mesh.getVerticesData('normal');
+  const lacquerEnd = mesh.subMeshes[0].verticesStart + mesh.subMeshes[0].verticesCount;
 
   assert.ok(positions && normals, 'the cup needs positions and normals');
-  let bottomCenter = -1;
-  let chordCenter = -1;
+  const crownNormals: number[] = [];
+  const baseNormals: number[] = [];
   for (let vertex = 0; vertex < positions.length / 3; vertex++) {
     const offset = vertex * 3;
-    if (
-      positions[offset] === 0
-      && positions[offset + 1] === 0
-      && positions[offset + 2] === 0
-    ) bottomCenter = vertex;
-    if (
-      positions[offset] === 0
-      && positions[offset + 1] === 0.54
-      && positions[offset + 2] === 0
-    ) chordCenter = vertex;
+    const y = positions[offset + 1];
+    if (vertex < lacquerEnd && y > 0.2) crownNormals.push(normals[offset + 1]);
+    if (vertex >= mesh.metadata.baseVertexStart && y === 0) baseNormals.push(normals[offset + 1]);
   }
-
-  assert.ok(bottomCenter > 0, 'the wooden base needs a center vertex');
-  assert.ok(chordCenter > 0, 'the straight side needs a center vertex');
-  assert.ok(normals[1] > 0.99, 'the lacquer dome normal must point away from the solid');
-  assert.ok(
-    normals[bottomCenter * 3 + 1] < -0.99,
-    'the wooden base normal must point away from the solid',
-  );
-  assert.ok(
-    normals[chordCenter * 3 + 2] < -0.99,
-    'the straight side normal must point away from the solid',
-  );
+  assert.ok(crownNormals.length > 100, 'the crown needs enough smooth vertices');
+  assert.ok(baseNormals.length > 100, 'the base needs enough flat vertices');
+  assert.ok(crownNormals.every((normal) => normal > 0.6), 'crown normals must face upward');
+  assert.ok(baseNormals.every((normal) => normal < -0.99), 'base normals must face downward');
 
   mesh.dispose();
   scene.dispose();

@@ -74,6 +74,7 @@ export function JiaobeiGame() {
             onThrow={handleThrow}
             onDone={() => go('result')}
             onWishChange={(wish) => setState((s) => ({ ...s, wish }))}
+            onWishCategoryChange={(wishCategory) => setState((s) => ({ ...s, wishCategory }))}
           />
         )}
         {phase === 'result' && <ResultScene state={state} onRestart={restart} />}

@@ -37,6 +37,7 @@ import {
 import { createThrowSetup } from '../../src/games/shantou-jiaobei/physics/throwSetup.ts';
 
 export interface SeededPieceReport {
+  finalPosition: { x: number; y: number; z: number };
   finalUpDot: number;
   firstImpactMs: number;
   assistCount: number;
@@ -429,7 +430,12 @@ export async function runSeededThrows(
               retrySnapshots: [...retrySnapshots],
               settledMs: totalElapsedMs + attemptElapsedMs,
               maxAssistPerPiecePerAttempt,
-              pieces: pieces.map((_, index) => ({
+              pieces: pieces.map((piece, index) => ({
+                finalPosition: {
+                  x: piece.mesh.position.x,
+                  y: piece.mesh.position.y,
+                  z: piece.mesh.position.z,
+                },
                 finalUpDot: finalDots[index],
                 firstImpactMs: landedAt[index] ?? Infinity,
                 assistCount: assistCounts[index],

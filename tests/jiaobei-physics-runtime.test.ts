@@ -15,6 +15,11 @@ import {
 import { NullEngine } from '@babylonjs/core/Engines/nullEngine.js';
 import type { PhysicsBody } from '@babylonjs/core/Physics/v2/physicsBody.js';
 import '@babylonjs/core/Physics/physicsEngineComponent.js';
+import {
+  ALTAR_CUP_FOOTPRINT_MARGIN,
+  ALTAR_TABLE_DEPTH,
+  ALTAR_TABLE_WIDTH,
+} from '../src/games/shantou-jiaobei/physics/altarElements.ts';
 import { JiaobeiMesh } from '../src/games/shantou-jiaobei/physics/JiaobeiMesh.ts';
 import {
   classifyCupFace,
@@ -398,6 +403,9 @@ test('1024 seeded throws meet timing retry distribution and fairness gates', asy
   ));
   const positiveRatio = dots.filter((dot) => dot > 0).length / dots.length;
   const results = new Set(reports.map((report) => report.result));
+  const finalPositions = reports.flatMap((report) => (
+    report.pieces.map((piece) => piece.finalPosition)
+  ));
 
   assert.ok(p95 <= 2600, `p95 ${p95}ms`);
   assert.ok(times.at(-1)! <= 3200, `max ${times.at(-1)}ms`);
@@ -407,4 +415,10 @@ test('1024 seeded throws meet timing retry distribution and fairness gates', asy
     `positive ratio ${positiveRatio}`,
   );
   assert.deepEqual([...results].sort(), ['sheng', 'xiao', 'yin']);
+  assert.ok(finalPositions.every((position) => (
+    Math.abs(position.x) + ALTAR_CUP_FOOTPRINT_MARGIN <= ALTAR_TABLE_WIDTH / 2
+  )));
+  assert.ok(finalPositions.every((position) => (
+    Math.abs(position.z) + ALTAR_CUP_FOOTPRINT_MARGIN <= ALTAR_TABLE_DEPTH / 2
+  )));
 });

@@ -1,11 +1,63 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { games } from '@/core/gamesRegistry';
+
+export const metadata: Metadata = {
+  title: '趣玩民俗小游戏站',
+  description:
+    'rex-game —— 浏览器中的民俗小游戏站。当前展品：潮汕圣杯占卜。无需下载，双手合十即可在线掷筊问愿。',
+  openGraph: {
+    title: 'rex-game · 趣玩民俗小游戏站',
+    description: '浏览器中的民俗小游戏站，首个展品：潮汕圣杯占卜。',
+    url: 'https://game.rexai.top/',
+  },
+};
 
 export default function HomePage() {
   const exhibit = games[0];
 
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        name: 'rex-game',
+        url: 'https://game.rexai.top/',
+        description: '浏览器即开即玩的静态民俗小游戏站。',
+        inLanguage: 'zh-CN',
+        publisher: {
+          '@type': 'Organization',
+          name: 'rex-game',
+          url: 'https://game.rexai.top/',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://game.rexai.top/favicon.svg',
+          },
+        },
+      },
+      {
+        '@type': 'ItemList',
+        itemListElement: games.map((g, index) => {
+          const href = g.href.endsWith('/') ? g.href : `${g.href}/`;
+          return {
+            '@type': 'ListItem',
+            position: index + 1,
+            url: `https://game.rexai.top${href}`,
+            name: g.name,
+            description: g.tagline,
+            image: `https://game.rexai.top${g.cover}`,
+          };
+        }),
+      },
+    ],
+  };
+
   return (
     <main className="home-exhibit">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <header className="home-exhibit__rail rise">
         <Link className="home-exhibit__wordmark" href="/" aria-label="rex game 首页">REX GAME</Link>
         <span>浏览器中的民俗小游戏</span>

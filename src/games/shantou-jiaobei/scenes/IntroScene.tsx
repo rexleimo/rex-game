@@ -1,38 +1,49 @@
-'use client';
+import { JIAOBEI_QUICK_ANSWER, JIAOBEI_SIGNS } from '../content/culture';
 
-import { CupResultGlyph } from '../components/CupResultGlyph';
+const FACE_ASSETS = {
+  rounded: { src: '/assets/jiaobei/jiaobei-rounded.webp', label: '凸面 / 红漆' },
+  flat: { src: '/assets/jiaobei/jiaobei-flat.webp', label: '平面 / 木底' },
+} as const;
 
-/** 开场：文化介绍（圣杯/笑杯/阴杯）+ 开始按钮。 */
+/** Cinematic opening tableau: six cups arranged as the three traditional signs. */
 export function IntroScene({ onStart }: { onStart: () => void }) {
   return (
     <section className="intro rise">
-      <header className="intro__header">
-        <p className="intro__index">仪式说明 / 先静心，再落杯</p>
-        <h2 className="intro__title">把问题留在掌心，<br />等杯象落定。</h2>
-        <p className="intro__lead">
-          潮汕掷筊以一对半月形筊杯回应心里的询问。开始后可以<strong>双手合十静心默念</strong>，也可在舞台下方写下这一问。
-        </p>
-      </header>
+      <div className="intro__cinema" aria-label="六枚新月形筊杯在黑丝绸上排成圣杯、阴杯与笑杯">
+        <div className="intro__silk" aria-hidden />
+        <div className="intro__halo" aria-hidden />
+        <div className="intro__smoke intro__smoke--one" aria-hidden />
+        <div className="intro__smoke intro__smoke--two" aria-hidden />
+        <div className="intro__specimens">
+          {JIAOBEI_SIGNS.map((sign, index) => {
+            const faces = Array.from({ length: 2 }, (_, faceIndex) => (
+              faceIndex < sign.flatFaceCount ? FACE_ASSETS.flat : FACE_ASSETS.rounded
+            ));
+            return (
+              <article className={`intro__specimen intro__specimen--${sign.result}`} key={sign.result}>
+                <span className="intro__specimen-index">0{index + 1}</span>
+                <div className="intro__cup-stage" role="img" aria-label={`${sign.name}：${sign.faces}`}>
+                  {faces.map((face, faceIndex) => (
+                    <figure className={`intro__face intro__face--${faceIndex + 1}`} key={`${face.label}-${faceIndex}`}>
+                      <img src={face.src} alt={face.label} width="320" height="150" />
+                      <figcaption>{face.label}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+                <div className="intro__specimen-copy"><strong>{sign.name}</strong><span>{sign.faces}</span><em>{sign.meaning}</em></div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
 
-      <ul className="intro__specimens">
-        <li className="intro__specimen intro__specimen--sheng">
-          <CupResultGlyph result="sheng" size={58} />
-          <div><strong>圣杯</strong><em>一凸一平</em><span>所愿可行，仍要亲自走稳。</span></div>
-        </li>
-        <li className="intro__specimen intro__specimen--xiao">
-          <CupResultGlyph result="xiao" size={58} />
-          <div><strong>笑杯</strong><em>两片皆平</em><span>问题未明，可稍后再问。</span></div>
-        </li>
-        <li className="intro__specimen intro__specimen--yin">
-          <CupResultGlyph result="yin" size={58} />
-          <div><strong>阴杯</strong><em>两片皆凸</em><span>此刻不宜强求，静待时机。</span></div>
-        </li>
-      </ul>
-
-      <footer className="intro__footer">
-        <p className="intro__note">连掷三杯，杯象只作片刻参考。游戏内容仅供娱乐。</p>
-        <button className="btn btn--gold intro__start" onClick={onStart}>开始这一问</button>
-      </footer>
+      <div className="intro__content">
+        <p className="intro__index">潮汕跋杯 · 三象陈列</p>
+        <h2 className="intro__title">六枚如刃<br />一问见心</h2>
+        <div className="intro__culture"><strong>潮汕圣杯是什么？</strong><p>{JIAOBEI_QUICK_ANSWER}</p></div>
+        <div className="intro__actions"><button className="btn btn--gold intro__start" onClick={onStart}>开始掷筊</button><a className="intro__learn" href="#jiaobei-guide">了解潮汕圣杯文化与三种杯象</a></div>
+        <p className="intro__note">可使用摄像头手势或按钮操作；摄像头并非必需。</p>
+      </div>
     </section>
   );
 }

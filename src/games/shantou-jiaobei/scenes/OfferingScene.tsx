@@ -1,16 +1,19 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import type { CupResult, GameState } from '../JiaobeiGame';
+import type { CupResult, GameState, WishCategory } from '../JiaobeiGame';
 import { CupResultGlyph } from '../components/CupResultGlyph';
 import { CameraPosePanel } from '../vision/CameraPosePanel';
 import { sfx } from '../audio/SfxManager';
+import { WishSpeech } from '../voice/WishSpeech';
 
 const RESULT_META: Record<CupResult, { label: string; color: string }> = {
   sheng: { label: '圣杯', color: 'var(--c-sheng)' },
   xiao: { label: '笑杯', color: 'var(--c-xiao)' },
   yin: { label: '阴杯', color: 'var(--c-yin)' },
 };
+
+const CATEGORIES: WishCategory[] = ['感情', '事业', '学业', '财运', '健康', '其他'];
 
 /** 回合序数 → 汉字 */
 const CN = ['', '一', '二', '三'];
@@ -28,12 +31,15 @@ export function OfferingScene({
   onThrow,
   onDone,
   onWishChange,
+  onWishCategoryChange,
 }: {
   state: GameState;
   onThrow: (r: CupResult) => void;
   onDone: () => void;
   /** 心愿在掷杯页内联编辑，向上同步到结果页展示 */
   onWishChange?: (wish: string) => void;
+  /** 心愿类别选择 */
+  onWishCategoryChange?: (category: WishCategory) => void;
 }) {
   const round = state.throws.length + 1;
   const done = round > 3;
@@ -45,6 +51,9 @@ export function OfferingScene({
   const [physicsReady, setPhysicsReady] = useState(false);
   const [physicsError, setPhysicsError] = useState(false);
   const [cameraDown, setCameraDown] = useState<string | null>(null); // 摄像头降级原因
+  const [listening, setListening] = useState(false);
+  const [speechError, setSpeechError] = useState<string | null>(null);
+  const speechRef = useRef<WishSpeech | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -132,6 +141,41 @@ export function OfferingScene({
   // 摄像头识别仅在物理可接收投掷时运行，避免加载期间误触发后锁死。
   const poseEnabled = physicsReady && !physicsError && !throwing && !done;
 
+  const speechSupported = WishSpeech.isSupported();
+
+  const toggleSpeech = () => {
+    if (!speechSupported || listening) {
+      speechRef.current?.stop();
+      setListening(false);
+      return;
+    }
+    setSpeechError(null);
+    speechRef.current?.abort();
+    speechRef.current = new WishSpeech(
+      (result) => {
+        onWishChange?.(result.transcript);
+        if (result.isFinal) {
+          setListening(false);
+        }
+      },
+      (error) => {
+        setSpeechError(error.message || '语音识别出错');
+        setListening(false);
+      },
+      () => {
+        setListening(false);
+      },
+    );
+    speechRef.current.start();
+    setListening(true);
+  };
+
+  useEffect(() => {
+    return () => {
+      speechRef.current?.abort();
+    };
+  }, []);
+
   return (
     <section className="offering rise">
       <header className="offering__rail">
@@ -188,16 +232,46 @@ export function OfferingScene({
       ) : null}
 
       <div className="offering__console">
+        <div className="offering__categories" role="group" aria-label="心愿类别">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              className={`offering__category ${state.wishCategory === cat ? 'offering__category--active' : ''}`}
+              onClick={() => onWishCategoryChange?.(cat)}
+              aria-pressed={state.wishCategory === cat}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
         <label className="offering__wish">
           <span className="offering__wishlabel">所愿</span>
           <input
             className="offering__wishinput"
-            placeholder="在此写下心愿，或合十默念"
+            placeholder="在此写下心愿，或点击右侧麦克风说话"
             value={state.wish}
             onChange={(e) => onWishChange?.(e.target.value)}
             maxLength={40}
             disabled={state.throws.length > 0}
           />
+          {speechSupported && (
+            <button
+              type="button"
+              className={`offering__mic ${listening ? 'offering__mic--active' : ''}`}
+              onClick={toggleSpeech}
+              aria-label={listening ? '停止语音识别' : '语音输入心愿'}
+              aria-pressed={listening}
+              disabled={state.throws.length > 0}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+                <path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3Z" />
+                <path d="M19 11v1a7 7 0 0 1-14 0v-1" />
+                <path d="M12 19v3" />
+              </svg>
+            </button>
+          )}
         </label>
 
         <div className="offering__action">
@@ -226,20 +300,16 @@ export function OfferingScene({
           )}
         </div>
 
-        <p className="offering__hint">
-          {cameraDown
-            ? `${cameraDown}，仍可点击掷杯完成这一问。`
-            : '双手合十保持约 5 秒即可掷杯，也可随时使用手动掷杯。'}
-        </p>
+        {speechError ? (
+          <p className="offering__hint offering__hint--error">{speechError}</p>
+        ) : (
+          <p className="offering__hint">
+            {cameraDown
+              ? `${cameraDown}，仍可点击掷杯完成这一问。`
+              : '双手合十保持约 5 秒即可掷杯，也可随时使用手动掷杯。'}
+          </p>
+        )}
       </div>
-
-      <style>{`
-        @media (max-width: 480px) {
-          .offering__cam {
-            position: static;
-          }
-        }
-      `}</style>
     </section>
   );
 }

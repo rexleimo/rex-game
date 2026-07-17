@@ -22,6 +22,10 @@ export const theme = {
     textSoft: '#6E5A46',
     textFaint: '#8A7358',
     textInvert: '#F4ECD8',
+    // 新增：文化深化色
+    ink: '#1A120B', // 墨黑
+    cinnabar: '#B22C25', // 印泥红 / 朱砂亮
+    paperAged: '#E8DCC0', // 旧纸
     // 杯象三色（克制、和谐）
     sheng: '#5F8A64', // 圣杯 · 竹青
     xiao: '#B8863A', // 笑杯 · 赭黄
@@ -42,8 +46,8 @@ export const theme = {
   },
   foil: 'linear-gradient(135deg, #f2dc9a 0%, #d8b25a 34%, #b98a2f 62%, #ecca7c 100%)',
   font: {
-    display: '"Noto Serif SC", "Songti SC", "STSong", serif',
-    body: '"Noto Sans SC", system-ui, sans-serif',
+    display: '"Noto Serif SC", "Songti SC", "STSong", "SimSun", serif',
+    body: '"Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", system-ui, sans-serif',
   },
 } as const;
 

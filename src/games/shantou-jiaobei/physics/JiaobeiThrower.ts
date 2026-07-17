@@ -1,7 +1,7 @@
 import {
   ArcRotateCamera, Color3, Color4, DirectionalLight, Engine, HemisphericLight,
   Matrix, MeshBuilder, PhysicsActivationControl, PhysicsAggregate, PhysicsShapeType, Scene,
-  ShadowGenerator, StandardMaterial, Vector3, HavokPlugin, Mesh,
+  ShadowGenerator, SpotLight, StandardMaterial, Texture, Vector3, HavokPlugin, Mesh,
 } from '@babylonjs/core';
 // 物理 v2 side-effect 注册（HavokPlugin / PhysicsAggregate / PhysicsBody 等）
 import '@babylonjs/core/Physics/physicsEngineComponent.js';
@@ -39,6 +39,7 @@ import {
   type ThrowPieceAssistState,
   type ThrowProgress,
 } from './throwRuntime.ts';
+import { createAltarElements } from './altarElements.ts';
 import { createThrowSetup } from './throwSetup.ts';
 import {
   installJiaobeiE2eDiagnostics,
@@ -106,6 +107,7 @@ export class JiaobeiThrower {
   private pieceFaceBrakeActive: boolean[] = [];
   private onImpact?: () => void;
   private e2eDiagnostics: JiaobeiE2eDiagnostics | null = installJiaobeiE2eDiagnostics();
+  private altarElements?: ReturnType<typeof createAltarElements>;
 
   constructor(canvas: HTMLCanvasElement | null, engine?: Engine) {
     this.canvas = canvas;
@@ -126,7 +128,16 @@ export class JiaobeiThrower {
   /** 初始化相机/灯光/地面/阴影，物理引擎在 throwOnce 前异步注入 */
   private setupBasics() {
     const scene = this.scene;
-    scene.clearColor = new Color4(0.09, 0.063, 0.043, 1); // 漆黑褐（呼应新视觉底色）
+    scene.clearColor = new Color4(0.018, 0.009, 0.012, 1);
+    scene.fogMode = Scene.FOGMODE_EXP2;
+    scene.fogColor = new Color3(0.018, 0.009, 0.012);
+    scene.fogDensity = 0.032;
+    scene.imageProcessingConfiguration.toneMappingEnabled = true;
+    scene.imageProcessingConfiguration.exposure = 1.0;
+    scene.imageProcessingConfiguration.contrast = 1.18;
+    scene.imageProcessingConfiguration.vignetteEnabled = true;
+    scene.imageProcessingConfiguration.vignetteWeight = 2.2;
+    scene.imageProcessingConfiguration.vignetteColor = new Color4(0.05, 0, 0.008, 1);
 
     const initialGoal = computeCameraGoal([], this.getAspect(), 2);
     const camera = new ArcRotateCamera(
@@ -137,23 +148,37 @@ export class JiaobeiThrower {
       new Vector3(initialGoal.target.x, initialGoal.target.y, initialGoal.target.z),
       scene,
     );
-    if (this.canvas) camera.attachControl(this.canvas, true);
-    camera.lowerRadiusLimit = 3.8;
-    camera.upperRadiusLimit = 10;
+    camera.inputs.clear();
+    camera.lowerRadiusLimit = initialGoal.radius;
+    camera.upperRadiusLimit = initialGoal.radius;
     camera.lowerBetaLimit = 0.52;
     camera.upperBetaLimit = 1.08;
     camera.panningSensibility = 0;
     this.camera = camera;
 
-    // 环境补光（压低，给方向光的阴影让位）
+    // 环境补光：提亮整体，让红漆杯身可见
     const hemi = new HemisphericLight('hemi', new Vector3(0.2, 1, 0.3), scene);
-    hemi.intensity = 0.55;
-    hemi.groundColor = new Color3(0.18, 0.11, 0.09);
+    hemi.intensity = 0.42;
+    hemi.groundColor = new Color3(0.035, 0.012, 0.015);
+    hemi.diffuse = new Color3(0.74, 0.64, 0.58);
 
-    // 主方向光 —— 产生投影，把筊杯「钉」在台面上，消除悬浮的假感
-    const dir = new DirectionalLight('dir', new Vector3(-0.45, -1, -0.35), scene);
-    dir.position = new Vector3(3, 8, 2.5);
-    dir.intensity = 1.15;
+    // 主方向光 —— 产生投影，把筊杯「钉」在台面上
+    const dir = new DirectionalLight('dir', new Vector3(-0.62, -1, -0.42), scene);
+    dir.position = new Vector3(4.5, 7.5, 3.5);
+    dir.intensity = 1.38;
+    dir.diffuse = Color3.FromHexString('#ffd0ad');
+
+    const landingFill = new SpotLight(
+      'landingFill',
+      new Vector3(-1.8, 5.8, -2.1),
+      new Vector3(0.26, -1, 0.34),
+      Math.PI / 2.25,
+      1.8,
+      scene,
+    );
+    landingFill.diffuse = Color3.FromHexString('#e8a77d');
+    landingFill.intensity = 0.62;
+    landingFill.range = 12;
 
     // 厚实体台面同时承担视觉与物理碰撞，避免杯片飞出薄地板后无限坠落。
     this.ground = MeshBuilder.CreateBox('ground', {
@@ -163,19 +188,50 @@ export class JiaobeiThrower {
     }, scene);
     this.ground.position.y = -THROW_GROUND_THICKNESS / 2;
     const gmat = new StandardMaterial('gmat', scene);
-    gmat.diffuseColor = Color3.FromHexString('#241610');
-    gmat.specularColor = new Color3(0.04, 0.03, 0.02);
+    gmat.diffuseColor = Color3.FromHexString('#080405');
+    gmat.specularColor = new Color3(0.08, 0.015, 0.025);
+    // 庙砖纹理：暗红底 + 微弱砖缝
+    const brickTexture = new Texture(
+      'data:image/svg+xml;base64,' +
+        btoa(
+          `<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'>
+            <defs>
+              <pattern id='brick' x='0' y='0' width='64' height='32' patternUnits='userSpaceOnUse'>
+                <rect width='62' height='30' fill='#3d2118' />
+                <rect x='62' y='0' width='2' height='32' fill='#1f100a' />
+                <rect x='0' y='30' width='64' height='2' fill='#1f100a' />
+              </pattern>
+            </defs>
+            <rect width='100%' height='100%' fill='url(%23brick)' opacity='0.55' />
+            <filter id='noise'>
+              <feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' />
+              <feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0' />
+            </filter>
+            <rect width='100%' height='100%' filter='url(%23noise)' />
+          </svg>`,
+        ),
+      scene,
+    );
+    brickTexture.uScale = 8;
+    brickTexture.vScale = 8;
+    gmat.diffuseTexture = brickTexture;
     this.ground.material = gmat;
     this.ground.receiveShadows = true;
     // 地面物理体（静止刚体，修复穿模）—— 必须在 enablePhysics 后添加
     // 这里只创建 mesh，物理体在 ensurePhysics 后的 throwOnce 里首次添加
 
     // 柔和投影
-    const sg = new ShadowGenerator(1024, dir);
-    sg.useBlurExponentialShadowMap = true;
-    sg.blurKernel = 32;
+    const shadowSize = (this.canvas?.clientWidth ?? 0) > 900 ? 2048 : 1024;
+    const sg = new ShadowGenerator(shadowSize, dir);
+    sg.usePercentageCloserFiltering = true;
+    sg.filteringQuality = ShadowGenerator.QUALITY_HIGH;
+    sg.bias = 0.00035;
+    sg.normalBias = 0.014;
     sg.darkness = 0.42;
     this.shadowGen = sg;
+
+    // 潮汕庙宇祭坛元素：木质台面、香炉、烛火
+    this.altarElements = createAltarElements(scene, (mesh) => this.shadowGen.addShadowCaster(mesh, true));
   }
 
   private assertActive(generation: number) {
@@ -293,7 +349,7 @@ export class JiaobeiThrower {
       const setup = setups[i];
 
       // 投影：把视觉 mesh 加入投影投射者
-      this.shadowGen.addShadowCaster(p.mesh, true);
+      this.shadowGen.addShadowCaster(p.visual, true);
 
       const body = p.aggregate.body;
       (this.scene.getPhysicsEngine()!.getPhysicsPlugin() as HavokPlugin).setActivationControl(
@@ -341,7 +397,7 @@ export class JiaobeiThrower {
     this.animating = false;
     this.shake = 0;
     if (this.pieces.length > 0) this.applyCameraGoal(this.getCameraGoal(), 1);
-    if (this.canvas) this.camera.attachControl(this.canvas, true);
+    this.camera.inputs.clear();
   }
 
   /** 每帧跟随两片杯的真实位置，并叠加短促落地震动。 */
@@ -552,7 +608,7 @@ export class JiaobeiThrower {
   private clearPieces() {
     this.cancelSettling?.();
     this.collisionDisposers.splice(0).forEach((dispose) => dispose());
-    this.pieces.forEach((piece) => this.shadowGen?.removeShadowCaster(piece.mesh));
+    this.pieces.forEach((piece) => this.shadowGen?.removeShadowCaster(piece.visual));
     this.pieces.forEach((piece) => piece.dispose());
     this.pieces = [];
     this.landed = [];
@@ -676,6 +732,7 @@ export class JiaobeiThrower {
       document.removeEventListener('visibilitychange', this.visibilityChangeHandler);
     }
     this.clearPieces();
+    this.altarElements?.dispose();
     this.groundAggregate?.dispose();
     this.ground?.dispose();
     this.scene.dispose();

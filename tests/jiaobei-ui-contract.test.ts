@@ -24,6 +24,22 @@ const offeringSource = readFileSync(new URL(
   '../src/games/shantou-jiaobei/scenes/OfferingScene.tsx',
   import.meta.url,
 ), 'utf8');
+const jiaobeiCssSource = readFileSync(new URL(
+  '../src/styles/jiaobei.css',
+  import.meta.url,
+), 'utf8');
+const pageSource = readFileSync(new URL(
+  '../app/games/shantou-jiaobei/page.tsx',
+  import.meta.url,
+), 'utf8');
+const glyphSource = readFileSync(new URL(
+  '../src/games/shantou-jiaobei/components/CupResultGlyph.tsx',
+  import.meta.url,
+), 'utf8');
+const altarSource = readFileSync(new URL(
+  '../src/games/shantou-jiaobei/physics/altarElements.ts',
+  import.meta.url,
+), 'utf8');
 
 function findMatchingDivEnd(source: string, openingIndex: number): number {
   const divTag = /<\/?div\b[^>]*>/g;
@@ -49,9 +65,9 @@ test('the compact mobile preview flows below the 3D stage instead of covering it
   assert.ok(cameraStart >= 0);
   assert.ok(cameraStart > findMatchingDivEnd(offeringSource, stageStart));
 
-  const mediaStart = offeringSource.indexOf('@media (max-width: 480px)');
+  const mediaStart = jiaobeiCssSource.indexOf('@media (max-width: 480px)');
   assert.ok(mediaStart >= 0);
-  const mobileRule = offeringSource.slice(mediaStart, mediaStart + 320);
+  const mobileRule = jiaobeiCssSource.slice(mediaStart, mediaStart + 420);
 
   assert.match(mobileRule, /\.offering__cam\s*\{[^}]*position:\s*static/);
 });
@@ -90,12 +106,37 @@ test('the result view reveals its interpretation without adding a game phase', (
   assert.match(resultSource, /window\.setTimeout\(\(\) => setExpanded\(true\), 1200\)/);
   assert.match(resultSource, /onClick=\{\(\) => setExpanded\(true\)\}/);
   assert.match(resultSource, /const RESULT_TITLE/);
-  assert.match(resultSource, /RESULT_TITLE\[v\.key\]/);
+  assert.match(resultSource, /RESULT_TITLE\[v\.key(?: as VerdictKey)?\]/);
+});
+
+test('the culture guide and FAQ remain server-rendered for search and answer engines', () => {
+  assert.match(pageSource, /<article className="jiaobei-guide"/);
+  assert.match(pageSource, /<h2>什么是潮汕掷筊/);
+  assert.match(pageSource, /'@type': 'FAQPage'/);
+  assert.match(pageSource, /faqItems\.map/);
+  assert.match(pageSource, /<dl className="jiaobei-guide__faq">/);
+});
+
+test('cup glyphs use a long tapered machete profile', () => {
+  assert.match(glyphSource, /data-profile="curved-blade"/);
+  assert.match(glyphSource, /M2 29C14 10 43 7 62 14/);
+  assert.doesNotMatch(glyphSource, /M4 49C7 21 29 3 53 22/);
+});
+
+test('the silk surface receives cup shadows without self-shadowing and decor stays behind play', () => {
+  assert.match(altarSource, /tableTop.receiveShadows = true/);
+  assert.doesNotMatch(altarSource, /shadowCaster(tableTop)/);
+  assert.match(altarSource, /ALTAR_TABLE_WIDTH = 11\.6/);
+  assert.match(altarSource, /ALTAR_TABLE_DEPTH = 9/);
+  assert.ok(altarSource.includes('const decorZ = 3.58;'));
 });
 
 test('cup result symbols use the game-consistent vector glyph instead of opaque legacy art', () => {
   assert.match(resultSource, /CupResultGlyph/);
-  assert.match(introSource, /CupResultGlyph/);
+  assert.match(introSource, /jiaobei-rounded\.webp/);
+  assert.match(introSource, /jiaobei-flat\.webp/);
+  assert.match(introSource, /平面 \/ 木底/);
+  assert.match(introSource, /凸面 \/ 红漆/);
   assert.match(offeringSource, /CupResultGlyph/);
   assert.doesNotMatch(resultSource, /cup_(sheng|xiao|yin)\.png/);
   assert.doesNotMatch(introSource, /cup_(sheng|xiao|yin)\.png/);
