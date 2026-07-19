@@ -407,11 +407,20 @@
   transition: background 0.14s ease, color 0.14s ease, transform 0.12s ease, border-color 0.14s ease;
 }
 
-.foldBtn:hover,
+.foldBtn:hover:not(:disabled),
 .toolBtn:hover,
 .actionBtn:hover {
   transform: translateY(-1px);
   border-color: var(--jz-gold);
+}
+
+.foldBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  color: var(--jz-ink-soft);
+  background: #f0e8d8;
+  box-shadow: none;
+  transform: none;
 }
 
 .foldActive,
@@ -419,6 +428,14 @@
   color: #fff8ec;
   background: linear-gradient(180deg, var(--jz-red) 0%, var(--jz-red-deep) 100%);
   border-color: var(--jz-red-deep);
+}
+
+.foldBtn.foldActive:disabled {
+  opacity: 1;
+  color: #fff8ec;
+  background: linear-gradient(180deg, var(--jz-red) 0%, var(--jz-red-deep) 100%);
+  border-color: var(--jz-red-deep);
+  cursor: default;
 }
 
 .unfoldBtn {

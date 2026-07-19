@@ -189,6 +189,7 @@ export function JianzhiGame() {
   const lastPlacedRef = useRef('');
   const announcedRef = useRef<Set<string>>(new Set());
   const pendingCompleteRef = useRef<{ motifIds: string[]; comboIds: string[] } | null>(null);
+  const finalizingRef = useRef(false);
   const audioRef = useRef<ReturnType<typeof createPaperAudio> | null>(null);
   if (!audioRef.current) audioRef.current = createPaperAudio();
 
@@ -212,20 +213,31 @@ export function JianzhiGame() {
   const playSnip = useCallback(() => audioRef.current?.playSnip(settings.muted), [settings.muted]);
   const playChime = useCallback(() => audioRef.current?.playChime(settings.muted), [settings.muted]);
 
-  const navigateFromSubnav = useCallback((v: View, tab?: CodexTab) => {
-    if (v === 'workshop') {
-      setActiveLesson(null);
-      setActiveCommission(null);
-      setPhase('craft');
-      setPlacedIds([]);
-      lastPlacedRef.current = '';
-      pendingCompleteRef.current = null;
-      setView('workshop');
-      return;
-    }
-    if (v === 'codex' && tab) setCodexTab(tab);
-    setView(v);
-  }, []);
+  const startPractice = useCallback(() => {
+    setActiveLesson(null);
+    setActiveCommission(null);
+    setPhase('craft');
+    setPlacedIds([]);
+    lastPlacedRef.current = '';
+    pendingCompleteRef.current = null;
+    finalizingRef.current = false;
+    announcedRef.current = new Set(progress.discoveredCombos);
+    setQuizPick(null);
+    setQuizExplainVisible(false);
+    setView('workshop');
+  }, [progress.discoveredCombos]);
+
+  const navigateFromSubnav = useCallback(
+    (v: View, tab?: CodexTab) => {
+      if (v === 'workshop') {
+        startPractice();
+        return;
+      }
+      if (v === 'codex' && tab) setCodexTab(tab);
+      setView(v);
+    },
+    [startPractice],
+  );
 
   // 引擎生命周期：reading 结束后挂载；reveal/quiz/result 不重挂以免清空展开纸面
   const canvasSession =
@@ -300,6 +312,7 @@ export function JianzhiGame() {
     setActiveCommission(null);
     setPhase('craft');
     pendingCompleteRef.current = null;
+    finalizingRef.current = false;
     setQuizPick(null);
     setQuizExplainVisible(false);
     setView('map');
@@ -315,11 +328,14 @@ export function JianzhiGame() {
     setFold(activeObjective.foldSuggestion);
     setPlacedIds([]);
     lastPlacedRef.current = '';
+    finalizingRef.current = false;
     resetQuizState();
     setPhase('craft');
   }, [activeObjective, resetQuizState]);
 
   const finalizeCompletion = useCallback(() => {
+    if (finalizingRef.current) return;
+    finalizingRef.current = true;
     const pending = pendingCompleteRef.current;
     const motifIds = pending?.motifIds ?? placedIds;
     const comboIds = pending?.comboIds ?? detectCombos(motifIds, JIANZHI_COMBOS).map((c) => c.id);
@@ -438,6 +454,7 @@ export function JianzhiGame() {
       setPlacedIds([]);
       lastPlacedRef.current = '';
       pendingCompleteRef.current = null;
+      finalizingRef.current = false;
       announcedRef.current = new Set(progress.discoveredCombos);
       resetQuizState();
       setPhase('reading');
@@ -457,6 +474,7 @@ export function JianzhiGame() {
       setPlacedIds([]);
       lastPlacedRef.current = '';
       pendingCompleteRef.current = null;
+      finalizingRef.current = false;
       announcedRef.current = new Set(progress.discoveredCombos);
       resetQuizState();
       setPhase('reading');
@@ -464,17 +482,6 @@ export function JianzhiGame() {
     },
     [progress.graduated, progress.discoveredCombos, resetQuizState],
   );
-
-  const startPractice = useCallback(() => {
-    setActiveLesson(null);
-    setActiveCommission(null);
-    setPhase('craft');
-    setPlacedIds([]);
-    lastPlacedRef.current = '';
-    pendingCompleteRef.current = null;
-    announcedRef.current = new Set(progress.discoveredCombos);
-    setView('workshop');
-  }, [progress.discoveredCombos]);
 
   const saveWork = useCallback(() => {
     const engine = engineRef.current;
@@ -585,6 +592,7 @@ export function JianzhiGame() {
     setActiveCommission(null);
     setPhase('craft');
     pendingCompleteRef.current = null;
+    finalizingRef.current = false;
     resetQuizState();
     setView('map');
   }, [resetQuizState]);
