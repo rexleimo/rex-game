@@ -236,7 +236,10 @@ test('the Yingge experience opens with a dedicated start menu', () => {
 test('the game is registered and exposed as a statically rendered culture page', () => {
   assert.match(registrySource, /id: 'chaoshan-yingge'/);
   assert.match(registrySource, /href: '\/games\/chaoshan-yingge'/);
-  assert.match(homeSource, /href=\{nextExhibit\.href\}/);
+  // Home lists secondary exhibits via others[] (multi-game grid), not a single nextExhibit.
+  assert.match(homeSource, /others\.map\(\(g\) =>/);
+  assert.match(homeSource, /home-exhibit__more/);
+  assert.match(homeSource, /href=\{g\.href\}/);
   assert.match(pageSource, /<YinggeGame/);
   assert.match(pageSource, /'@type': 'VideoGame'/);
   assert.match(pageSource, /潮汕英歌/);
