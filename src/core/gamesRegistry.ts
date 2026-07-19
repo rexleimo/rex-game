@@ -43,7 +43,7 @@ export const games: GameMeta[] = [
   {
     id: 'jianzhi',
     name: '纸上生花：中国剪纸',
-    tagline: '折、剪、展，在对称镂空之间认识鱼、蝠、花、囍里的千年祈愿。',
+    tagline: '跟纸灵学徒：读帖、折剪、展开读懂吉语。',
     cover: '/assets/jianzhi/cover.svg',
     href: '/games/jianzhi',
     badge: '新作',
