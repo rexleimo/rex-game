@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const exhibit = games[0];
-  const nextExhibit = games[1];
+  const others = games.slice(1);
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -30,10 +30,7 @@ export default function HomePage() {
           '@type': 'Organization',
           name: 'rex-game',
           url: 'https://game.rexai.top/',
-          logo: {
-            '@type': 'ImageObject',
-            url: 'https://game.rexai.top/favicon.svg',
-          },
+          logo: { '@type': 'ImageObject', url: 'https://game.rexai.top/favicon.svg' },
         },
       },
       {
@@ -71,9 +68,9 @@ export default function HomePage() {
           <h1>潮汕圣杯，一掷见心</h1>
           <p className="home-exhibit__lead">将心愿默念于双手之间，等两片筊杯落定。每一次落杯，都是给自己的一段停顿。</p>
           <Link className="home-exhibit__cta" href={exhibit.href}>开始这一问 <span aria-hidden>→</span></Link>
-          {nextExhibit && (
-            <Link className="home-exhibit__cta" href={nextExhibit.href}>
-              玩英歌：合槌成阵<span aria-hidden>→</span>
+          {others[0] && (
+            <Link className="home-exhibit__cta" href={others[0].href}>
+              玩{others[0].name.split('：')[0]}<span aria-hidden>→</span>
             </Link>
           )}
           <p className="home-exhibit__privacy">无需下载。摄像头画面仅在本地浏览器内处理。</p>
@@ -88,7 +85,26 @@ export default function HomePage() {
         </figure>
       </section>
 
-      <section className="home-exhibit__record rise" style={{ animationDelay: '180ms' }} aria-label="展品资料">
+      {others.length > 0 && (
+        <section className="home-exhibit__more rise" style={{ animationDelay: '160ms' }} aria-label="更多展品">
+          <p className="home-exhibit__more-label">更多展品 / MORE EXHIBITS</p>
+          <div className="home-exhibit__more-grid">
+            {others.map((g) => (
+              <Link key={g.id} className="home-exhibit__more-card" href={g.href}>
+                <span className="home-exhibit__more-badge">{g.badge ?? '展品'}</span>
+                <div className="home-exhibit__more-cover" style={{ borderColor: g.accent }}>
+                  <img src={g.cover} alt={`${g.name}主视觉`} />
+                </div>
+                <h2>{g.name}</h2>
+                <p>{g.tagline}</p>
+                <span className="home-exhibit__more-go">进入 <span aria-hidden>→</span></span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section className="home-exhibit__record rise" style={{ animationDelay: '200ms' }} aria-label="展品资料">
         <p>当前展品</p>
         <h2>{exhibit.name}</h2>
         <p>{exhibit.tagline}</p>
@@ -97,11 +113,6 @@ export default function HomePage() {
           <div><dt>交互</dt><dd>手势或手动掷杯</dd></div>
           <div><dt>提示</dt><dd>仅供娱乐，不构成建议</dd></div>
         </dl>
-        {nextExhibit && (
-          <Link className="home-exhibit__cta" href={nextExhibit.href}>
-            下一展品：合槌成阵 <span aria-hidden>→</span>
-          </Link>
-        )}
       </section>
 
       <footer className="home-exhibit__footer">REX GAME · 以轻巧的互动，留住片刻的好奇。</footer>

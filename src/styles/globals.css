@@ -205,6 +205,122 @@ h3 {
   animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* 剪纸游戏页脚文化说明 */
+.jz-guide {
+  max-width: 1120px;
+  margin: 8px auto 60px;
+  padding: 28px clamp(16px, 3vw, 40px) 0;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: clamp(20px, 4vw, 48px);
+  align-items: start;
+}
+.jz-guide__rail h2 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(28px, 4vw, 40px);
+  color: var(--c-surface);
+  margin: 0 0 14px;
+}
+.jz-guide__rail p {
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: var(--c-text-invert);
+  opacity: 0.86;
+  margin: 0 0 12px;
+}
+.jz-guide__notice {
+  background: linear-gradient(180deg, #f7f0de, #efe4ca);
+  color: var(--c-text);
+  border: 1px solid var(--line-gold);
+  border-radius: var(--r);
+  padding: 20px;
+}
+.jz-guide__notice strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  display: block;
+  margin-bottom: 10px;
+}
+.jz-guide__notice ul {
+  margin: 0;
+  padding-left: 18px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--c-text-soft);
+}
+.jz-guide__notice li { margin-bottom: 8px; }
+
+@media (max-width: 860px) {
+  .jz-guide { grid-template-columns: 1fr; }
+}
+
+/* 首页「更多展品」 */
+.home-exhibit__more {
+  padding: 1.6rem 0 0.4rem;
+  margin: 0 clamp(0.2rem, 3vw, 2.4rem);
+  border-top: 1px solid var(--line-gold);
+}
+.home-exhibit__more-label {
+  color: var(--c-gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin: 0 0 1.1rem;
+}
+.home-exhibit__more-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.1rem;
+}
+.home-exhibit__more-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.1rem 1.1rem 1.2rem;
+  background: linear-gradient(180deg, rgba(244, 236, 216, 0.05), rgba(244, 236, 216, 0.02));
+  border: 1px solid var(--line-gold);
+  border-radius: 14px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background 0.3s ease;
+}
+.home-exhibit__more-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--line-gold-strong);
+  background: linear-gradient(180deg, rgba(244, 236, 216, 0.09), rgba(244, 236, 216, 0.03));
+}
+.home-exhibit__more-badge {
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #3a2410;
+  background: var(--foil);
+  border-radius: 999px;
+  padding: 0.18rem 0.6rem;
+}
+.home-exhibit__more-cover {
+  border: 1px solid var(--line-gold);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #241510;
+  aspect-ratio: 16 / 9;
+}
+.home-exhibit__more-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.home-exhibit__more-card h2 { color: var(--c-text-invert); font-size: 1.18rem; letter-spacing: 0.06em; margin: 0.3rem 0 0; }
+.home-exhibit__more-card p { margin: 0; color: rgba(244, 236, 216, 0.66); font-size: 0.84rem; line-height: 1.6; }
+.home-exhibit__more-go {
+  margin-top: 0.2rem;
+  color: var(--c-gold-bright);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

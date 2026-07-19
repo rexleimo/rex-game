@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">纸上生花：中国剪纸文化游戏</title>
+  <desc id="desc">版画风底纸、朱红团花窗花与超大衬线标题构成的主视觉</desc>
+
+  <!-- 版画底纸 -->
+  <rect width="1200" height="630" fill="#dfd0af"/>
+  <path d="M0 0h1200v14H0z" fill="#171411"/>
+  <path d="M0 616h1200v14H0z" fill="#171411"/>
+
+  <!-- 右侧朱红版面 + 团花窗花 -->
+  <g>
+    <rect x="720" y="14" width="480" height="602" fill="#9f251d"/>
+    <rect x="758" y="52" width="404" height="526" fill="none" stroke="#fff0ce" stroke-opacity="0.5" stroke-width="2"/>
+    <g transform="translate(960 315)" fill="#fff0ce">
+      <g>
+        <ellipse cx="0" cy="-118" rx="26" ry="72"/>
+        <g transform="rotate(60)"><ellipse cx="0" cy="-118" rx="26" ry="72"/></g>
+        <g transform="rotate(120)"><ellipse cx="0" cy="-118" rx="26" ry="72"/></g>
+        <g transform="rotate(180)"><ellipse cx="0" cy="-118" rx="26" ry="72"/></g>
+        <g transform="rotate(240)"><ellipse cx="0" cy="-118" rx="26" ry="72"/></g>
+        <g transform="rotate(300)"><ellipse cx="0" cy="-118" rx="26" ry="72"/></g>
+      </g>
+      <circle cx="0" cy="0" r="34"/>
+      <circle cx="0" cy="0" r="16" fill="#9f251d"/>
+    </g>
+    <!-- 竖排标语 -->
+    <text x="800" y="120" fill="#fff0ce" font-family="'Noto Serif SC',serif" font-size="30" font-weight="900" letter-spacing="14" writing-mode="tb">看图说吉话</text>
+    <!-- 朱印 -->
+    <g transform="translate(792 500) rotate(-3)">
+      <rect x="-6" y="-6" width="84" height="108" fill="none" stroke="#fff0ce" stroke-width="6"/>
+      <rect x="4" y="4" width="64" height="88" fill="none" stroke="#fff0ce" stroke-width="2"/>
+      <text x="36" y="34" text-anchor="middle" fill="#fff0ce" font-family="'Noto Serif SC',serif" font-size="34" font-weight="900">纸</text>
+      <text x="36" y="78" text-anchor="middle" fill="#fff0ce" font-family="'Noto Serif SC',serif" font-size="34" font-weight="900">上</text>
+    </g>
+  </g>
+
+  <!-- 左侧编辑排版标题 -->
+  <text x="60" y="92" fill="#171411" font-family="serif" font-size="26" font-weight="700" letter-spacing="6">REX GAME / 非遗互动展品 03</text>
+  <text x="48" y="270" fill="#171411" font-family="'Noto Serif SC',serif" font-size="150" font-weight="900" letter-spacing="-6">纸上</text>
+  <text x="48" y="410" fill="#9f251d" font-family="'Noto Serif SC',serif" font-size="150" font-weight="900" letter-spacing="-6">生花</text>
+  <line x1="52" y1="452" x2="700" y2="452" stroke="#171411" stroke-width="4"/>
+  <text x="54" y="500" fill="#4b4035" font-family="'Noto Serif SC',serif" font-size="26" font-weight="700">折 · 剪 · 读 · 展　把纹样拼成一句吉话</text>
+  <text x="56" y="560" fill="#665749" font-family="sans-serif" font-size="22" letter-spacing="6">CHINESE PAPER-CUTTING · RExGAME</text>
+</svg>

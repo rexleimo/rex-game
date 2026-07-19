@@ -40,6 +40,15 @@ export const games: GameMeta[] = [
     badge: '新作',
     accent: '#9F251D',
   },
+  {
+    id: 'jianzhi',
+    name: '纸上生花：中国剪纸',
+    tagline: '折、剪、展，在对称镂空之间认识鱼、蝠、花、囍里的千年祈愿。',
+    cover: '/assets/jianzhi/cover.svg',
+    href: '/games/jianzhi',
+    badge: '新作',
+    accent: '#B22C25',
+  },
 ];
 
 export function getGame(id: GameId): GameMeta | undefined {
