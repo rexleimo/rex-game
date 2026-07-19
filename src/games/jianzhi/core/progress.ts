@@ -1,63 +1,190 @@
-import type { FoldMode, JianzhiChapterId, JianzhiProgress, SavedWork } from './types';
+import type {
+  FoldMode,
+  JianzhiCommissionId,
+  JianzhiLessonId,
+  JianzhiProgress,
+  SavedWork,
+} from './types';
 
-const CHAPTER_COUNT = 6; // 与 content/chapters.ts 中 JIANZHI_CHAPTERS 长度保持一致
+export const PROGRESS_KEY_V2 = 'rex-game:jianzhi:progress:v2';
+export const PROGRESS_KEY_V1 = 'rex-game:jianzhi:progress:v1';
+
+const LESSON_COUNT = 7;
+
+const V1_CHAPTER_TO_LESSON: Record<string, JianzhiLessonId | undefined> = {
+  awaken: 'awaken',
+  'north-window': 'rebus-intro',
+  'south-fine': 'window-four',
+  'silk-rosette': 'silk-rosette',
+  zodiac: 'fu-shou',
+  legacy: 'graduate',
+};
 
 export function createInitialJianzhiProgress(): JianzhiProgress {
   return {
-    unlocked: 1,
+    version: 2,
+    curriculumUnlocked: 1,
+    completedLessons: [],
+    completedCommissions: [],
     collectedMotifIds: [],
-    cultureEntryIds: [],
-    completedChapters: [],
     discoveredCombos: [],
+    cultureEntryIds: [],
+    graduated: false,
   };
 }
 
-/** 从 localStorage 字符串安全解析进度；格式损坏时回退到初始值。 */
+function isLessonId(id: string): id is JianzhiLessonId {
+  return (
+    id === 'awaken' ||
+    id === 'symmetry' ||
+    id === 'rebus-intro' ||
+    id === 'window-four' ||
+    id === 'silk-rosette' ||
+    id === 'fu-shou' ||
+    id === 'graduate'
+  );
+}
+
+function isCommissionId(id: string): id is JianzhiCommissionId {
+  return id === 'spring-window' || id === 'wedding-xi';
+}
+
+export function migrateV1ToV2(parsed: Record<string, unknown>): JianzhiProgress {
+  const base = createInitialJianzhiProgress();
+  const chapters = Array.isArray(parsed.completedChapters)
+    ? (parsed.completedChapters as string[])
+    : [];
+  const completedLessons = [
+    ...new Set(
+      chapters
+        .map((c) => V1_CHAPTER_TO_LESSON[c])
+        .filter((x): x is JianzhiLessonId => Boolean(x)),
+    ),
+  ];
+  const fromUnlock = Number.isFinite(Number(parsed.unlocked))
+    ? Math.max(1, Math.min(LESSON_COUNT, Math.round(Number(parsed.unlocked))))
+    : 1;
+  const fromCompleted = Math.min(LESSON_COUNT, completedLessons.length + 1);
+  const curriculumUnlocked = Math.max(fromUnlock, fromCompleted);
+
+  return {
+    ...base,
+    curriculumUnlocked,
+    completedLessons,
+    collectedMotifIds: Array.isArray(parsed.collectedMotifIds)
+      ? (parsed.collectedMotifIds as string[])
+      : [],
+    cultureEntryIds: Array.isArray(parsed.cultureEntryIds)
+      ? (parsed.cultureEntryIds as string[])
+      : [],
+    discoveredCombos: Array.isArray(parsed.discoveredCombos)
+      ? (parsed.discoveredCombos as string[])
+      : [],
+    graduated: completedLessons.includes('graduate'),
+  };
+}
+
 export function parseJianzhiProgress(value: string | null): JianzhiProgress {
   const base = createInitialJianzhiProgress();
   if (!value) return base;
   try {
-    const parsed = JSON.parse(value) as Partial<JianzhiProgress>;
-    return {
-      unlocked: Number.isFinite(parsed.unlocked)
-        ? Math.max(1, Math.min(CHAPTER_COUNT, Math.round(parsed.unlocked!)))
-        : 1,
-      collectedMotifIds: Array.isArray(parsed.collectedMotifIds) ? parsed.collectedMotifIds : [],
-      cultureEntryIds: Array.isArray(parsed.cultureEntryIds) ? parsed.cultureEntryIds : [],
-      completedChapters: Array.isArray(parsed.completedChapters)
-        ? (parsed.completedChapters as JianzhiChapterId[])
-        : [],
-      discoveredCombos: Array.isArray(parsed.discoveredCombos) ? parsed.discoveredCombos : [],
-    };
+    const parsed = JSON.parse(value) as Record<string, unknown>;
+    if (parsed.version === 2 || Array.isArray(parsed.completedLessons)) {
+      const completedLessons = Array.isArray(parsed.completedLessons)
+        ? (parsed.completedLessons as string[]).filter(isLessonId)
+        : [];
+      const completedCommissions = Array.isArray(parsed.completedCommissions)
+        ? (parsed.completedCommissions as string[]).filter(isCommissionId)
+        : [];
+      const unlockedRaw = Number(parsed.curriculumUnlocked ?? parsed.unlocked);
+      return {
+        version: 2,
+        curriculumUnlocked: Number.isFinite(unlockedRaw)
+          ? Math.max(1, Math.min(LESSON_COUNT, Math.round(unlockedRaw)))
+          : 1,
+        completedLessons,
+        completedCommissions,
+        collectedMotifIds: Array.isArray(parsed.collectedMotifIds)
+          ? (parsed.collectedMotifIds as string[])
+          : [],
+        cultureEntryIds: Array.isArray(parsed.cultureEntryIds)
+          ? (parsed.cultureEntryIds as string[])
+          : [],
+        discoveredCombos: Array.isArray(parsed.discoveredCombos)
+          ? (parsed.discoveredCombos as string[])
+          : [],
+        graduated: Boolean(parsed.graduated) || completedLessons.includes('graduate'),
+      };
+    }
+    // v1 shape
+    if (Array.isArray(parsed.completedChapters) || parsed.unlocked != null) {
+      return migrateV1ToV2(parsed);
+    }
+    return base;
   } catch {
     return base;
   }
 }
 
-/** 记录一次章节完成：聚合已解锁章节、已收集纹样与文化档案，并推进解锁进度。 */
-export function recordChapterCompletion(
+export function recordLessonCompletion(
   progress: JianzhiProgress,
-  chapterId: JianzhiChapterId,
+  lessonId: JianzhiLessonId,
   order: number,
   cultureEntryIds: string[],
   motifIds: string[],
-  totalChapters: number,
+  totalLessons: number,
   comboIds: string[] = [],
 ): JianzhiProgress {
-  const completedChapters = progress.completedChapters.includes(chapterId)
-    ? progress.completedChapters
-    : [...progress.completedChapters, chapterId];
+  const completedLessons = progress.completedLessons.includes(lessonId)
+    ? progress.completedLessons
+    : [...progress.completedLessons, lessonId];
   const collectedMotifIds = [...new Set([...progress.collectedMotifIds, ...motifIds])];
   const culture = [...new Set([...progress.cultureEntryIds, ...cultureEntryIds])];
   const discoveredCombos = [...new Set([...progress.discoveredCombos, ...comboIds])];
-  const unlocked = Math.max(progress.unlocked, Math.min(totalChapters, order + 1));
-  return { unlocked, collectedMotifIds, cultureEntryIds: culture, completedChapters, discoveredCombos };
+  const curriculumUnlocked = Math.max(
+    progress.curriculumUnlocked,
+    Math.min(totalLessons, order + 1),
+  );
+  const graduated = progress.graduated || lessonId === 'graduate' || order >= totalLessons;
+  return {
+    version: 2,
+    curriculumUnlocked: graduated ? totalLessons : curriculumUnlocked,
+    completedLessons,
+    completedCommissions: progress.completedCommissions,
+    collectedMotifIds,
+    cultureEntryIds: culture,
+    discoveredCombos,
+    graduated,
+  };
+}
+
+export function recordCommissionCompletion(
+  progress: JianzhiProgress,
+  commissionId: JianzhiCommissionId,
+  cultureEntryIds: string[],
+  motifIds: string[],
+  comboIds: string[] = [],
+): JianzhiProgress {
+  const completedCommissions = progress.completedCommissions.includes(commissionId)
+    ? progress.completedCommissions
+    : [...progress.completedCommissions, commissionId];
+  return {
+    ...progress,
+    version: 2,
+    completedCommissions,
+    collectedMotifIds: [...new Set([...progress.collectedMotifIds, ...motifIds])],
+    cultureEntryIds: [...new Set([...progress.cultureEntryIds, ...cultureEntryIds])],
+    discoveredCombos: [...new Set([...progress.discoveredCombos, ...comboIds])],
+  };
 }
 
 /** 自由创作时收集纹样，推进图鉴解锁（不产生完成记录）。 */
 export function collectMotifs(progress: JianzhiProgress, motifIds: string[]): JianzhiProgress {
   if (!motifIds.length) return progress;
-  return { ...progress, collectedMotifIds: [...new Set([...progress.collectedMotifIds, ...motifIds])] };
+  return {
+    ...progress,
+    collectedMotifIds: [...new Set([...progress.collectedMotifIds, ...motifIds])],
+  };
 }
 
 /** 记录一次或多次「拼读成句」，推进吉语图谱解锁。 */
