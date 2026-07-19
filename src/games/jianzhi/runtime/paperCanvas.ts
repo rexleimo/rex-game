@@ -7,6 +7,8 @@ const PAPER_FILL_BOTTOM = '#a5281f';
 const PAPER_EDGE = 'rgba(80, 18, 14, 0.55)';
 const MOTIF_SCALE = 0.4;
 const CUT_WIDTH = 0.032;
+/** Unfold reveal duration when motion is allowed (ms). */
+const UNFOLD_DURATION_MS = 1050;
 
 interface Particle {
   x: number;
@@ -17,6 +19,23 @@ interface Particle {
   vr: number;
   life: number;
   size: number;
+}
+
+/** Static paper grain: sparse warm noise, generated once and reused. */
+function makeGrain(size: number): HTMLCanvasElement {
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const g = c.getContext('2d')!;
+  const img = g.createImageData(size, size);
+  for (let i = 0; i < img.data.length; i += 4) {
+    const v = 220 + Math.random() * 35;
+    img.data[i] = v;
+    img.data[i + 1] = v * 0.25;
+    img.data[i + 2] = v * 0.2;
+    img.data[i + 3] = Math.random() > 0.92 ? 28 : 0;
+  }
+  g.putImageData(img, 0, 0);
+  return c;
 }
 
 export type PaperTool = { type: 'motif'; motifId: string } | { type: 'cut' };
@@ -59,6 +78,8 @@ export function createPaperCanvas(
   if (!ctx) throw new Error('无法创建画布上下文');
   ctx.scale(dpr, dpr);
 
+  const grain = makeGrain(size);
+
   let fold: FoldMode = 'book';
   let foldConfig: FoldConfig = getFoldConfig(fold);
   let tool: PaperTool = { type: 'motif', motifId: 'fish' };
@@ -85,6 +106,12 @@ export function createPaperCanvas(
     grad.addColorStop(1, PAPER_FILL_BOTTOM);
     c.fillStyle = grad;
     c.fillRect(0, 0, size, size);
+    // Subtle static grain on red paper body
+    c.save();
+    c.globalCompositeOperation = 'multiply';
+    c.globalAlpha = 0.45;
+    c.drawImage(grain, 0, 0, size, size);
+    c.restore();
     c.strokeStyle = 'rgba(255,255,255,0.04)';
     c.lineWidth = 1;
     for (let i = 0; i < 6; i += 1) {
@@ -126,30 +153,74 @@ export function createPaperCanvas(
     }
   }
 
+  /** Soft shadow + highlight along fold boundaries from foldConfig. */
   function drawCrease(c: CanvasRenderingContext2D) {
-    if (fold === 'book' || fold === 'four') {
-      c.strokeStyle = 'rgba(255, 240, 225, 0.35)';
-      c.lineWidth = 1.5;
-      c.beginPath();
-      c.moveTo(size / 2, 0);
-      c.lineTo(size / 2, size);
-      c.stroke();
-    }
-    if (fold === 'four') {
-      c.beginPath();
-      c.moveTo(0, size / 2);
-      c.lineTo(size, size / 2);
-      c.stroke();
-    }
-    if (fold === 'rosette') {
+    const soft = 14;
+    if (foldConfig.clip === 'rect' && foldConfig.rect) {
+      const [x0, y0, x1, y1] = foldConfig.rect;
+      // Vertical fold edge (book / four left boundary)
+      if (x0 > 0 && x0 < 1) {
+        const px = x0 * size;
+        const g = c.createLinearGradient(px - soft, 0, px + soft, 0);
+        g.addColorStop(0, 'rgba(0,0,0,0)');
+        g.addColorStop(0.42, 'rgba(40, 8, 6, 0.22)');
+        g.addColorStop(0.5, 'rgba(20, 4, 3, 0.32)');
+        g.addColorStop(0.58, 'rgba(40, 8, 6, 0.14)');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        c.fillStyle = g;
+        c.fillRect(px - soft, y0 * size, soft * 2, (y1 - y0) * size);
+        c.strokeStyle = 'rgba(255, 240, 225, 0.35)';
+        c.lineWidth = 1.5;
+        c.beginPath();
+        c.moveTo(px, y0 * size);
+        c.lineTo(px, y1 * size);
+        c.stroke();
+      }
+      // Horizontal fold edge (four top boundary)
+      if (y0 > 0 && y0 < 1) {
+        const py = y0 * size;
+        const g = c.createLinearGradient(0, py - soft, 0, py + soft);
+        g.addColorStop(0, 'rgba(0,0,0,0)');
+        g.addColorStop(0.42, 'rgba(40, 8, 6, 0.22)');
+        g.addColorStop(0.5, 'rgba(20, 4, 3, 0.32)');
+        g.addColorStop(0.58, 'rgba(40, 8, 6, 0.14)');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        c.fillStyle = g;
+        c.fillRect(x0 * size, py - soft, (x1 - x0) * size, soft * 2);
+        c.strokeStyle = 'rgba(255, 240, 225, 0.35)';
+        c.lineWidth = 1.5;
+        c.beginPath();
+        c.moveTo(x0 * size, py);
+        c.lineTo(x1 * size, py);
+        c.stroke();
+      }
+    } else if (foldConfig.clip === 'sector') {
       const step = (2 * Math.PI) / ROSETTE_N;
-      c.strokeStyle = 'rgba(255, 240, 225, 0.22)';
-      c.lineWidth = 1.2;
+      const R = size * 0.74;
+      const cx = size / 2;
+      const cy = size / 2;
+      // Soft radial fold-axis shadows
       for (let k = 0; k < ROSETTE_N; k += 1) {
         const a = k * step + step / 2;
+        const cos = Math.cos(a);
+        const sin = Math.sin(a);
+        c.save();
+        c.translate(cx, cy);
+        c.rotate(a);
+        const g = c.createLinearGradient(0, -soft, 0, soft);
+        g.addColorStop(0, 'rgba(0,0,0,0)');
+        g.addColorStop(0.45, 'rgba(40, 8, 6, 0.16)');
+        g.addColorStop(0.5, 'rgba(20, 4, 3, 0.26)');
+        g.addColorStop(0.55, 'rgba(40, 8, 6, 0.12)');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        c.fillStyle = g;
+        c.fillRect(0, -soft, R, soft * 2);
+        c.restore();
+        c.strokeStyle = 'rgba(255, 240, 225, 0.22)';
+        c.lineWidth = 1.2;
         c.beginPath();
-        c.moveTo(size / 2, size / 2);
-        c.lineTo(size / 2 + Math.cos(a) * size * 0.74, size / 2 + Math.sin(a) * size * 0.74);
+        c.moveTo(cx, cy);
+        c.lineTo(cx + cos * R, cy + sin * R);
         c.stroke();
       }
     }
@@ -352,7 +423,7 @@ export function createPaperCanvas(
       }
       return new Promise<void>((resolve) => {
         const start = performance.now();
-        const dur = 780;
+        const dur = UNFOLD_DURATION_MS;
         const tick = (now: number) => {
           const t = Math.min(1, (now - start) / dur);
           revealT = t;
