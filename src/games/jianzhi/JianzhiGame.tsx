@@ -3,26 +3,32 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { MOTIFS, getMotif } from './content/motifs';
-import { JIANZHI_CHAPTERS, JIANZHI_CULTURE_ENTRIES } from './content/chapters';
+import { JIANZHI_LESSONS, LESSON_COUNT, getLesson } from './content/lessons';
+import { JIANZHI_COMMISSIONS, getCommission } from './content/commissions';
+import { JIANZHI_CULTURE_ENTRIES } from './content/culture';
 import { JIANZHI_COMBOS, getCombo } from './content/combos';
 import { createPaperCanvas } from './runtime/paperCanvas';
 import { createPaperAudio } from './runtime/audio';
-import { evaluateChapter } from './core/evaluate';
+import { evaluateObjective } from './core/evaluate';
 import { detectCombos } from './core/rebus';
 import {
+  PROGRESS_KEY_V2,
+  PROGRESS_KEY_V1,
   addWork,
   collectMotifs,
   createInitialJianzhiProgress,
   createWork,
   discoverCombos,
   parseJianzhiProgress,
-  recordChapterCompletion,
+  recordCommissionCompletion,
+  recordLessonCompletion,
   removeWork,
 } from './core/progress';
 import type {
   EvidenceKind,
   FoldMode,
-  JianzhiChapter,
+  JianzhiCommission,
+  JianzhiLesson,
   JianzhiProgress,
   JianzhiSettings,
   MotifDef,
@@ -30,7 +36,6 @@ import type {
 } from './core/types';
 import styles from './JianzhiGame.module.css';
 
-const PROGRESS_KEY = 'rex-game:jianzhi:progress:v1';
 const WORKS_KEY = 'rex-game:jianzhi:works:v1';
 const SETTINGS_KEY = 'rex-game:jianzhi:settings:v1';
 
@@ -41,26 +46,9 @@ const FOLD_OPTIONS: Array<{ id: FoldMode; label: string; hint: string }> = [
   { id: 'rosette', label: '团花', hint: '旋转放射，丝路团花' },
 ];
 
-const TOTAL_CHAPTERS = JIANZHI_CHAPTERS.length;
-
-type View = 'menu' | 'workshop' | 'story' | 'codex' | 'settings';
+type View = 'enter' | 'map' | 'workshop' | 'codex' | 'settings';
 type ToolMode = 'motif' | 'cut';
 type CodexTab = 'motif' | 'combo' | 'archive' | 'works';
-
-interface PendingCompletion {
-  chapter: JianzhiChapter;
-  newMotifs: string[];
-  comboIds: string[];
-}
-interface QuizState {
-  chapter: JianzhiChapter;
-  selected: number | null;
-}
-interface ResultState {
-  chapter: JianzhiChapter;
-  newMotifs: string[];
-  comboIds: string[];
-}
 
 function evidenceLabel(e: EvidenceKind): string {
   if (e === 'recorded') return '资料记载';
@@ -68,19 +56,25 @@ function evidenceLabel(e: EvidenceKind): string {
   return '游戏化演绎';
 }
 
-const createInitialProgress = createInitialJianzhiProgress;
-
 function loadProgress(): JianzhiProgress {
   try {
-    return parseJianzhiProgress(window.localStorage.getItem(PROGRESS_KEY));
+    const v2 = window.localStorage.getItem(PROGRESS_KEY_V2);
+    if (v2) return parseJianzhiProgress(v2);
+    const v1 = window.localStorage.getItem(PROGRESS_KEY_V1);
+    if (v1) {
+      const migrated = parseJianzhiProgress(v1);
+      window.localStorage.setItem(PROGRESS_KEY_V2, JSON.stringify(migrated));
+      return migrated;
+    }
   } catch {
-    return createInitialProgress();
+    /* ignore */
   }
+  return createInitialJianzhiProgress();
 }
 
 function persistProgress(p: JianzhiProgress) {
   try {
-    window.localStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
+    window.localStorage.setItem(PROGRESS_KEY_V2, JSON.stringify(p));
   } catch {
     /* ignore */
   }
@@ -114,28 +108,6 @@ function loadSettings(): JianzhiSettings {
   return { reducedMotion: false, muted: false };
 }
 
-/** 版画海报里的对称剪影（纯装饰）。 */
-function PaperCut() {
-  return (
-    <svg className={styles.posterCut} viewBox="0 0 200 200" aria-hidden fill="currentColor">
-      <g opacity="0.92">
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <ellipse
-            key={i}
-            cx="100"
-            cy="58"
-            rx="15"
-            ry="40"
-            transform={`rotate(${i * 60} 100 100)`}
-          />
-        ))}
-        <circle cx="100" cy="100" r="18" />
-        <circle cx="100" cy="100" r="9" fill="var(--red)" />
-      </g>
-    </svg>
-  );
-}
-
 /** 把纹样的 draw() 剪影画成一张小剪纸图，用于图鉴 / 吉语图谱 / 纹样面板。 */
 type GlyphTone = 'red' | 'ink' | 'muted';
 function MotifGlyph({ motif, size = 88, tone = 'red' }: { motif: MotifDef; size?: number; tone?: GlyphTone }) {
@@ -150,10 +122,8 @@ function MotifGlyph({ motif, size = 88, tone = 'red' }: { motif: MotifDef; size?
     if (!ctx) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, size, size);
-    // 宣纸底
     ctx.fillStyle = tone === 'muted' ? '#ece3cf' : '#f3e9d2';
     ctx.fillRect(0, 0, size, size);
-    // 剪影
     ctx.fillStyle = tone === 'red' ? '#9f251d' : tone === 'ink' ? '#2a2622' : '#a99c86';
     ctx.save();
     ctx.translate(size / 2, size / 2);
@@ -164,22 +134,47 @@ function MotifGlyph({ motif, size = 88, tone = 'red' }: { motif: MotifDef; size?
   return <canvas ref={ref} width={size} height={size} style={{ width: size, height: size, display: 'block' }} aria-hidden />;
 }
 
+function Subnav({
+  active,
+  onNavigate,
+}: {
+  active: View;
+  onNavigate: (v: View, codexTab?: CodexTab) => void;
+}) {
+  return (
+    <nav className={styles.subnav} aria-label="工坊导航">
+      <button type="button" className={styles.subnavBtn} aria-current={active === 'map' ? 'page' : undefined} onClick={() => onNavigate('map')}>
+        功课地图
+      </button>
+      <button type="button" className={styles.subnavBtn} aria-current={active === 'workshop' ? 'page' : undefined} onClick={() => onNavigate('workshop')}>
+        自习台
+      </button>
+      <button type="button" className={styles.subnavBtn} aria-current={active === 'codex' ? 'page' : undefined} onClick={() => onNavigate('codex', 'motif')}>
+        纹样册
+      </button>
+      <button type="button" className={styles.subnavBtn} onClick={() => onNavigate('codex', 'works')}>
+        作品
+      </button>
+      <button type="button" className={styles.subnavBtn} aria-current={active === 'settings' ? 'page' : undefined} onClick={() => onNavigate('settings')}>
+        设置
+      </button>
+    </nav>
+  );
+}
+
 export function JianzhiGame() {
-  const [view, setView] = useState<View>('menu');
+  const [view, setView] = useState<View>('enter');
   const [fold, setFold] = useState<FoldMode>('book');
   const [tool, setTool] = useState<ToolMode>('motif');
   const [selectedMotif, setSelectedMotif] = useState(MOTIFS[0].id);
-  const [activeChapter, setActiveChapter] = useState<JianzhiChapter | null>(null);
-  const [showIntro, setShowIntro] = useState(false);
+  const [activeLesson, setActiveLesson] = useState<JianzhiLesson | null>(null);
+  const [activeCommission, setActiveCommission] = useState<JianzhiCommission | null>(null);
   const [placedIds, setPlacedIds] = useState<string[]>([]);
-  const [progress, setProgress] = useState<JianzhiProgress>(createInitialProgress);
+  const [progress, setProgress] = useState<JianzhiProgress>(createInitialJianzhiProgress);
   const [works, setWorks] = useState<SavedWork[]>([]);
   const [settings, setSettings] = useState<JianzhiSettings>({ reducedMotion: false, muted: false });
   const [codexTab, setCodexTab] = useState<CodexTab>('motif');
   const [toast, setToast] = useState('');
-  const [pendingCompletion, setPendingCompletion] = useState<PendingCompletion | null>(null);
-  const [quiz, setQuiz] = useState<QuizState | null>(null);
-  const [result, setResult] = useState<ResultState | null>(null);
   const [preview, setPreview] = useState<SavedWork | null>(null);
 
   const canvasHost = useRef<HTMLDivElement>(null);
@@ -189,7 +184,9 @@ export function JianzhiGame() {
   const audioRef = useRef<ReturnType<typeof createPaperAudio> | null>(null);
   if (!audioRef.current) audioRef.current = createPaperAudio();
 
-  // 初始化
+  const activeObjective = activeLesson ?? activeCommission;
+  const isPractice = !activeLesson && !activeCommission;
+
   useEffect(() => {
     setProgress(loadProgress());
     setWorks(loadWorks());
@@ -204,17 +201,33 @@ export function JianzhiGame() {
   const playSnip = useCallback(() => audioRef.current?.playSnip(settings.muted), [settings.muted]);
   const playChime = useCallback(() => audioRef.current?.playChime(settings.muted), [settings.muted]);
 
-  // 引擎生命周期
+  const navigateFromSubnav = useCallback((v: View, tab?: CodexTab) => {
+    if (v === 'workshop') {
+      setActiveLesson(null);
+      setActiveCommission(null);
+      setPlacedIds([]);
+      lastPlacedRef.current = '';
+      setView('workshop');
+      return;
+    }
+    if (v === 'codex' && tab) setCodexTab(tab);
+    setView(v);
+  }, []);
+
+  // 引擎生命周期：仅 workshop 挂载画布
   useEffect(() => {
     if (view !== 'workshop' || !canvasHost.current) return;
     const engine = createPaperCanvas(canvasHost.current, {
       reducedMotion: settings.reducedMotion,
-      onReady: () => engineRef.current?.setTool(tool === 'motif' ? { type: 'motif', motifId: selectedMotif } : { type: 'cut' }),
+      onReady: () =>
+        engineRef.current?.setTool(
+          tool === 'motif' ? { type: 'motif', motifId: selectedMotif } : { type: 'cut' },
+        ),
     });
     engineRef.current = engine;
     engine.setReducedMotion(settings.reducedMotion);
     engine.setTool(tool === 'motif' ? { type: 'motif', motifId: selectedMotif } : { type: 'cut' });
-    engine.setFold(activeChapter ? activeChapter.foldSuggestion : fold);
+    engine.setFold(activeObjective ? activeObjective.foldSuggestion : fold);
     engine.onReject(() => flashToast('这一折只剪外侧，请在亮起的折面里落剪'));
     engine.onChange(() => {
       const ids = engine.placedMotifIds();
@@ -229,10 +242,10 @@ export function JianzhiGame() {
       engineRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view, activeChapter]);
+  }, [view, activeLesson?.id, activeCommission?.id]);
 
   useEffect(() => {
-    engineRef.current?.setFold(activeChapter ? activeChapter.foldSuggestion : fold);
+    engineRef.current?.setFold(activeObjective ? activeObjective.foldSuggestion : fold);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fold]);
 
@@ -240,17 +253,18 @@ export function JianzhiGame() {
     engineRef.current?.setTool(tool === 'motif' ? { type: 'motif', motifId: selectedMotif } : { type: 'cut' });
   }, [tool, selectedMotif]);
 
-  // 已在纸上「成句」的吉语组合（用于追踪、记录与提示）
   const formedCombos = useMemo(() => detectCombos(placedIds, JIANZHI_COMBOS), [placedIds]);
 
-  // 拼读成句：即时提示 + 解锁图谱（不重复播报已知句）
   useEffect(() => {
     if (view !== 'workshop') return;
     const fresh = formedCombos.filter((c) => !announcedRef.current.has(c.id));
     if (!fresh.length) return;
     fresh.forEach((c) => announcedRef.current.add(c.id));
     setProgress((prev) => {
-      const next = discoverCombos(prev, fresh.map((c) => c.id));
+      const next = discoverCombos(
+        prev,
+        fresh.map((c) => c.id),
+      );
       persistProgress(next);
       return next;
     });
@@ -260,25 +274,11 @@ export function JianzhiGame() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formedCombos, view]);
 
-  const finalizeCompletion = useCallback(
-    (chapter: JianzhiChapter, newMotifs: string[], comboIds: string[]) => {
-      setProgress((prev) => {
-        const next = recordChapterCompletion(
-          prev,
-          chapter.id,
-          chapter.order,
-          chapter.cultureEntryIds,
-          newMotifs,
-          TOTAL_CHAPTERS,
-          comboIds,
-        );
-        persistProgress(next);
-        return next;
-      });
-      setResult({ chapter, newMotifs, comboIds });
-    },
-    [],
-  );
+  const leaveWorkshop = useCallback(() => {
+    setActiveLesson(null);
+    setActiveCommission(null);
+    setView('map');
+  }, []);
 
   const handleUnfold = useCallback(async () => {
     const engine = engineRef.current;
@@ -286,49 +286,95 @@ export function JianzhiGame() {
     await engine.unfold();
     playChime();
     const ids = engine.placedMotifIds();
-    if (!activeChapter) return;
-    const evaluation = evaluateChapter(activeChapter, ids);
-    if (evaluation.passed) {
-      const comboIds = detectCombos(ids, JIANZHI_COMBOS).map((c) => c.id);
-      const newMotifs = [...new Set([...activeChapter.objectiveMotifIds, ...ids])];
-      if (activeChapter.quiz) {
-        // 先做章末理解题，再结算
-        setPendingCompletion({ chapter: activeChapter, newMotifs, comboIds });
-        setQuiz({ chapter: activeChapter, selected: null });
-      } else {
-        finalizeCompletion(activeChapter, newMotifs, comboIds);
-      }
-    } else {
-      const missing = evaluation.missing.map((id) => getMotif(id)?.name ?? id);
-      flashToast(`还差这些纹样：${missing.join('、')} —— 点「继续剪」补上`);
+    if (!activeObjective) {
+      flashToast('自习台可自由剪折 · 存作品或拼吉语');
+      return;
     }
-  }, [activeChapter, flashToast, playChime, finalizeCompletion]);
 
-  const finishQuiz = useCallback(() => {
-    if (!pendingCompletion) return;
-    finalizeCompletion(pendingCompletion.chapter, pendingCompletion.newMotifs, pendingCompletion.comboIds);
-    setQuiz(null);
-    setPendingCompletion(null);
-  }, [pendingCompletion, finalizeCompletion]);
+    const evaluation = evaluateObjective(activeObjective, ids, JIANZHI_COMBOS);
+    if (!evaluation.passed) {
+      if (activeObjective.objectiveMode === 'any-combo') {
+        flashToast('请再拼出一句吉语——把纹样凑成一句彩头');
+      } else {
+        const missing = evaluation.missing.map((id) => getMotif(id)?.name ?? id);
+        flashToast(`还差这些纹样：${missing.join('、')} —— 点「继续剪」补上`);
+      }
+      return;
+    }
 
-  const enterChapter = useCallback(
-    (chapter: JianzhiChapter) => {
-      if (chapter.order > progress.unlocked) return;
-      setActiveChapter(chapter);
-      setFold(chapter.foldSuggestion);
+    const comboIds = detectCombos(ids, JIANZHI_COMBOS).map((c) => c.id);
+    const newMotifs = [...new Set([...activeObjective.objectiveMotifIds, ...ids])];
+
+    // Task 6: craft-only stub — complete immediately; Task 7 adds reading/reveal/quiz
+    if (activeLesson) {
+      setProgress((prev) => {
+        const next = recordLessonCompletion(
+          prev,
+          activeLesson.id,
+          activeLesson.order,
+          activeLesson.cultureEntryIds,
+          newMotifs,
+          LESSON_COUNT,
+          comboIds,
+        );
+        persistProgress(next);
+        return next;
+      });
+      flashToast(`功课完成：${activeLesson.title}`);
+    } else if (activeCommission) {
+      setProgress((prev) => {
+        const next = recordCommissionCompletion(
+          prev,
+          activeCommission.id,
+          activeCommission.cultureEntryIds,
+          newMotifs,
+          comboIds,
+        );
+        persistProgress(next);
+        return next;
+      });
+      flashToast(`委托完成：${activeCommission.title}`);
+    }
+    setActiveLesson(null);
+    setActiveCommission(null);
+    setView('map');
+  }, [activeObjective, activeLesson, activeCommission, flashToast, playChime]);
+
+  const enterLesson = useCallback(
+    (lesson: JianzhiLesson) => {
+      if (lesson.order > progress.curriculumUnlocked) return;
+      setActiveLesson(lesson);
+      setActiveCommission(null);
+      setFold(lesson.foldSuggestion);
       setTool('motif');
-      setSelectedMotif(chapter.objectiveMotifIds[0] ?? MOTIFS[0].id);
+      setSelectedMotif(lesson.objectiveMotifIds[0] ?? MOTIFS[0].id);
       setPlacedIds([]);
       lastPlacedRef.current = '';
       announcedRef.current = new Set(progress.discoveredCombos);
       setView('workshop');
-      setShowIntro(true);
     },
-    [progress.unlocked, progress.discoveredCombos],
+    [progress.curriculumUnlocked, progress.discoveredCombos],
   );
 
-  const startFreeWorkshop = useCallback(() => {
-    setActiveChapter(null);
+  const enterCommission = useCallback(
+    (commission: JianzhiCommission) => {
+      if (!progress.graduated) return;
+      setActiveLesson(null);
+      setActiveCommission(commission);
+      setFold(commission.foldSuggestion);
+      setTool('motif');
+      setSelectedMotif(commission.objectiveMotifIds[0] ?? MOTIFS[0].id);
+      setPlacedIds([]);
+      lastPlacedRef.current = '';
+      announcedRef.current = new Set(progress.discoveredCombos);
+      setView('workshop');
+    },
+    [progress.graduated, progress.discoveredCombos],
+  );
+
+  const startPractice = useCallback(() => {
+    setActiveLesson(null);
+    setActiveCommission(null);
     setPlacedIds([]);
     lastPlacedRef.current = '';
     announcedRef.current = new Set(progress.discoveredCombos);
@@ -344,7 +390,7 @@ export function JianzhiGame() {
     const names = ids.map((id) => getMotif(id)?.name).filter(Boolean) as string[];
     const work = createWork({
       dataUrl,
-      fold: activeChapter ? activeChapter.foldSuggestion : fold,
+      fold: activeObjective ? activeObjective.foldSuggestion : fold,
       motifIds: ids,
       name: names.length ? `《${names.join('·')}》` : '我的剪纸',
     });
@@ -353,7 +399,7 @@ export function JianzhiGame() {
       persistWorks(next);
       return next;
     });
-    if (!activeChapter && ids.length) {
+    if (isPractice && ids.length) {
       setProgress((prev) => {
         const nextP = collectMotifs(prev, ids);
         persistProgress(nextP);
@@ -361,7 +407,7 @@ export function JianzhiGame() {
       });
     }
     flashToast('已存入「我的作品」');
-  }, [activeChapter, fold, flashToast]);
+  }, [activeObjective, fold, isPractice, flashToast]);
 
   const downloadCurrent = useCallback(() => {
     const engine = engineRef.current;
@@ -401,12 +447,13 @@ export function JianzhiGame() {
   }, []);
 
   const clearAllProgress = useCallback(() => {
-    setProgress(createInitialProgress());
+    setProgress(createInitialJianzhiProgress());
     setWorks([]);
     lastPlacedRef.current = '';
     announcedRef.current = new Set();
     try {
-      window.localStorage.removeItem(PROGRESS_KEY);
+      window.localStorage.removeItem(PROGRESS_KEY_V2);
+      window.localStorage.removeItem(PROGRESS_KEY_V1);
       window.localStorage.removeItem(WORKS_KEY);
     } catch {
       /* ignore */
@@ -415,99 +462,129 @@ export function JianzhiGame() {
   }, [flashToast]);
 
   const selectedMotifDef = useMemo(() => getMotif(selectedMotif), [selectedMotif]);
-  const targetCombo = activeChapter?.targetComboId ? getCombo(activeChapter.targetComboId) : undefined;
+  const targetComboId = activeObjective?.targetComboId;
+  const targetCombo = targetComboId ? getCombo(targetComboId) : undefined;
+
+  const workshopTitle = activeLesson
+    ? `${activeLesson.title} · ${activeLesson.subtitle}`
+    : activeCommission
+      ? `${activeCommission.title} · ${activeCommission.season}`
+      : '自习台 · 自由创作';
+
+  const objectiveReady =
+    !!activeObjective &&
+    (activeObjective.objectiveMode === 'any-combo'
+      ? formedCombos.length > 0
+      : activeObjective.objectiveMotifIds.length > 0 &&
+        activeObjective.objectiveMotifIds.every((id) => placedIds.includes(id)));
 
   return (
     <section className={styles.root} aria-label="纸上生花：剪纸文化游戏">
-      {toast && <div className={styles.toast} role="status">{toast}</div>}
-
-      {view === 'menu' && (
-        <div className={styles.menu}>
-          <header className={styles.rail}>
-            <p>REX GAME / 非遗互动展品 03</p>
-            <p>CHINESE PAPER-CUTTING</p>
-            <span>已解锁章节 {progress.unlocked} / {TOTAL_CHAPTERS}</span>
-          </header>
-
-          <div className={styles.hero}>
-            <div className={styles.heroCopy}>
-              <p className={styles.eyebrow}>折 · 剪 · 读 · 展</p>
-              <h1>纸上<span>生花</span></h1>
-              <p className={styles.lead}>
-                拿起虚拟的红纸，对折、落剪、展开——再把纹样拼成一句吉话。莲配鱼是「连年有余」，蝠配桃是「福寿双全」，读懂剪纸里藏了千年的谐音与象征。
-              </p>
-              <nav className={styles.menuNav} aria-label="开始菜单">
-                <button type="button" className={styles.menuBtn} onClick={startFreeWorkshop}>
-                  <span>01</span><strong>创作工坊</strong><small>自由拼句，随手成花</small>
-                </button>
-                <button type="button" className={styles.menuBtn} onClick={() => setView('story')}>
-                  <span>02</span><strong>故事关卡</strong><small>读帖 · 拼句 · 答题</small>
-                </button>
-                <button type="button" className={styles.menuBtn} onClick={() => { setCodexTab('combo'); setView('codex'); }}>
-                  <span>03</span><strong>吉语图谱</strong><small>已解读 {progress.discoveredCombos.length} / {JIANZHI_COMBOS.length}</small>
-                </button>
-                <button type="button" className={styles.menuBtn} onClick={() => { setCodexTab('motif'); setView('codex'); }}>
-                  <span>04</span><strong>纹样图鉴</strong><small>已收录 {progress.collectedMotifIds.length} / {MOTIFS.length}</small>
-                </button>
-                <button type="button" className={styles.menuBtn} onClick={() => { setCodexTab('works'); setView('codex'); }}>
-                  <span>05</span><strong>我的作品</strong><small>已存 {works.length} 件</small>
-                </button>
-                <button type="button" className={styles.menuBtn} onClick={() => setView('settings')}>
-                  <span>06</span><strong>游戏设置</strong><small>动效与音效</small>
-                </button>
-              </nav>
-            </div>
-            <div className={styles.poster} aria-hidden>
-              <div className={styles.posterSun} />
-              <PaperCut />
-              <p>一纸千纹 · 看图说吉话</p>
-              <div className={styles.posterSeal}>纸<br />上</div>
-            </div>
-          </div>
-
-          <footer className={styles.menuFooter}>
-            <span>读帖 · 选折法 · 戳纹样 · 拼吉语 · 展开见花</span>
-            <span>进度与作品保存于本地浏览器</span>
-          </footer>
+      {toast && (
+        <div className={styles.toast} role="status">
+          {toast}
         </div>
       )}
 
-      {view === 'story' && (
-        <div className={styles.shell}>
-          <header className={styles.masthead}>
-            <div>
-              <p className={styles.eyebrow}>REX GAME / 非遗互动展品 03</p>
-              <h1>故事关卡</h1>
-              <p className={styles.titleEn}>跟随纸灵，读帖识源流、拼纹成吉语、答题悟其理，修复被「忘却之风」吹散的民间记忆。</p>
-            </div>
-            <div className={styles.seal} aria-hidden>故<br />事</div>
-          </header>
-          <p className={styles.storyIntro}>
-            每一章先「读帖」认识这一路剪纸的源流与技法，再在工坊里把纹样拼成一句吉话，最后用一道理解题巩固其中的谐音或象征。完成当前章，才会解锁下一章。
+      {view === 'enter' && (
+        <div className={styles.enter}>
+          <p className={styles.wordmark}>纸上生花</p>
+          <h1 className={styles.heroTitle}>
+            学徒工坊
+          </h1>
+          <p className={styles.heroLead}>
+            拜帖读源流，折纸练对称，落剪拼吉语。你是工坊里的学徒——完成七课功课出师后，师傅会把时令委托交给你。
           </p>
-          <div className={styles.chapterList}>
-            {JIANZHI_CHAPTERS.map((chapter) => {
-              const locked = chapter.order > progress.unlocked;
-              const done = progress.completedChapters.includes(chapter.id);
-              const combo = chapter.targetComboId ? getCombo(chapter.targetComboId) : undefined;
-              return (
-                <button
-                  key={chapter.id}
-                  type="button"
-                  className={`${styles.chapter} ${locked ? styles.chapterLocked : ''} ${done ? styles.chapterDone : ''}`}
-                  disabled={locked}
-                  onClick={() => enterChapter(chapter)}
-                >
-                  <span className={styles.chapterNo}>{String(chapter.order).padStart(2, '0')}</span>
-                  <strong>{chapter.title}</strong>
-                  <small>{chapter.subtitle}{combo ? ` · 拼「${combo.phrase}」` : ''}</small>
-                  <em>{locked ? '未解锁' : done ? '已完成 ✓' : chapter.region}</em>
-                </button>
-              );
-            })}
-          </div>
-          <div className={styles.backRow}>
-            <button type="button" className={styles.ghostBtn} onClick={() => setView('menu')}>← 返回菜单</button>
+          <button type="button" className={styles.primaryBtn} onClick={() => setView('map')}>
+            进入工坊
+          </button>
+        </div>
+      )}
+
+      {view === 'map' && (
+        <div className={styles.shell}>
+          <div className={styles.map}>
+            <header className={styles.mapHeader}>
+              <div>
+                <p className={styles.wordmark}>纸上生花</p>
+                <h1 className={styles.heroTitle} style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}>
+                  功课地图
+                </h1>
+                <p className={styles.heroLead} style={{ fontSize: '0.95rem' }}>
+                  已解锁 {progress.curriculumUnlocked} / {LESSON_COUNT}
+                  {progress.graduated ? ' · 已出师' : ''}
+                  {' · '}已收录纹样 {progress.collectedMotifIds.length}/{MOTIFS.length}
+                </p>
+              </div>
+              <div className={styles.seal} aria-hidden>
+                纸<br />上
+              </div>
+            </header>
+
+            <Subnav active="map" onNavigate={navigateFromSubnav} />
+
+            <div className={styles.lessonTrack}>
+              {JIANZHI_LESSONS.map((lesson) => {
+                const locked = lesson.order > progress.curriculumUnlocked;
+                const done = progress.completedLessons.includes(lesson.id);
+                const current = !locked && !done && lesson.order === progress.curriculumUnlocked;
+                const cls = [
+                  styles.lessonCard,
+                  locked ? styles.lessonLocked : '',
+                  done ? styles.lessonDone : '',
+                  current ? styles.lessonCurrent : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ');
+                return (
+                  <button
+                    key={lesson.id}
+                    type="button"
+                    className={cls}
+                    disabled={locked}
+                    onClick={() => enterLesson(lesson)}
+                  >
+                    <span className={styles.sideLabel}>
+                      {String(lesson.order).padStart(2, '0')} · {lesson.region}
+                    </span>
+                    <strong>{lesson.title}</strong>
+                    <small>{lesson.subtitle}</small>
+                    <em>
+                      {locked ? '未解锁' : done ? '已完成' : current ? '当前功课' : '可重温'}
+                    </em>
+                  </button>
+                );
+              })}
+            </div>
+
+            {progress.graduated && (
+              <section className={styles.commissionSection} aria-label="时令委托">
+                <header className={styles.mapHeader}>
+                  <div>
+                    <p className={styles.wordmark}>时令委托</p>
+                    <p className={styles.heroLead} style={{ fontSize: '0.95rem', margin: 0 }}>
+                      出师后，村里把年节与喜事的剪纸托付给你。
+                    </p>
+                  </div>
+                </header>
+                {JIANZHI_COMMISSIONS.map((c) => {
+                  const done = progress.completedCommissions.includes(c.id);
+                  return (
+                    <button
+                      key={c.id}
+                      type="button"
+                      className={`${styles.commissionCard} ${done ? styles.commissionDone : ''}`}
+                      onClick={() => enterCommission(c)}
+                    >
+                      <span className={styles.sideLabel}>{c.season}</span>
+                      <strong>{c.title}</strong>
+                      <small>{c.brief}</small>
+                      <em>{done ? '已交付 ✓' : '待接单'}</em>
+                    </button>
+                  );
+                })}
+              </section>
+            )}
           </div>
         </div>
       )}
@@ -515,12 +592,10 @@ export function JianzhiGame() {
       {view === 'workshop' && (
         <div className={styles.workshop}>
           <div className={styles.workshopBar}>
-            <button type="button" className={styles.barBack} onClick={() => setView(activeChapter ? 'story' : 'menu')}>
-              ← {activeChapter ? '故事关卡' : '菜单'}
+            <button type="button" className={styles.barBack} onClick={leaveWorkshop}>
+              ← 功课地图
             </button>
-            <p className={styles.barTitle}>
-              {activeChapter ? `${activeChapter.title} · ${activeChapter.subtitle}` : '创作工坊 · 自由创作'}
-            </p>
+            <p className={styles.barTitle}>{workshopTitle}</p>
             <span className={styles.barFold}>{FOLD_OPTIONS.find((f) => f.id === fold)?.label}折</span>
           </div>
 
@@ -564,20 +639,30 @@ export function JianzhiGame() {
                   </span>
                 </div>
                 <div className={styles.actionRow}>
-                  <button type="button" className={styles.actionBtn} onClick={() => engineRef.current?.undo()}>撤销</button>
-                  <button type="button" className={styles.actionBtn} onClick={() => engineRef.current?.clear()}>清空</button>
-                  <button type="button" className={styles.actionBtn} onClick={() => engineRef.current?.fold()}>继续剪</button>
+                  <button type="button" className={styles.actionBtn} onClick={() => engineRef.current?.undo()}>
+                    撤销
+                  </button>
+                  <button type="button" className={styles.actionBtn} onClick={() => engineRef.current?.clear()}>
+                    清空
+                  </button>
+                  <button type="button" className={styles.actionBtn} onClick={() => engineRef.current?.fold()}>
+                    继续剪
+                  </button>
                   <button
                     type="button"
-                    className={`${styles.actionBtn} ${styles.unfoldBtn} ${activeChapter && activeChapter.objectiveMotifIds.every((id) => placedIds.includes(id)) && activeChapter.objectiveMotifIds.length > 0 ? styles.unfoldReady : ''}`}
+                    className={`${styles.actionBtn} ${styles.unfoldBtn} ${objectiveReady ? styles.unfoldReady : ''}`}
                     onClick={handleUnfold}
                   >
                     展开 ✦
                   </button>
                 </div>
                 <div className={styles.saveRow}>
-                  <button type="button" className={styles.ghostBtn} onClick={saveWork}>存入作品</button>
-                  <button type="button" className={styles.ghostBtn} onClick={downloadCurrent}>下载图片</button>
+                  <button type="button" className={styles.ghostBtn} onClick={saveWork}>
+                    存入作品
+                  </button>
+                  <button type="button" className={styles.ghostBtn} onClick={downloadCurrent}>
+                    下载图片
+                  </button>
                 </div>
               </div>
             </div>
@@ -585,15 +670,16 @@ export function JianzhiGame() {
             <aside className={styles.side}>
               {targetCombo && (
                 <div className={styles.comboTarget}>
-                  <p className={styles.comboTargetLabel}>本章要拼的吉语</p>
+                  <p className={styles.comboTargetLabel}>本课要拼的吉语</p>
                   <p className={styles.comboTargetPhrase}>{targetCombo.phrase}</p>
-                  <div className={styles.comboTargetPieces}>
+                  <div>
                     {targetCombo.motifIds.map((id) => {
                       const m = getMotif(id);
                       const ok = placedIds.includes(id);
                       return (
                         <span key={id} className={`${styles.comboPiece} ${ok ? styles.comboPieceOk : ''}`}>
-                          {ok ? '✓ ' : ''}{m?.name}
+                          {ok ? '✓ ' : ''}
+                          {m?.name}
                         </span>
                       );
                     })}
@@ -601,34 +687,54 @@ export function JianzhiGame() {
                 </div>
               )}
 
-              {activeChapter && (
+              {activeObjective && (
                 <div className={styles.card}>
-                  <p className={styles.sideLabel}>本章任务</p>
+                  <p className={styles.sideLabel}>{activeLesson ? '本课任务' : '委托任务'}</p>
                   <ul className={styles.objectiveList}>
-                    {activeChapter.objectiveMotifIds.length === 0 ? (
-                      <li className={styles.objectiveItem}>自由拼句：任选纹样凑出一句吉话，图谱会为你记下。</li>
+                    {activeObjective.objectiveMode === 'any-combo' ? (
+                      <li className={styles.objectiveItem}>
+                        自由拼句：任选纹样凑出一句吉话，图谱会为你记下。
+                      </li>
+                    ) : activeObjective.objectiveMotifIds.length === 0 ? (
+                      <li className={styles.objectiveItem}>自由拼句：任选纹样凑出一句吉话。</li>
                     ) : (
-                      activeChapter.objectiveMotifIds.map((id) => {
+                      activeObjective.objectiveMotifIds.map((id) => {
                         const m = getMotif(id);
                         const done = placedIds.includes(id);
                         return (
                           <li key={id} className={`${styles.objectiveItem} ${done ? styles.objectiveOk : ''}`}>
-                            <span>{done ? '✓' : '○'}</span>剪出「{m?.name}」—— {m?.meaning}
+                            <span>{done ? '✓' : '○'}</span> 剪出「{m?.name}」—— {m?.meaning}
                           </li>
                         );
                       })
                     )}
                   </ul>
-                  <p className={styles.focusNote}>文化聚焦：{activeChapter.culturalFocus}</p>
+                  {activeLesson && (
+                    <p className={styles.focusNote}>文化聚焦：{activeLesson.culturalFocus}</p>
+                  )}
+                  {activeCommission && (
+                    <p className={styles.focusNote}>{activeCommission.brief}</p>
+                  )}
+                </div>
+              )}
+
+              {isPractice && (
+                <div className={styles.card}>
+                  <p className={styles.sideLabel}>自习台</p>
+                  <p className={styles.focusNote} style={{ border: 0, margin: 0, padding: 0 }}>
+                    自由折剪、拼吉语、存作品。自习不推进功课进度；拼成的吉语会记入图谱。
+                  </p>
                 </div>
               )}
 
               {formedCombos.length > 0 && (
                 <div className={styles.comboLog}>
                   <p className={styles.sideLabel}>已拼成 · 本次</p>
-                  <div className={styles.comboLogList}>
+                  <div>
                     {formedCombos.map((c) => (
-                      <span key={c.id} className={styles.comboLogItem}>{c.phrase}</span>
+                      <span key={c.id} className={styles.comboLogItem}>
+                        {c.phrase}
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -643,12 +749,14 @@ export function JianzhiGame() {
                         key={m.id}
                         type="button"
                         className={`${styles.chip} ${selectedMotif === m.id ? styles.chipActive : ''} ${progress.collectedMotifIds.includes(m.id) ? styles.chipKnown : ''}`}
-                        onClick={() => { setSelectedMotif(m.id); playSnip(); }}
+                        onClick={() => {
+                          setSelectedMotif(m.id);
+                          playSnip();
+                        }}
                         title={`${m.name} · ${m.meaning}`}
                       >
                         <MotifGlyph motif={m} size={40} tone="red" />
-                        <span className={styles.chipName}>{m.name}</span>
-                        <span className={styles.chipMeaning}>{m.meaning}</span>
+                        <span>{m.name}</span>
                       </button>
                     ))}
                   </div>
@@ -656,320 +764,281 @@ export function JianzhiGame() {
               )}
 
               {tool === 'motif' && selectedMotifDef && (
-                <div className={styles.meanCard}>
+                <div className={styles.card}>
                   <p className={styles.sideLabel}>
-                    当前纹样 · <span className={styles.evidence}>{evidenceLabel(selectedMotifDef.evidence)}</span>
+                    当前纹样 · {evidenceLabel(selectedMotifDef.evidence)}
                   </p>
-                  <h3>{selectedMotifDef.name} <small>{selectedMotifDef.pinyin}</small></h3>
-                  <p className={styles.meanMain}>{selectedMotifDef.meaning}</p>
-                  <p className={styles.meanLesson}>{selectedMotifDef.lesson}</p>
-                  <p className={styles.meanRegion}>{selectedMotifDef.region}</p>
+                  <strong>
+                    {selectedMotifDef.name}{' '}
+                    <small>{selectedMotifDef.pinyin}</small>
+                  </strong>
+                  <p className={styles.focusNote}>{selectedMotifDef.meaning}</p>
+                  <p className={styles.focusNote}>{selectedMotifDef.lesson}</p>
                 </div>
               )}
 
               {tool === 'cut' && (
-                <div className={styles.meanCard}>
+                <div className={styles.card}>
                   <p className={styles.sideLabel}>自由剪</p>
-                  <p className={styles.meanLesson}>
+                  <p className={styles.focusNote}>
                     在亮起的折面里拖动手指或鼠标，划出的线条会从红纸中镂空。配合不同折法，一条线会变成对称的满纸花纹。
                   </p>
                 </div>
               )}
             </aside>
           </div>
-
-          {showIntro && activeChapter && (
-            <div className={styles.overlay}>
-              <div className={styles.introCard}>
-                <p className={styles.eyebrow}>{activeChapter.region} · 读帖</p>
-                <h2>{activeChapter.title}</h2>
-                <p className={styles.introSub}>{activeChapter.subtitle}</p>
-                {activeChapter.narrative.map((line, i) => (
-                  <p key={i} className={styles.introLine}>{line}</p>
-                ))}
-                <dl className={styles.introReading}>
-                  <div className={styles.introReadingRow}>
-                    <dt className={styles.introReadingTerm}>源流</dt>
-                    <dd className={styles.introReadingDef}>{activeChapter.reading.origin}</dd>
-                  </div>
-                  <div className={styles.introReadingRow}>
-                    <dt className={styles.introReadingTerm}>技法</dt>
-                    <dd className={styles.introReadingDef}>{activeChapter.reading.technique}</dd>
-                  </div>
-                  <div className={styles.introReadingRow}>
-                    <dt className={styles.introReadingTerm}>看点</dt>
-                    <dd className={styles.introReadingDef}>{activeChapter.reading.focus}</dd>
-                  </div>
-                </dl>
-                <div className={styles.introActions}>
-                  <button type="button" className={styles.ghostBtn} onClick={() => { setView('story'); setShowIntro(false); }}>稍后再说</button>
-                  <button type="button" className={styles.primaryBtn} onClick={() => setShowIntro(false)}>开始创作</button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       )}
 
       {view === 'codex' && (
         <div className={styles.shell}>
-          <header className={styles.masthead}>
-            <div>
-              <p className={styles.eyebrow}>FIELD NOTES / 图鉴</p>
-              <h1>纹样图鉴</h1>
-              <p className={styles.titleEn}>每一道镂空都是一个心愿，每一句吉话都由纹样拼成。</p>
+          <div className={styles.codex}>
+            <header className={styles.mapHeader}>
+              <div>
+                <p className={styles.wordmark}>师傅纹样册</p>
+                <h1 className={styles.heroTitle} style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}>
+                  纹样册
+                </h1>
+                <p className={styles.heroLead} style={{ fontSize: '0.95rem' }}>
+                  每一道镂空都是一个心愿，每一句吉话都由纹样拼成。
+                </p>
+              </div>
+              <div className={styles.seal} aria-hidden>
+                图<br />鉴
+              </div>
+            </header>
+
+            <Subnav active="codex" onNavigate={navigateFromSubnav} />
+
+            <div className={styles.tabs} role="tablist">
+              <button
+                type="button"
+                className={`${styles.tab} ${codexTab === 'motif' ? styles.tabActive : ''}`}
+                onClick={() => setCodexTab('motif')}
+              >
+                纹样 {progress.collectedMotifIds.length}/{MOTIFS.length}
+              </button>
+              <button
+                type="button"
+                className={`${styles.tab} ${codexTab === 'combo' ? styles.tabActive : ''}`}
+                onClick={() => setCodexTab('combo')}
+              >
+                吉语 {progress.discoveredCombos.length}/{JIANZHI_COMBOS.length}
+              </button>
+              <button
+                type="button"
+                className={`${styles.tab} ${codexTab === 'archive' ? styles.tabActive : ''}`}
+                onClick={() => setCodexTab('archive')}
+              >
+                档案 {progress.cultureEntryIds.length}/{JIANZHI_CULTURE_ENTRIES.length}
+              </button>
+              <button
+                type="button"
+                className={`${styles.tab} ${codexTab === 'works' ? styles.tabActive : ''}`}
+                onClick={() => setCodexTab('works')}
+              >
+                作品 {works.length}
+              </button>
             </div>
-            <div className={styles.seal} aria-hidden>图<br />鉴</div>
-          </header>
 
-          <div className={styles.tabs} role="tablist">
-            <button type="button" className={`${styles.tab} ${codexTab === 'motif' ? styles.tabActive : ''}`} onClick={() => setCodexTab('motif')}>纹样 {progress.collectedMotifIds.length}/{MOTIFS.length}</button>
-            <button type="button" className={`${styles.tab} ${codexTab === 'combo' ? styles.tabActive : ''}`} onClick={() => setCodexTab('combo')}>吉语图谱 {progress.discoveredCombos.length}/{JIANZHI_COMBOS.length}</button>
-            <button type="button" className={`${styles.tab} ${codexTab === 'archive' ? styles.tabActive : ''}`} onClick={() => setCodexTab('archive')}>文化档案 {progress.cultureEntryIds.length}/{JIANZHI_CULTURE_ENTRIES.length}</button>
-            <button type="button" className={`${styles.tab} ${codexTab === 'works' ? styles.tabActive : ''}`} onClick={() => setCodexTab('works')}>我的作品 {works.length}</button>
-          </div>
-
-          {codexTab === 'motif' && (
-            <div className={styles.codexGrid}>
-              {MOTIFS.map((m) => {
-                const known = progress.collectedMotifIds.includes(m.id);
-                return (
-                  <article key={m.id} className={`${styles.codexCard} ${known ? '' : styles.codexLocked}`}>
-                    <div className={styles.codexGlyphWrap}>
+            {codexTab === 'motif' && (
+              <div className={styles.motifGrid}>
+                {MOTIFS.map((m) => {
+                  const known = progress.collectedMotifIds.includes(m.id);
+                  return (
+                    <article key={m.id} className={styles.archiveCard} style={known ? undefined : { opacity: 0.55 }}>
                       <MotifGlyph motif={m} size={92} tone={known ? 'red' : 'muted'} />
-                    </div>
-                    <div className={styles.codexNum}>{known ? '✓' : '锁'}</div>
-                    <h3>{m.name} <small>{m.pinyin}</small></h3>
-                    <p className={styles.codexMeaning}>{m.meaning}</p>
-                    {known ? (
-                      <>
-                        <p className={styles.codexLesson}>{m.lesson}</p>
-                        <p className={styles.codexMeta}>{m.region} · <span className={styles.evidence}>{evidenceLabel(m.evidence)}</span></p>
-                        <a className={styles.codexSrc} href={m.sourceUrl} target="_blank" rel="noreferrer">资料入口：{m.sourceLabel} ↗</a>
-                      </>
-                    ) : (
-                      <p className={styles.codexLesson}>在工坊里剪出这个纹样，即可解锁它的寓意与故事。</p>
-                    )}
-                  </article>
-                );
-              })}
-            </div>
-          )}
-
-          {codexTab === 'combo' && (
-            <div className={styles.comboGrid}>
-              {JIANZHI_COMBOS.map((c) => {
-                const known = progress.discoveredCombos.includes(c.id);
-                return (
-                  <article key={c.id} className={`${styles.comboCard} ${known ? '' : styles.comboCardLocked}`}>
-                    <div className={styles.comboCardHead}>
-                      <h3 className={styles.comboCardPhrase}>{known ? c.phrase : '＿＿＿＿'}</h3>
-                    </div>
-                    <div className={styles.comboCardMotifs}>
-                      {c.motifIds.map((id, i) => {
-                        const m = getMotif(id);
-                        return (
-                          <span key={id} style={{ display: 'contents' }}>
-                            {i > 0 && <span className={styles.comboCardPlus}>＋</span>}
-                            <span className={styles.comboCardMotif}>
-                              {m && <MotifGlyph motif={m} size={46} tone={known ? 'red' : 'muted'} />}
-                              <span className={styles.comboCardName}>{m?.name}</span>
-                            </span>
-                          </span>
-                        );
-                      })}
-                    </div>
-                    {known ? (
-                      <>
-                        <p className={styles.comboCardPrinciple}>{c.principle}</p>
-                        <a className={styles.comboCardSrc} href={c.sourceUrl} target="_blank" rel="noreferrer">{c.sourceLabel} ↗</a>
-                      </>
-                    ) : (
-                      <p className={styles.comboCardPrinciple}>把上面这些纹样剪到同一张纸上，就能读出这句吉话，并解锁它的成句原理。</p>
-                    )}
-                  </article>
-                );
-              })}
-            </div>
-          )}
-
-          {codexTab === 'archive' && (
-            <div className={styles.codexGrid}>
-              {JIANZHI_CULTURE_ENTRIES.map((entry) => {
-                const known = progress.cultureEntryIds.includes(entry.id);
-                return (
-                  <article key={entry.id} className={`${styles.codexCard} ${known ? '' : styles.codexLocked}`}>
-                    <div className={styles.codexNum}>{known ? '✓' : '锁'}</div>
-                    <h3>{entry.title}</h3>
-                    <p className={styles.codexMeaning}>{entry.summary}</p>
-                    {known ? (
-                      <>
-                        <p className={styles.codexLesson}>{entry.detail}</p>
-                        <p className={styles.codexMeta}>{entry.region} · <span className={styles.evidence}>{evidenceLabel(entry.evidence)}</span></p>
-                        <a className={styles.codexSrc} href={entry.sourceUrl} target="_blank" rel="noreferrer">资料入口：{entry.sourceLabel} ↗</a>
-                      </>
-                    ) : (
-                      <p className={styles.codexLesson}>完成对应故事章节即可解锁这条文化笔记。</p>
-                    )}
-                  </article>
-                );
-              })}
-            </div>
-          )}
-
-          {codexTab === 'works' && (
-            <>
-              {works.length === 0 ? (
-                <p className={styles.emptyNote}>还没有作品。去「创作工坊」剪一张，再点「存入作品」吧。</p>
-              ) : (
-                <div className={styles.worksGrid}>
-                  {works.map((w) => (
-                    <button key={w.id} type="button" className={styles.workCard} onClick={() => setPreview(w)}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={w.dataUrl} alt={w.name} />
-                      <span>{w.name}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-
-          <div className={styles.backRow}>
-            <button type="button" className={styles.ghostBtn} onClick={() => setView('menu')}>← 返回菜单</button>
-          </div>
-        </div>
-      )}
-
-      {view === 'settings' && (
-        <div className={styles.shell}>
-          <header className={styles.masthead}>
-            <div>
-              <p className={styles.eyebrow}>SETTINGS / 设置</p>
-              <h1>游戏设置</h1>
-              <p className={styles.titleEn}>动效与音效，随你习惯。</p>
-            </div>
-            <div className={styles.seal} aria-hidden>设<br />置</div>
-          </header>
-          <section className={styles.settingsBox}>
-            <label className={styles.toggle}>
-              <input type="checkbox" checked={settings.reducedMotion} onChange={(e) => updateSettings({ reducedMotion: e.target.checked })} />
-              减少动态效果（展开动画更轻）
-            </label>
-            <label className={styles.toggle}>
-              <input type="checkbox" checked={settings.muted} onChange={(e) => updateSettings({ muted: e.target.checked })} />
-              静音（剪与展开的音效）
-            </label>
-            <button type="button" className={styles.dangerBtn} onClick={clearAllProgress}>清空进度与作品</button>
-          </section>
-          <div className={styles.backRow}>
-            <button type="button" className={styles.ghostBtn} onClick={() => setView('menu')}>← 返回菜单</button>
-          </div>
-        </div>
-      )}
-
-      {quiz && (
-        <div className={styles.overlay}>
-          <div className={styles.quizCard}>
-            <p className={styles.eyebrow}>章末理解题</p>
-            <h2>{quiz.chapter.title}</h2>
-            <p className={styles.quizQuestion}>{quiz.chapter.quiz!.question}</p>
-            <div className={styles.quizOptions}>
-              {quiz.chapter.quiz!.options.map((opt, i) => {
-                const answered = quiz.selected !== null;
-                const isAnswer = i === quiz.chapter.quiz!.answer;
-                const isPicked = i === quiz.selected;
-                const cls = answered
-                  ? isAnswer
-                    ? styles.quizOptionRight
-                    : isPicked
-                      ? styles.quizOptionWrong
-                      : ''
-                  : '';
-                return (
-                  <button
-                    key={i}
-                    type="button"
-                    className={`${styles.quizOption} ${cls}`}
-                    disabled={answered}
-                    onClick={() => setQuiz((s) => (s ? { ...s, selected: i } : s))}
-                  >
-                    <b>{String.fromCharCode(65 + i)}</b>{opt}
-                  </button>
-                );
-              })}
-            </div>
-            {quiz.selected !== null && (
-              <>
-                <p className={styles.quizExplain}>{quiz.chapter.quiz!.explain}</p>
-                <div className={styles.introActions}>
-                  <button type="button" className={styles.primaryBtn} onClick={finishQuiz}>领取奖励 →</button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
-
-      {result && (
-        <div className={styles.overlay}>
-          <div className={styles.resultCard}>
-            <p className={styles.eyebrow}>本章完成</p>
-            <h2>{result.chapter.title}</h2>
-            {(() => {
-              const combo = result.chapter.targetComboId && result.comboIds.includes(result.chapter.targetComboId)
-                ? getCombo(result.chapter.targetComboId)
-                : undefined;
-              return combo ? (
-                <div className={styles.resultComboBanner}>
-                  <strong>拼成「{combo.phrase}」</strong>
-                  <span>{combo.principle}</span>
-                </div>
-              ) : null;
-            })()}
-            <p className={styles.resultReward}>{result.chapter.reward}</p>
-            {result.newMotifs.length > 0 && (
-              <div className={styles.resultMotifs}>
-                {result.newMotifs.map((id) => {
-                  const m = getMotif(id);
-                  return m ? (
-                    <span key={id} className={styles.resultMotif}>{m.name} · {m.meaning}</span>
-                  ) : null;
+                      <h3>
+                        {m.name} <small>{m.pinyin}</small>
+                      </h3>
+                      <p className={styles.focusNote}>{m.meaning}</p>
+                      {known ? (
+                        <>
+                          <p className={styles.focusNote}>{m.lesson}</p>
+                          <p className={styles.focusNote}>
+                            {m.region} · {evidenceLabel(m.evidence)}
+                          </p>
+                          <a href={m.sourceUrl} target="_blank" rel="noreferrer">
+                            资料入口：{m.sourceLabel} ↗
+                          </a>
+                        </>
+                      ) : (
+                        <p className={styles.focusNote}>在工坊里剪出这个纹样，即可解锁它的寓意与故事。</p>
+                      )}
+                    </article>
+                  );
                 })}
               </div>
             )}
-            <div className={styles.introActions}>
-              <button type="button" className={styles.ghostBtn} onClick={() => { setResult(null); setCodexTab('combo'); setView('codex'); }}>看吉语图谱</button>
-              <button
-                type="button"
-                className={styles.primaryBtn}
-                onClick={() => {
-                  setResult(null);
-                  const next = JIANZHI_CHAPTERS[result.chapter.order];
-                  if (next && next.order <= progress.unlocked) enterChapter(next);
-                  else setView('story');
-                }}
-              >
-                {JIANZHI_CHAPTERS[result.chapter.order] && JIANZHI_CHAPTERS[result.chapter.order].order <= progress.unlocked ? '下一章 →' : '返回故事'}
+
+            {codexTab === 'combo' && (
+              <div className={styles.motifGrid}>
+                {JIANZHI_COMBOS.map((c) => {
+                  const known = progress.discoveredCombos.includes(c.id);
+                  return (
+                    <article key={c.id} className={styles.archiveCard} style={known ? undefined : { opacity: 0.55 }}>
+                      <h3>{known ? c.phrase : '＿＿＿＿'}</h3>
+                      <div>
+                        {c.motifIds.map((id, i) => {
+                          const m = getMotif(id);
+                          return (
+                            <span key={id} style={{ display: 'inline-flex', alignItems: 'center', gap: 4, marginRight: 8 }}>
+                              {i > 0 && <span>＋</span>}
+                              {m && <MotifGlyph motif={m} size={46} tone={known ? 'red' : 'muted'} />}
+                              <span>{m?.name}</span>
+                            </span>
+                          );
+                        })}
+                      </div>
+                      {known ? (
+                        <>
+                          <p className={styles.focusNote}>{c.principle}</p>
+                          <a href={c.sourceUrl} target="_blank" rel="noreferrer">
+                            {c.sourceLabel} ↗
+                          </a>
+                        </>
+                      ) : (
+                        <p className={styles.focusNote}>
+                          把上面这些纹样剪到同一张纸上，就能读出这句吉话，并解锁它的成句原理。
+                        </p>
+                      )}
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+
+            {codexTab === 'archive' && (
+              <div className={styles.motifGrid}>
+                {JIANZHI_CULTURE_ENTRIES.map((entry) => {
+                  const known = progress.cultureEntryIds.includes(entry.id);
+                  return (
+                    <article key={entry.id} className={styles.archiveCard} style={known ? undefined : { opacity: 0.55 }}>
+                      <h3>{entry.title}</h3>
+                      <p className={styles.focusNote}>{entry.summary}</p>
+                      {known ? (
+                        <>
+                          <p className={styles.focusNote}>{entry.detail}</p>
+                          <p className={styles.focusNote}>
+                            {entry.region} · {evidenceLabel(entry.evidence)}
+                          </p>
+                          <a href={entry.sourceUrl} target="_blank" rel="noreferrer">
+                            资料入口：{entry.sourceLabel} ↗
+                          </a>
+                        </>
+                      ) : (
+                        <p className={styles.focusNote}>完成对应功课或委托即可解锁这条文化笔记。</p>
+                      )}
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+
+            {codexTab === 'works' && (
+              <>
+                {works.length === 0 ? (
+                  <p className={styles.focusNote}>还没有作品。去「自习台」剪一张，再点「存入作品」吧。</p>
+                ) : (
+                  <div className={styles.worksGrid}>
+                    {works.map((w) => (
+                      <button key={w.id} type="button" className={styles.workCard} onClick={() => setPreview(w)}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={w.dataUrl} alt={w.name} />
+                        <span>{w.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+
+            <div className={styles.backRow}>
+              <button type="button" className={styles.ghostBtn} onClick={() => setView('map')}>
+                ← 返回功课地图
               </button>
             </div>
           </div>
         </div>
       )}
 
+      {view === 'settings' && (
+        <div className={styles.shell}>
+          <header className={styles.mapHeader}>
+            <div>
+              <p className={styles.wordmark}>设置</p>
+              <h1 className={styles.heroTitle} style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}>
+                游戏设置
+              </h1>
+              <p className={styles.heroLead} style={{ fontSize: '0.95rem' }}>
+                动效与音效，随你习惯。
+              </p>
+            </div>
+            <div className={styles.seal} aria-hidden>
+              设<br />置
+            </div>
+          </header>
+
+          <Subnav active="settings" onNavigate={navigateFromSubnav} />
+
+          <section className={styles.settings}>
+            <label className={styles.settingsRow}>
+              减少动态效果（展开动画更轻）
+              <input
+                type="checkbox"
+                checked={settings.reducedMotion}
+                onChange={(e) => updateSettings({ reducedMotion: e.target.checked })}
+              />
+            </label>
+            <label className={styles.settingsRow}>
+              静音（剪与展开的音效）
+              <input
+                type="checkbox"
+                checked={settings.muted}
+                onChange={(e) => updateSettings({ muted: e.target.checked })}
+              />
+            </label>
+            <button type="button" className={styles.ghostBtn} onClick={clearAllProgress}>
+              清空进度与作品
+            </button>
+          </section>
+
+          <div className={styles.backRow}>
+            <button type="button" className={styles.ghostBtn} onClick={() => setView('map')}>
+              ← 返回功课地图
+            </button>
+          </div>
+        </div>
+      )}
+
       {preview && (
-        <div className={styles.overlay} onClick={() => setPreview(null)}>
-          <div className={styles.previewCard} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.reveal} onClick={() => setPreview(null)} role="presentation">
+          <div className={styles.revealInner} onClick={(e) => e.stopPropagation()} role="dialog" aria-label={preview.name}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={preview.dataUrl} alt={preview.name} />
-            <h3>{preview.name}</h3>
-            <p className={styles.meanRegion}>
+            <img src={preview.dataUrl} alt={preview.name} style={{ width: '100%', borderRadius: 8 }} />
+            <p className={styles.revealPhrase}>{preview.name}</p>
+            <p className={styles.revealPrinciple}>
               {FOLD_OPTIONS.find((f) => f.id === preview.fold)?.label}折
-              {preview.motifIds.length ? ` · ${preview.motifIds.map((id) => getMotif(id)?.name).filter(Boolean).join('、')}` : ''}
+              {preview.motifIds.length
+                ? ` · ${preview.motifIds.map((id) => getMotif(id)?.name).filter(Boolean).join('、')}`
+                : ''}
             </p>
-            <div className={styles.introActions}>
-              <button type="button" className={styles.ghostBtn} onClick={() => deleteWork(preview.id)}>删除</button>
-              <button type="button" className={styles.primaryBtn} onClick={() => { const a = document.createElement('a'); a.href = preview.dataUrl; a.download = `${preview.name}.png`; a.click(); }}>下载</button>
+            <div className={styles.revealActions}>
+              <button type="button" className={styles.ghostBtn} onClick={() => deleteWork(preview.id)}>
+                删除
+              </button>
+              <button
+                type="button"
+                className={styles.primaryBtn}
+                onClick={() => {
+                  const a = document.createElement('a');
+                  a.href = preview.dataUrl;
+                  a.download = `${preview.name}.png`;
+                  a.click();
+                }}
+              >
+                下载
+              </button>
             </div>
           </div>
         </div>
