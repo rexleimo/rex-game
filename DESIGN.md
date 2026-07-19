@@ -1,497 +1,408 @@
 ---
 version: alpha
-name: Wired-design-analysis
-description: An inspired interpretation of Wired's design language — a flagship technology-magazine brand whose surface is a strict editorial duet of stark black wordmark on white canvas, anchored by a tall narrow custom display serif for hero headlines, a humanist serif body face for long-form reading, and a clean sans face for metadata; layout reads like a printed magazine ported to the web with very little marketing chrome.
+name: rex-game-chinese-museum
+description: >
+  Playable folk-culture museum. Notion-like quiet product narrative meets
+  Chinese scholar-object aesthetics — xuan-paper canvas, cinnabar single CTA,
+  Song display + Hei body, restrained seal marks and hairline gold. Dual
+  surfaces: Museum Light (marketing/culture) and Altar Dark (game immersion).
+---
 
-colors:
-  primary: "#000000"
-  on-primary: "#ffffff"
-  ink: "#000000"
-  ink-soft: "#1a1a1a"
-  body: "#757575"
-  hairline: "#e0e0e0"
-  canvas: "#ffffff"
-  canvas-soft: "#f5f5f5"
-  link: "#057dbc"
+# rex-game DESIGN.md
 
-typography:
-  display-hero:
-    fontFamily: WiredDisplay, "Times New Roman", Georgia, serif
-    fontSize: 64px
-    fontWeight: 400
-    lineHeight: 59.52px
-    letterSpacing: -0.5px
-  display-lg:
-    fontFamily: WiredDisplay, "Times New Roman", Georgia, serif
-    fontSize: 48px
-    fontWeight: 400
-    lineHeight: 50.4px
-    letterSpacing: -0.4px
-  display-md:
-    fontFamily: WiredDisplay, "Times New Roman", Georgia, serif
-    fontSize: 32px
-    fontWeight: 400
-    lineHeight: 35.2px
-    letterSpacing: -0.3px
-  display-sm:
-    fontFamily: WiredDisplay, "Times New Roman", Georgia, serif
-    fontSize: 26px
-    fontWeight: 400
-    lineHeight: 28.08px
-  display-xs:
-    fontFamily: Apercu, "Helvetica Neue", Helvetica, Arial, sans-serif
-    fontSize: 20px
-    fontWeight: 700
-    lineHeight: 24px
-    letterSpacing: -0.28px
-  body-serif-lg:
-    fontFamily: BreveText, Georgia, "Times New Roman", serif
-    fontSize: 19px
-    fontWeight: 400
-    lineHeight: 27.93px
-    letterSpacing: 0.108px
-  body-serif-md:
-    fontFamily: BreveText, Georgia, "Times New Roman", serif
-    fontSize: 16px
-    fontWeight: 400
-    lineHeight: 24px
-    letterSpacing: 0.09px
-  body-md:
-    fontFamily: Apercu, "Helvetica Neue", Helvetica, Arial, sans-serif
-    fontSize: 17px
-    fontWeight: 400
-    lineHeight: 20px
-  body-md-strong:
-    fontFamily: Apercu, "Helvetica Neue", Helvetica, Arial, sans-serif
-    fontSize: 17px
-    fontWeight: 700
-    lineHeight: 22px
-    letterSpacing: -0.144px
-  body-sm:
-    fontFamily: Apercu, "Helvetica Neue", Helvetica, Arial, sans-serif
-    fontSize: 14px
-    fontWeight: 400
-    lineHeight: 18px
-    letterSpacing: 0.4px
-  body-sm-strong:
-    fontFamily: Apercu, "Helvetica Neue", Helvetica, Arial, sans-serif
-    fontSize: 14px
-    fontWeight: 700
-    lineHeight: 18px
-    letterSpacing: 0.4px
-  byline:
-    fontFamily: BreveText, Georgia, "Times New Roman", serif
-    fontSize: 12.73px
-    fontWeight: 700
-    lineHeight: 28px
-    letterSpacing: 0.108px
-  caption:
-    fontFamily: Apercu, "Helvetica Neue", Helvetica, Arial, sans-serif
-    fontSize: 12px
-    fontWeight: 400
-    lineHeight: 16px
-  button-md:
-    fontFamily: Apercu, "Helvetica Neue", Helvetica, Arial, sans-serif
-    fontSize: 16px
-    fontWeight: 700
-    lineHeight: 20px
-    letterSpacing: 0.3px
+**Source of truth for UI.** Structure inspired by Notion marketing IA; material language is Chinese paper & lacquer, not Western SaaS chrome.
 
-rounded:
-  none: 0px
-  full: 9999px
-
-spacing:
-  xxs: 2px
-  xs: 4px
-  sm: 8px
-  md: 12px
-  lg: 16px
-  xl: 20px
-  2xl: 24px
-  3xl: 32px
-  4xl: 48px
-
-components:
-  nav-bar:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.body-sm-strong}"
-    padding: "{spacing.md} {spacing.xl}"
-  nav-link:
-    textColor: "{colors.ink}"
-    typography: "{typography.body-sm-strong}"
-  button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
-    typography: "{typography.button-md}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.md} {spacing.xl}"
-  button-outline:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    borderColor: "{colors.ink}"
-    typography: "{typography.button-md}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.md} {spacing.xl}"
-  button-icon-circular:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.full}"
-    padding: "{spacing.sm}"
-  text-input:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    borderColor: "{colors.ink}"
-    typography: "{typography.body-md}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.md} {spacing.lg}"
-  story-card-large:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.display-md}"
-    padding: "{spacing.lg}"
-  story-card:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.display-xs}"
-    padding: "{spacing.md}"
-  story-row:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    borderColor: "{colors.hairline}"
-    typography: "{typography.body-md-strong}"
-    padding: "{spacing.lg} 0"
-  category-eyebrow:
-    textColor: "{colors.ink}"
-    typography: "{typography.body-sm-strong}"
-  byline-row:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.body}"
-    typography: "{typography.byline}"
-  hero-band:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.display-hero}"
-    padding: "{spacing.4xl} {spacing.xl}"
-  masthead-band:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.body-md-strong}"
-    padding: "{spacing.md} {spacing.xl}"
-  hairline-divider:
-    borderColor: "{colors.hairline}"
-  footer:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
-    typography: "{typography.body-sm}"
-    padding: "{spacing.4xl} {spacing.xl}"
-
-  # ─── Examples (illustrative) — auto-derived; resolve any TO_FILL markers below ───
-  ex-pricing-tier:
-    description: "Default Pricing tier card. Re-uses feature-card chrome with brand canvas-soft surface."
-    backgroundColor: "{colors.canvas-soft}"
-    textColor: "{colors.ink}"
-    borderColor: "{colors.hairline}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.lg}"
-  ex-pricing-tier-featured:
-    description: "Featured/highlighted tier — polarity-flipped surface (dark fill + light text in light mode, light fill + dark text in dark mode)."
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.on-primary}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.lg}"
-  ex-product-selector:
-    description: "What's Included summary card — re-purposed for SaaS / B2B verticals (NOT a literal product gallery)."
-    backgroundColor: "{colors.canvas-soft}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.lg}"
-  ex-cart-drawer:
-    description: "Subscription summary — re-purposed for SaaS / B2B (line items per add-on, not literal cart)."
-    backgroundColor: "{colors.canvas}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.lg}"
-    item-divider: "{colors.hairline}"
-  ex-app-shell-row:
-    description: "Sidebar nav row inside the App Shell example. Active state uses brand primary as the indicator."
-    backgroundColor: "{colors.canvas}"
-    activeIndicator: "{colors.primary}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.md} {spacing.lg}"
-  ex-data-table-cell:
-    description: "Default data-table th + td chrome. Header uses mono-caps eyebrow typography; body uses body-sm."
-    headerBackground: "{colors.canvas-soft}"
-    headerTypography: "{typography.caption}"
-    bodyTypography: "{typography.body-sm}"
-    cellPadding: "{spacing.md} {spacing.lg}"
-    rowBorder: "{colors.hairline}"
-  ex-auth-form-card:
-    description: "Sign-in / sign-up card. Re-uses feature-card chrome with text-input primitives inside."
-    backgroundColor: "{colors.canvas-soft}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.lg}"
-  ex-modal-card:
-    description: "Modal dialog surface — same chrome as feature-card with elevated shadow."
-    backgroundColor: "{colors.canvas}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.lg}"
-  ex-empty-state-card:
-    description: "Empty-state illustration frame."
-    backgroundColor: "{colors.canvas-soft}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.3xl}"
-    captionTypography: "{typography.body-md}"
-  ex-toast:
-    description: "Toast notification surface — feature-card shape + medium shadow."
-    backgroundColor: "{colors.canvas}"
-    rounded: "{rounded.none}"
-    padding: "{spacing.md} {spacing.lg}"
-    typography: "{typography.body-sm}"
+Related: `docs/superpowers/specs/2026-07-20-chinese-style-site-seo-geo-design.md`, `docs/notion-design-reference.md`.
 
 ---
 
-
 ## Overview
 
-Wired is the flagship technology-magazine brand under Condé Nast — and the web surface refuses to dress itself as a SaaS marketing site. The page is unmistakably an editorial product: a white canvas, a strict black wordmark in the brand's proprietary `WiredDisplay` (a tall, narrow, high-contrast serif used at 64 px), and stacked story cards that read as a printed magazine grid ported to the screen. There is no atmospheric gradient, no decorative chrome, no chromatic accent — the brand's only colour beyond the black-and-white duet is the small `{colors.link}` (`#057dbc`) used for inline body links inside long-form articles.
+rex-game should feel like a **well-lit side hall in a cultural museum** that happens to contain playable exhibits — not a carnival temple skin, and not a purple-gradient AI template.
 
-Type carries the entire identity. Three families ladder the system: `WiredDisplay` (the proprietary high-contrast serif) for hero / section headlines; `BreveText` (a humanist serif) for long-form body and bylines; and `Apercu` (a humanist sans) for metadata, captions, eyebrow tags, and buttons. The pairing is editorial-grade: serifs for narrative, sans for navigation and structural labels.
+- **Museum Light** is the default for home, culture SEO pages, about, and chrome: warm off-white paper, ink-brown type, one cinnabar action color.
+- **Altar Dark** is reserved for game runtimes and optional hero night bands: lacquer brown-black, foil gold hairlines, paper-cream type on dark.
+- Personality comes from **typography scale, paper texture, and exhibit photography** — decoration (seals, faint wave grain) stays sparse.
+- Follow Notion’s discipline: **one primary action color**, large poster headlines, short claims per section, real content (covers, term grids, sources) over ornament.
 
-Buttons are square. The brand uses `{rounded.none}` 0 px corners across the entire UI — newsletter sign-ups, login forms, "Read more" CTAs all render as sharp rectangles. The only circular shape is the `button-icon-circular` used for social-share affordances. There are no soft drop-shadows; the brand uses hairline borders for elevation when needed.
-
-**Key Characteristics:**
-- A strict black-and-white duet with no chromatic accent except the inline link blue `{colors.link}`. The brand reads as a printed magazine.
-- Three-face typographic system — `WiredDisplay` serif for display, `BreveText` serif for body, `Apercu` sans for metadata and buttons.
-- Square buttons (`{rounded.none}`) — the brand never softens corners on interactive elements.
-- A magazine-style story grid: large feature card at top, two-up secondary, then a vertical stack of bylined story rows separated by `{colors.hairline}` 1 px dividers.
-- The brand's only signature decorative move is the **masthead band** — a thin black strip with the wordmark centred, no other decoration.
-- A near-black `{colors.ink}` (`#000000`) footer band, no graphics, just text columns and the wordmark repeating.
+---
 
 ## Colors
 
-### Brand & Accent
-- **Ink Black** (`{colors.primary}` — `#000000`): The brand's only "accent." Used for wordmark, headlines, CTAs, footer fill. Pure black, never softened.
+### Museum Light (default site chrome)
 
-### Surface
-- **Canvas** (`{colors.canvas}` — `#ffffff`): The default page background.
-- **Canvas Soft** (`{colors.canvas-soft}` — `#f5f5f5`): Rare tint used for the comment-section background and search-result row hover states (not in the main page rhythm).
-- **Hairline** (`{colors.hairline}` — `#e0e0e0`): 1 px dividers between story rows. The brand's only "line."
+```yaml
+colors:
+  # Action — single confident primary (Notion blue → 朱砂)
+  primary: "#B22C25"           # cinnabar / 印泥
+  primary-hover: "#96241E"
+  primary-pressed: "#7A1D18"
+  on-primary: "#FFF8F0"
 
-### Text
-- **Ink** (`{colors.ink}` — `#000000`): Every headline, every body paragraph in BreveText.
-- **Ink Soft** (`{colors.ink-soft}` — `#1a1a1a`): A near-black variant used for caption-strong / footer link emphasis.
-- **Body** (`{colors.body}` — `#757575`): Secondary metadata — bylines, timestamps, supporting body lines.
+  # Canvas
+  canvas: "#F7F1E6"            # 宣纸米
+  canvas-soft: "#EFE6D4"       # 缃 / 略旧纸
+  surface: "#FFFCF6"           # 卡片亮面
+  surface-elevated: "#FFFFFF"
 
-### Semantic
-The brand operates with one inline link colour and no separate error / success / warning palette in its marketing surface. Validation cues on form pages use the ink black + body grey hierarchy.
+  # Ink scale (墨分)
+  ink: "#1A120B"               # 近墨
+  ink-secondary: "#2A1B12"
+  ink-muted: "#6E5A46"
+  ink-faint: "#8A7358"
+  hairline: "rgba(42, 27, 18, 0.12)"
+  hairline-strong: "rgba(42, 27, 18, 0.22)"
 
-- **Link** (`{colors.link}` — `#057dbc`): The inline body-link blue. Used only inside long-form article body copy, never on UI buttons or navigation.
+  # Accents (decorate only — never replace primary CTA)
+  accent-gold: "#C9A24B"       # 古铜金
+  accent-gold-bright: "#E4C479"
+  accent-cyan: "#3D6B73"       # 石青（链接次级 / 标签）
+  accent-bamboo: "#5F8A64"     # 竹青（圣杯等语义）
+  accent-ochre: "#B8863A"      # 赭（笑杯等）
+  accent-indigo: "#455F79"     # 黛（阴杯等）
+
+  # Semantic
+  focus-ring: "#B22C25"
+  success: "#5F8A64"
+  warning: "#B8863A"
+  danger: "#96241E"
+```
+
+### Altar Dark (games + optional hero)
+
+```yaml
+colors_altar:
+  bg: "#17100B"
+  bg-soft: "#23160F"
+  surface-paper: "#F4ECD8"
+  text-invert: "#F4ECD8"
+  text-invert-muted: "rgba(244, 236, 216, 0.68)"
+  gold: "#C9A24B"
+  gold-bright: "#E4C479"
+  cinnabar: "#A6332B"
+  line-gold: "rgba(201, 162, 75, 0.55)"
+  line-gold-strong: "rgba(201, 162, 75, 0.92)"
+```
+
+Map Altar tokens to existing `globals.css` lacquer variables; do not delete them.
+
+### CSS variable mapping (implement)
+
+```css
+/* data-theme="museum" | default on html for culture/home */
+--c-primary: #b22c25;
+--c-canvas: #f7f1e6;
+--c-canvas-soft: #efe6d4;
+--c-surface: #fffcf6;
+--c-ink: #1a120b;
+--c-ink-muted: #6e5a46;
+--c-hairline: rgba(42, 27, 18, 0.12);
+--c-gold: #c9a24b;
+--c-cyan: #3d6b73;
+
+/* data-theme="altar" body/game roots keep current --c-bg etc. */
+```
+
+---
 
 ## Typography
 
-### Font Family
-Three families ladder the system:
-1. **WiredDisplay** — the proprietary tall-narrow high-contrast serif used exclusively for display headlines (64 px hero, scaling down to 26 px sub-display). The brand's most-recognisable typographic signature.
-2. **BreveText** — the proprietary humanist serif used for long-form body, bylines, and editorial captions. Used at 16 – 19 px line-height 1.45 – 1.50 for comfortable reading density.
-3. **Apercu** — a humanist sans used for nav, button labels, category eyebrows, metadata, and captions. Weights 400 / 700.
+```yaml
+typography:
+  font-display: "'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif"
+  font-body: "'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif"
 
-Inter is loaded as a fourth fallback face for embedded utility surfaces (the comment section, account pages) but does not appear on the main marketing / article surface.
+  display-hero:
+    fontFamily: display
+    fontSize: clamp(2.75rem, 6vw, 4.75rem)
+    fontWeight: 900
+    lineHeight: 1.08
+    letterSpacing: -0.03em
+    color: ink
 
-### Hierarchy
+  display-section:
+    fontFamily: display
+    fontSize: clamp(1.75rem, 3.5vw, 2.5rem)
+    fontWeight: 700
+    lineHeight: 1.15
+    letterSpacing: -0.02em
 
-| Token | Size | Weight | Line Height | Letter Spacing | Use |
-|---|---|---|---|---|---|
-| `{typography.display-hero}` | 64px | 400 | 59.5px | -0.5px | Cover-story headline. |
-| `{typography.display-lg}` | 48px | 400 | 50.4px | -0.4px | Major section / feature headlines. |
-| `{typography.display-md}` | 32px | 400 | 35.2px | -0.3px | Story-card large variant. |
-| `{typography.display-sm}` | 26px | 400 | 28px | 0 | Sub-display headings inside long-form articles. |
-| `{typography.display-xs}` | 20px | 700 | 24px | -0.28px | Sans (Apercu) display micro-headings for category callouts. |
-| `{typography.body-serif-lg}` | 19px | 400 | 27.93px | 0.108px | Lead paragraph of an article (BreveText). |
-| `{typography.body-serif-md}` | 16px | 400 | 24px | 0.09px | Default article body (BreveText). |
-| `{typography.body-md}` | 17px | 400 | 20px | 0 | Sans body (Apercu) for nav / metadata. |
-| `{typography.body-md-strong}` | 17px | 700 | 22px | -0.144px | Bold sans body. |
-| `{typography.body-sm}` | 14px | 400 | 18px | 0.4px | Secondary sans body. |
-| `{typography.body-sm-strong}` | 14px | 700 | 18px | 0.4px | Bold caption / nav-link. |
-| `{typography.byline}` | 12.73px | 700 | 28px | 0.108px | Article byline (BreveText). |
-| `{typography.caption}` | 12px | 400 | 16px | 0 | Fine print, image captions. |
-| `{typography.button-md}` | 16px | 700 | 20px | 0.3px | Button label. |
+  heading-card:
+    fontFamily: display
+    fontSize: 1.25rem
+    fontWeight: 700
+    lineHeight: 1.3
 
-### Principles
-- **Serif for narrative, sans for structure.** The serif faces never carry button labels or nav text; the sans face never carries article body.
-- **Display weight 400** — the proprietary WiredDisplay reads as elegant by virtue of its thin-tall-narrow design at default weight, not via weight 700+.
-- **Bylines use BreveText weight 700 with relaxed line-height 2.2.** The vertical breathing is part of the editorial signature.
+  body-lg:
+    fontFamily: body
+    fontSize: 1.0625rem
+    fontWeight: 400
+    lineHeight: 1.75
+    color: ink-muted
 
-### Note on Font Substitutes
-The three proprietary faces have no exact substitutes. Best open-source approximations:
-- **WiredDisplay** — *Playfair Display* weight 400 at large display sizes captures the high-contrast didone feel, though wider than the brand's tall-narrow proportions.
-- **BreveText** — *Lora* or *Source Serif Pro* at 16 – 19 px.
-- **Apercu** — *Inter* or *Manrope* weights 400 / 700.
+  body-md:
+    fontFamily: body
+    fontSize: 1rem
+    fontWeight: 400
+    lineHeight: 1.7
 
-## Layout
+  body-sm:
+    fontFamily: body
+    fontSize: 0.875rem
+    fontWeight: 400
+    lineHeight: 1.55
+    color: ink-muted
 
-### Spacing System
-- **Base unit**: 4 px.
-- **Tokens**: `{spacing.xxs}` 2 px · `{spacing.xs}` 4 px · `{spacing.sm}` 8 px · `{spacing.md}` 12 px · `{spacing.lg}` 16 px · `{spacing.xl}` 20 px · `{spacing.2xl}` 24 px · `{spacing.3xl}` 32 px · `{spacing.4xl}` 48 px.
-- **Section padding**: hero / story grid use `{spacing.4xl}` 48 px top/bottom on desktop.
-- **Story row padding**: `{spacing.lg}` 16 px vertical between bylined story rows.
+  eyebrow:
+    fontFamily: body
+    fontSize: 0.75rem
+    fontWeight: 700
+    lineHeight: 1.3
+    letterSpacing: 0.16em
+    textTransform: none  # 中文不用 uppercase 硬套
+    color: primary or gold
 
-### Grid & Container
-- Marketing content uses a wide container (~1400 px max).
-- Cover-story grid: 1 large hero + 2-up secondary stories + vertical stack.
-- Story-row stack: full-width single column with hairline dividers.
+  button:
+    fontFamily: body
+    fontSize: 0.9375rem
+    fontWeight: 600
+    letterSpacing: 0.04em
+```
 
-### Responsive Strategy
+**Rules**
 
-#### Breakpoints
+- Hero/section titles use **display Song**; UI chrome and long FAQ use **body Hei**.
+- Avoid Inter / Roboto / generic English SaaS stacks as primary.
+- Max measure for reading columns: ~36–40rem; Quick Answer ≤ ~42rem.
 
-| Name | Width | Key Changes |
-|---|---|---|
-| Mobile | < 768px | Cover hero 64→40 px; all grids 1-up; hamburger nav. |
-| Tablet | 768–1023px | 2-up secondary story grid. |
-| Desktop | ≥ 1024px | Full magazine grid. |
+---
 
-#### Touch Targets
-Button-primary renders ~44 px tall (12 vertical padding + 20 line). WCAG AAA at all widths.
+## Spacing & radius
 
-#### Collapsing Strategy
-- Nav: full link row + Subscribe CTA at desktop. Hamburger at mobile.
-- Magazine grid: hero stays full-width; 2-up secondary drops to 1-up at mobile.
-- Story rows: stay single-column at all viewports.
+```yaml
+spacing:
+  xxs: 4px
+  xs: 8px
+  sm: 12px
+  md: 16px
+  lg: 24px
+  xl: 32px
+  2xl: 48px
+  3xl: 64px
+  4xl: 96px
+  section-y: clamp(4rem, 10vw, 7.5rem)
+  page-x: clamp(1rem, 4vw, 4.5rem)
+  max-width: 1120px
+  max-width-wide: 1280px
 
-#### Image Behavior
-- Cover images: full-bleed 16:9 hero / 4:3 secondary.
-- Article body images: full-width inside the article column.
-- Author avatars: small inline circular crops next to bylines.
+rounded:
+  sm: 6px      # inputs, small chips
+  md: 10px     # cards (slightly squarer than Notion — 器物感)
+  lg: 14px     # feature panels
+  full: 9999px # primary CTA pills only
 
-## Elevation & Depth
+shadow:
+  card: "0 12px 40px -20px rgba(26, 18, 11, 0.18)"
+  soft: "0 4px 16px -8px rgba(26, 18, 11, 0.12)"
+```
 
-| Level | Treatment | Use |
-|---|---|---|
-| Level 0 — Flat | No shadow, no border. | Default — almost every surface lives at this level. |
-| Level 1 — Hairline | 1 px solid `{colors.hairline}` border. | Story-row dividers, input borders. |
-| Level 2 — Heavy Black Border | 2 px solid `{colors.ink}` border. | Subscribe CTA on certain campaign moments. |
+---
 
-The brand uses no drop-shadows. Surface contrast and hairline borders carry all visual hierarchy.
+## Layout patterns
 
-## Shapes
+### Notion-like section rhythm
 
-### Border Radius Scale
+Each marketing section:
 
-| Token | Value | Use |
-|---|---|---|
-| `{rounded.none}` | 0px | Every interactive shape — buttons, inputs, cards. The brand's signature square geometry. |
-| `{rounded.full}` | 9999px | Circular icon containers only (social-share, account avatar). |
+1. Optional **eyebrow** (〇一 / 文化馆)
+2. **Claim H2** (one sentence)
+3. Short lead (1–2 lines)
+4. Content block (grid, terms, quotes, covers)
+5. Optional text link or secondary CTA
 
-### Photography Geometry
-- Cover stories: 16:9 hero, edge-to-edge.
-- Secondary story cards: 4:3 thumbnails.
-- Article body images: native aspect, full column width.
-- Bylines / avatars: circular `{rounded.full}` 28 px crops.
+Vertical padding: `section-y`. Horizontal: centered `max-width` + `page-x`.
+
+### Home chapter order (fixed)
+
+1. Hero  
+2. Three exhibits bento  
+3. Why browser folklore  
+4. How to play  
+5. Trust / sources ethos  
+6. Trust strip metrics  
+7. Footer  
+
+### Culture SEO page order (fixed)
+
+1. Breadcrumb  
+2. Quick Answer  
+3. Action CTAs  
+4. Body sections  
+5. Term / example grid  
+6. FAQ  
+7. Sources  
+8. Related links  
+
+---
 
 ## Components
 
-### Buttons
+### SiteHeader
 
-**`button-primary`** — the square black CTA.
-- Background `{colors.primary}`, text `{colors.on-primary}`, label `{typography.button-md}` (Apercu 16 px / 700 / 0.3 px tracking), padding `{spacing.md} {spacing.xl}`, shape `{rounded.none}` 0 px.
+- Background: `canvas` / translucent paper; blur optional.
+- Height ~56–64px; bottom hairline.
+- Wordmark: display or tracked sans, ink or gold on altar hero overlay.
+- Nav links: `body-sm`, ink-muted → ink hover.
+- Primary CTA: pill cinnabar.
 
-**`button-outline`** — the white outline CTA.
-- Background `{colors.canvas}`, text `{colors.ink}`, 1 px solid `{colors.ink}` border, same typography / padding / shape.
+### SiteFooter
 
-**`button-icon-circular`** — the circular share-icon button.
-- Background `{colors.canvas}`, ink icon, shape `{rounded.full}`.
+- Background: `canvas-soft`.
+- Multi-column: 展品 / 文化 / 关于.
+- Disclaimer one-liner + domain.
+- No heavy ornament.
 
-### Cards & Containers
+### Button primary
 
-**`story-card-large`** — the cover-story card with `{typography.display-md}` headline.
-- Background `{colors.canvas}`, text `{colors.ink}`, padding `{spacing.lg}`. No border — the card lives on the canvas with the photo doing the work.
+- bg `primary`, text `on-primary`, radius `full`, padding 12px 22px.
+- Hover: `primary-hover`; focus-visible: 2px ring cinnabar offset 2px.
 
-**`story-card`** — the secondary story card.
-- Background `{colors.canvas}`, text `{colors.ink}`, padding `{spacing.md}`. Photo at top, sans display heading + body lead below.
+### Button secondary
 
-**`story-row`** — the bylined story list row.
-- Background `{colors.canvas}`, text `{colors.ink}`, 1 px solid `{colors.hairline}` bottom border, body in `{typography.body-md-strong}`, padding `{spacing.lg}` 0.
+- bg transparent or `surface`, border hairline-strong, text ink.
+- Radius `full` or `md`.
 
-### Inputs & Forms
+### ExhibitCard
 
-**`text-input`** — the standard text input.
-- Background `{colors.canvas}`, text `{colors.ink}`, 1 px solid `{colors.ink}` border, body in `{typography.body-md}`, padding `{spacing.md} {spacing.lg}`, shape `{rounded.none}`.
+- Surface white/paper, radius `md`, shadow `card`, padding `lg`.
+- Cover 16:10 or 4:3; title display; tagline body-sm.
+- Badge: small seal-like chip (cinnabar wash or gold outline) — not neon.
+- Footer actions: 开始游玩 (primary text link or button) · 读文化.
 
-### Navigation
+### SectionHeader
 
-**`nav-bar`** — the top nav, light by default.
-- Background `{colors.canvas}`, text `{colors.ink}`, padding `{spacing.md} {spacing.xl}`. Layout: hamburger left, masthead centre, Subscribe right.
+- Grid: index (〇一 or 01) in gold/cinnabar eyebrow + title stack.
+- Claim is the H2; no decorative dragon dividers.
 
-**`nav-link`** — link items inside nav.
-- Text `{colors.ink}`, set in `{typography.body-sm-strong}` (Apercu 14 / 700).
+### QuickAnswer
 
-**`footer`** — the black footer band.
-- Background `{colors.primary}`, text `{colors.on-primary}`, padding `{spacing.4xl} {spacing.xl}`. Body in `{typography.body-sm}` (Apercu 14 / 400). Footer column eyebrows in `{typography.body-sm-strong}`.
+- Soft surface or left gold hairline bar.
+- Label:「快速回答」eyebrow.
+- 3–5 sentences body-lg; plain text first for GEO.
 
-### Signature Components
+### CultureTermGrid
 
-**`hero-band`** — the white hero band hosting the cover-story.
-- Background `{colors.canvas}`, text `{colors.ink}`, padding `{spacing.4xl} {spacing.xl}`. Cover headline in `{typography.display-hero}` (WiredDisplay 64 px).
+- 2–3 columns; each term: strong name + short meaning.
+- Semantic colors only for jiaobei signs (bamboo/ochre/indigo).
 
-**`masthead-band`** — the thin top band with the wordmark.
-- Background `{colors.canvas}`, text `{colors.ink}`, padding `{spacing.md} {spacing.xl}`. The wordmark sits centred; flanked by section nav.
+### FaqList
 
-**`category-eyebrow`** — the small uppercase category label above story headlines.
-- Text `{colors.ink}`, set in `{typography.body-sm-strong}` (Apercu 14 / 700 — though some campaigns use ALL CAPS via CSS).
+- Disclosure or stacked Q/A; questions heading weight 600.
+- Answers body-md, ink-muted.
+- Must sync with FAQPage JSON-LD.
 
-**`byline-row`** — the article byline strip.
-- Background `{colors.canvas}`, text `{colors.body}`, body in `{typography.byline}` (BreveText 12.73 / 700 / line-height 2.2). Includes an author avatar + name + date.
+### SourceList
 
-**`hairline-divider`** — the 1 px line between story rows.
-- 1 px solid `{colors.hairline}`.
+- Ordered or bulleted external links; open in new tab with `rel="noopener noreferrer"`.
+- Prefer museums / ihchina / gov culture sites.
 
-### Examples (illustrative)
+### PlayCta
 
-> Auto-derived kit-mirror demonstration surfaces (`scripts/derive-examples-block.mjs`). Each `ex-*` entry references brand-native primitives so downstream consumers (`/preview-design`, `/generate-kit`) re-skin the same 10 surfaces consistently. `TO_FILL` markers indicate missing primitives — resolve in the LLM judgment pass.
+- Always visible near Quick Answer on culture pages.
+- Label pattern:「现在体验：{游戏名}」.
 
-**`ex-pricing-tier`** — Default Pricing tier card. Re-uses feature-card chrome with brand canvas-soft surface.
-- Properties: `backgroundColor`, `textColor`, `borderColor`, `rounded`, `padding`
+### Breadcrumb
 
-**`ex-pricing-tier-featured`** — Featured/highlighted tier — polarity-flipped surface (dark fill + light text in light mode, light fill + dark text in dark mode).
-- Properties: `backgroundColor`, `textColor`, `rounded`, `padding`
+- body-sm; separators `·` or `/`; current page not a link.
 
-**`ex-product-selector`** — What's Included summary card — re-purposed for SaaS / B2B verticals (NOT a literal product gallery).
-- Properties: `backgroundColor`, `rounded`, `padding`
+### TrustStrip
 
-**`ex-cart-drawer`** — Subscription summary — re-purposed for SaaS / B2B (line items per add-on, not literal cart).
-- Properties: `backgroundColor`, `rounded`, `padding`, `item-divider`
+- Horizontal metrics; large tabular numbers + short labels.
+- Only factual claims (exhibit count, free, local camera, etc.).
 
-**`ex-app-shell-row`** — Sidebar nav row inside the App Shell example. Active state uses brand primary as the indicator.
-- Properties: `backgroundColor`, `activeIndicator`, `rounded`, `padding`
+### HeroBand (altar variant)
 
-**`ex-data-table-cell`** — Default data-table th + td chrome. Header uses mono-caps eyebrow typography; body uses body-sm.
-- Properties: `headerBackground`, `headerTypography`, `bodyTypography`, `cellPadding`, `rowBorder`
+- bg altar, type paper-cream, gold hairlines.
+- Optional faint radial gold/cinnabar wash (already in globals).
+- CTAs: primary cinnabar solid + secondary ghost on paper stroke.
 
-**`ex-auth-form-card`** — Sign-in / sign-up card. Re-uses feature-card chrome with text-input primitives inside.
-- Properties: `backgroundColor`, `rounded`, `padding`
+---
 
-**`ex-modal-card`** — Modal dialog surface — same chrome as feature-card with elevated shadow.
-- Properties: `backgroundColor`, `rounded`, `padding`
+## Texture & decoration (restraint)
 
-**`ex-empty-state-card`** — Empty-state illustration frame.
-- Properties: `backgroundColor`, `rounded`, `padding`, `captionTypography`
+**Allowed**
 
-**`ex-toast`** — Toast notification surface — feature-card shape + medium shadow.
-- Properties: `backgroundColor`, `rounded`, `padding`, `typography`
+- 2–4% noise or paper grain overlay on canvas (CSS or SVG).
+- 1px gold or ink hairlines.
+- Small square seal mark as badge (unicode or SVG), low frequency.
+- Numbered section indices.
 
+**Forbidden**
 
-## Do's and Don'ts
+- Full-bleed red temple wallpaper.
+- Animated dragons, particle confetti, purple AI gradients.
+- Drop shadows heavier than `shadow.card` on every box.
+- Stock “oriental” clipart borders on SEO reading pages.
 
-### Do
-- Reserve `{colors.primary}` black for the wordmark, every CTA, and the footer fill. The brand IS the strict black-on-white duet.
-- Set hero headlines in `{typography.display-hero}` (WiredDisplay 64 px weight 400). The proprietary serif IS the brand's typographic signature.
-- Use `{rounded.none}` 0 px on every button and form input. The brand reads as a printed magazine — square corners are non-negotiable.
-- Pair WiredDisplay (serif display) with BreveText (serif body) and Apercu (sans labels). Three faces, three roles.
-- Render story rows with `{colors.hairline}` 1 px dividers — the brand's only elevation cue.
+---
 
-### Don't
-- Don't introduce a chromatic brand accent. The link blue is reserved for inline body links inside articles only.
-- Don't round button corners. The brand never softens its rectangular geometry.
-- Don't drop a soft drop-shadow on cards. Surface contrast and hairlines carry elevation.
-- Don't substitute the proprietary serif faces with a generic sans for display. The serif voice is the brand.
-- Don't promote display weight beyond 400. The brand's elegance is in the typeface design, not bold weight.
+## Motion
+
+```yaml
+motion:
+  duration-fast: 150ms
+  duration-med: 280ms
+  ease: cubic-bezier(0.22, 1, 0.36, 1)
+  enter: fade-up 12px, staggered 40–60ms
+```
+
+- Hover: translateY(-2px) or border-color gold on cards.
+- Honor `prefers-reduced-motion: reduce` → no transform entrance.
+
+---
+
+## Accessibility
+
+- Body text on paper: ink on canvas contrast ≥ 4.5:1.
+- Cinnabar buttons: use `on-primary` cream, not pure yellow on red without check.
+- Focus visible on all interactive elements.
+- Touch targets ≥ 44px where possible.
+- `lang="zh-CN"` on html; meaningful alt on exhibit images.
+
+---
+
+## SEO / GEO content chrome (visual)
+
+Culture pages are **documents**, not landing-page noise:
+
+- Reading width constrained.
+- H1 once; H2 for sections.
+- Quick Answer above the fold on desktop when possible.
+- FAQ visually distinct but not collapsible-only without SSR text (content must exist in HTML).
+
+---
+
+## Do / Don’t
+
+| Do | Don’t |
+|----|--------|
+| One cinnabar CTA language sitewide | Multiple competing neon CTAs |
+| Song for claims, Hei for UI/FAQ | All-Inter or all-kai-calligraphy body |
+| Cite sources under culture claims | Absolute “神明确切旨意” copy |
+| Dual theme museum/altar with shared fonts | Unrelated third pastel theme |
+| Notion section claims | Feature-grid lorem without narrative |
+
+---
+
+## Implementation notes
+
+1. Prefer `data-theme="museum"` on culture/home layouts; game routes set altar on runtime root.
+2. Shared components live under `src/components/site/` (or equivalent).
+3. Culture content data drives pages + sitemap from one registry.
+4. When redesigning, **match this file first**; section mock images are directional only.
+
+---
+
+## Version
+
+- `alpha` — approved direction 2026-07-20; refine after P1 visual review.
