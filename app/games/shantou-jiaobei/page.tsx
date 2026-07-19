@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { JiaobeiGame } from '@/games/shantou-jiaobei/JiaobeiGame';
 import { faqItems } from '@/games/shantou-jiaobei/content/faq';
 import { JIAOBEI_QUICK_ANSWER, JIAOBEI_SIGNS } from '@/games/shantou-jiaobei/content/culture';
@@ -175,6 +176,15 @@ export default function ShantouJiaobeiPage() {
 
         <footer className="jiaobei-guide__sources">
           <div><p>资料与边界</p><h3>继续了解掷筊文化</h3></div>
+          <p>
+            <Link href="/culture/jiaobei/">文化枢纽：潮汕掷筊</Link>
+            {' · '}
+            <Link href="/culture/jiaobei/sheng-yin-xiao/">圣阴笑含义</Link>
+            {' · '}
+            <Link href="/culture/jiaobei/how-to-read/">如何读杯</Link>
+            {' · '}
+            <Link href="/culture/jiaobei/online-vs-ritual/">在线与仪式</Link>
+          </p>
           <ul>{sources.map((source) => <li key={source.href}><a href={source.href} target="_blank" rel="noreferrer">{source.name}<span aria-hidden>↗</span></a></li>)}</ul>
           <p className="jiaobei-guide__disclaimer">本文综合公开文化资料作通识说明，不宣称覆盖所有地方传统；若用于真实礼俗，请尊重当地庙宇、长辈与传承者的指引。</p>
         </footer>

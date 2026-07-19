@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import '@/styles/globals.css';
+import '@/styles/museum.css';
 import '@/styles/home.css';
 import '@/styles/jiaobei.css';
 
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     template: '%s · rex-game',
   },
   description:
-    'rex-game —— 浏览器即开即玩的静态民俗小游戏站。首个游戏：潮汕圣杯占卜，在线掷筊问愿，体验传统潮汕民俗仪式。',
+    'rex-game —— 浏览器中的民俗文化馆。潮汕圣杯、潮汕英歌、中国剪纸：可玩展品与可检索文化导读，无需下载。',
   applicationName: 'rex-game',
   authors: [{ name: 'rexai', url: 'https://game.rexai.top' }],
   keywords: [
@@ -18,11 +19,12 @@ export const metadata: Metadata = {
     '民俗游戏',
     '潮汕圣杯',
     '掷筊',
-    '圣杯占卜',
-    '在线占卜',
+    '潮汕英歌',
+    '中国剪纸',
     '传统文化',
     '潮汕文化',
     'HTML5游戏',
+    '非遗',
   ],
   category: 'games',
   robots: {

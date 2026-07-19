@@ -94,11 +94,13 @@ test('the ready stage gives the player a clear idle cue before the first throw',
   assert.match(offeringSource, /筊杯已备/);
 });
 
-test('the home exhibition uses a still from the rendered jiaobei scene', () => {
+test('the home exhibition lists jiaobei via registry cover asset', () => {
   assert.ok(existsSync(heroAsset), 'the home needs the actual rendered jiaobei hero still');
-  assert.match(homeSource, /src="\/assets\/jiaobei-hero\.png"/);
-  assert.match(homeSource, /潮汕圣杯，一掷见心/);
+  assert.match(homeSource, /ExhibitCard|theme-museum|exhibits/);
+  assert.match(homeSource, /games\.map/);
   assert.doesNotMatch(homeSource, /GameCard/);
+  const registry = readFileSync(new URL('../src/core/gamesRegistry.ts', import.meta.url), 'utf8');
+  assert.match(registry, /jiaobei-hero\.png/);
 });
 
 test('the result view reveals its interpretation without adding a game phase', () => {
