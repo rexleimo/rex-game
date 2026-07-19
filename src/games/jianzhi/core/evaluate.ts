@@ -1,10 +1,20 @@
-import type { ChapterEvaluation, JianzhiChapter } from './types';
+import type { ObjectiveEvaluation, ObjectiveMode, RebusCombo } from './types.ts';
+import { detectCombos } from './rebus.ts';
 
-/**
- * 判定本章是否达成目标：目标纹样需全部出现在已落剪的纹样集合中。
- * 纯函数，不依赖 React / Canvas / localStorage，便于推理与测试。
- */
-export function evaluateChapter(chapter: JianzhiChapter, placedMotifIds: string[]): ChapterEvaluation {
-  const missing = chapter.objectiveMotifIds.filter((id) => !placedMotifIds.includes(id));
+export interface ObjectiveSpec {
+  objectiveMode: ObjectiveMode;
+  objectiveMotifIds: string[];
+}
+
+export function evaluateObjective(
+  spec: ObjectiveSpec,
+  placedMotifIds: string[],
+  combos: RebusCombo[] = [],
+): ObjectiveEvaluation {
+  if (spec.objectiveMode === 'any-combo') {
+    const formed = detectCombos(placedMotifIds, combos);
+    return { passed: formed.length > 0, missing: formed.length ? [] : ['*any-combo*'] };
+  }
+  const missing = spec.objectiveMotifIds.filter((id) => !placedMotifIds.includes(id));
   return { passed: missing.length === 0, missing };
 }
