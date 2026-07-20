@@ -1166,6 +1166,8 @@ export function JianzhiGame() {
                   onShare={handleShareWork}
                   onPreview={(w) => setPreview(w)}
                 />
+              </>
+            )}
 
             <div className={styles.backRow}>
               <button type="button" className={styles.ghostBtn} onClick={() => setView('map')}>
