@@ -41,7 +41,7 @@ export function IntroScene({ onStart }: { onStart: () => void }) {
         <p className="intro__index">潮汕跋杯 · 三象陈列</p>
         <h2 className="intro__title">六枚如刃<br />一问见心</h2>
         <div className="intro__culture"><strong>潮汕圣杯是什么？</strong><p>{JIAOBEI_QUICK_ANSWER}</p></div>
-        <div className="intro__actions"><button className="btn btn--gold intro__start" onClick={onStart}>开始掷筊</button><a className="intro__learn" href="#jiaobei-guide">了解潮汕圣杯文化与三种杯象</a></div>
+        <div className="intro__actions"><button className="gs-btn gs-btn--primary intro__start" onClick={onStart}>开始掷筊</button><a className="intro__learn" href="#jiaobei-guide">了解潮汕圣杯文化与三种杯象</a></div>
         <p className="intro__note">可使用摄像头手势或按钮操作；摄像头并非必需。</p>
       </div>
     </section>

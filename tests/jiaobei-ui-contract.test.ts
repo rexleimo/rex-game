@@ -144,3 +144,19 @@ test('cup result symbols use the game-consistent vector glyph instead of opaque 
   assert.doesNotMatch(introSource, /cup_(sheng|xiao|yin)\.png/);
   assert.doesNotMatch(offeringSource, /cup_(sheng|xiao|yin)\.png/);
 });
+
+test('JiaobeiGame uses shared GameChrome with gs- classes', () => {
+  const game = readFileSync(new URL('../src/games/shantou-jiaobei/JiaobeiGame.tsx', import.meta.url), 'utf8');
+  assert.match(game, /from ['"]@\/components\/game\/GameChrome['"]/);
+  assert.match(game, /game-shell\.css/);
+  assert.match(game, /<GameChrome/);
+  assert.doesNotMatch(game, /function GameChrome/);
+  assert.match(game, /展品 \/ 序章/);
+  assert.match(game, /仪式进行中/);
+  assert.match(game, /落杯已定/);
+});
+
+test('jiaobei intro primary CTA uses gs-btn', () => {
+  assert.match(introSource, /gs-btn/);
+  assert.match(introSource, /gs-btn--primary/);
+});

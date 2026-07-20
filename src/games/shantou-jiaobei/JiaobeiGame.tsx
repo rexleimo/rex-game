@@ -1,6 +1,8 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { GameChrome } from '@/components/game/GameChrome';
+import '@/styles/game-shell.css';
 import { IntroScene } from './scenes/IntroScene';
 import { OfferingScene } from './scenes/OfferingScene';
 import { ResultScene } from './scenes/ResultScene';
@@ -24,6 +26,12 @@ export interface GameState {
 }
 
 const INITIAL: GameState = { wish: '', wishCategory: '其他', throws: [] };
+
+const EDITION: Record<Phase, string> = {
+  intro: '展品 / 序章',
+  offering: '仪式进行中',
+  result: '落杯已定',
+};
 
 /**
  * 潮汕圣杯占卜 —— 游戏根组件。
@@ -57,7 +65,7 @@ export function JiaobeiGame() {
 
   return (
     <main className={`jiaobei jiaobei--${phase}`}>
-      <GameChrome phase={phase}>
+      <GameChrome title="潮汕圣杯" edition={EDITION[phase]}>
         {phase === 'intro' && (
           <IntroScene
             onStart={() => {
@@ -80,26 +88,5 @@ export function JiaobeiGame() {
         {phase === 'result' && <ResultScene state={state} onRestart={restart} />}
       </GameChrome>
     </main>
-  );
-}
-
-/** 游戏外壳：克制的展签导航 + 当前阶段。 */
-function GameChrome({ children, phase }: { children: React.ReactNode; phase: Phase }) {
-  const edition = phase === 'intro' ? '展品 / 序章' : phase === 'offering' ? '仪式进行中' : '落杯已定';
-
-  return (
-    <div className="chrome">
-      <header className="chrome__head">
-        <a className="chrome__back" href="/" aria-label="返回首页">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
-            <path d="M15 5l-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          返回展厅
-        </a>
-        <h1 className="chrome__title">潮汕圣杯</h1>
-        <span className="chrome__edition">{edition}</span>
-      </header>
-      <div className="chrome__body">{children}</div>
-    </div>
   );
 }

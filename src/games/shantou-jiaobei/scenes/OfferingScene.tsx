@@ -288,10 +288,10 @@ export function OfferingScene({
           </div>
 
           {done ? (
-            <button className="btn btn--gold" onClick={onDone}>查看神明解答</button>
+            <button className="gs-btn gs-btn--primary" onClick={onDone}>查看神明解答</button>
           ) : (
             <button
-              className="btn"
+              className="gs-btn gs-btn--primary"
               onClick={doThrow}
               disabled={throwing || physicsError || !physicsReady}
             >

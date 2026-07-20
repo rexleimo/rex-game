@@ -221,8 +221,8 @@ export function ResultScene({ state, onRestart }: { state: GameState; onRestart:
 
           <p className="result__disclaimer">仅供娱乐，不构成任何建议。</p>
           <div className="result__actions">
-            <button className="btn" onClick={onRestart}>再问一次</button>
-            <a className="btn btn--ghost" href="/">回到展厅</a>
+            <button className="gs-btn gs-btn--primary" onClick={onRestart}>再问一次</button>
+            <a className="gs-btn gs-btn--ghost" href="/">回到展厅</a>
           </div>
         </div>
       ) : null}
