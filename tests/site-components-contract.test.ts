@@ -6,10 +6,10 @@ const root = new URL('../', import.meta.url);
 
 test('CultureDocument wires quick answer FAQ sources and play CTA', () => {
   const src = readFileSync(new URL('src/components/site/CultureDocument.tsx', root), 'utf8');
-  assert.match(src, /QuickAnswer/);
+  assert.match(src, /QuickAnswerBar/);
   assert.match(src, /FaqList/);
   assert.match(src, /SourceList/);
-  assert.match(src, /PlayCta/);
+  assert.match(src, /CultureCtaBanner/);
   assert.match(src, /JsonLd|buildCulturePageGraph/);
 });
 

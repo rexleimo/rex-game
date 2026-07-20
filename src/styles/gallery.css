@@ -691,3 +691,199 @@ html:has(.theme-gallery) body {
 .g-doc a:hover {
   color: var(--g-gold-hi);
 }
+
+/* —— 文化页:展厅头 —— */
+.chero {
+  position: relative;
+  padding: 4.5rem 0 3rem;
+  background: radial-gradient(100% 120% at 78% 0%, rgba(200, 46, 33, 0.22) 0%, transparent 55%);
+  overflow: hidden;
+}
+.chero__inner {
+  position: relative;
+}
+.chero__crumb {
+  margin-bottom: 1.6rem;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--g-gold);
+}
+.chero__crumb a {
+  color: rgba(201, 162, 75, 0.85);
+}
+.chero__crumb a:hover {
+  color: var(--g-gold-hi);
+}
+.chero__crumb ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.chero__crumb li {
+  display: inline;
+}
+.chero__title {
+  max-width: 20em;
+  font-size: clamp(2rem, 5.5vw, 3.4rem);
+  letter-spacing: 0.04em;
+}
+.chero__title em {
+  font-style: normal;
+  color: var(--g-cinnabar-hi);
+}
+.chero__meta {
+  margin: 1rem 0 0;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--g-text-dim);
+}
+.chero__symbol {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(72px, 10vw, 120px);
+  opacity: 0.95;
+  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.5));
+}
+.chero__symbol svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 760px) {
+  .chero__symbol {
+    opacity: 0.3;
+    right: 0;
+  }
+}
+
+/* —— 文化页:快速回答条 —— */
+.cqa {
+  border-block: 1px solid rgba(201, 162, 75, 0.25);
+  background: var(--g-lacquer);
+}
+.cqa__inner {
+  display: flex;
+  gap: 1.2rem;
+  align-items: baseline;
+  padding-block: 1.1rem;
+}
+.cqa__label {
+  flex: none;
+  border: 1px solid rgba(201, 162, 75, 0.4);
+  border-radius: 2px;
+  padding: 3px 9px;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--g-gold);
+}
+.cqa__text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.85;
+  color: rgba(232, 220, 196, 0.88);
+}
+@media (max-width: 760px) {
+  .cqa__inner {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+}
+
+/* —— 文化页:宣纸阅读面(复用 museum.css 的 .culture-doc 全局排版) —— */
+.culture-paper {
+  background: #f7f1e6;
+  color: #1a120b;
+  padding: 3.5rem 0 4.5rem;
+}
+.culture-paper__inner {
+  width: min(46rem, 92vw);
+  margin-inline: auto;
+}
+.culture-paper a {
+  color: #a6332b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* —— 文化页:CTA 横幅 —— */
+.ccta {
+  background: linear-gradient(120deg, var(--g-cinnabar-deep), var(--g-cinnabar));
+}
+.ccta__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 2.2rem;
+}
+.ccta__text {
+  margin: 0;
+  font-family: var(--g-font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  letter-spacing: 0.1em;
+  color: var(--g-paper);
+}
+.ccta__btn {
+  flex: none;
+  background: var(--g-paper);
+  color: var(--g-cinnabar-deep);
+  border-radius: 2px;
+  padding: 0.8rem 1.8rem;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  transition: transform var(--g-dur-micro) var(--g-ease);
+}
+.ccta__btn:hover {
+  transform: translateY(-2px);
+}
+@media (max-width: 760px) {
+  .ccta__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* —— hub 展厅:专题卡 —— */
+.chub__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.2rem;
+}
+.chub__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.4rem 1.3rem;
+  background: var(--g-float);
+  border: 1px solid rgba(201, 162, 75, 0.18);
+  border-radius: 6px;
+  transition:
+    transform var(--g-dur-micro) var(--g-ease),
+    border-color var(--g-dur-micro) var(--g-ease);
+}
+.chub__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(201, 162, 75, 0.45);
+}
+.chub__card-title {
+  font-family: var(--g-font-display);
+  font-size: 17px;
+  color: var(--g-text-hi);
+}
+.chub__card-teaser {
+  flex: 1;
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--g-text);
+}
+.chub__card-meta {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--g-gold);
+}
