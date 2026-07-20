@@ -54,10 +54,10 @@ export const metadata: Metadata = {
     url: 'https://game.rexai.top',
     images: [
       {
-        url: '/assets/jiaobei-hero.png',
+        url: '/assets/og-home.png',
         width: 1200,
         height: 630,
-        alt: '潮汕圣杯游戏中的两片真实 3D 筊杯落在木质台面上',
+        alt: 'rex-game 可玩的民俗文化馆:一座可以玩的中国民艺馆',
       },
     ],
   },
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'rex-game · 可玩的民俗文化馆',
     description: '一座可以玩的中国民艺馆:掷筊问愿、英歌合槌、折剪生花,即开即玩。',
-    images: ['/assets/jiaobei-hero.png'],
+    images: ['/assets/og-home.png'],
   },
 };
 
