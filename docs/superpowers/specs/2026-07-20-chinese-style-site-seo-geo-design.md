@@ -1,6 +1,6 @@
 # rex-game 中国风全站 + 文化 SEO/GEO 设计规格
 
-**状态**：已批准，实现计划见 `docs/superpowers/plans/2026-07-20-chinese-style-site-seo-geo.md`  
+**状态**：已实现（静态导出通过）；计划见 `docs/superpowers/plans/2026-07-20-chinese-style-site-seo-geo.md`  
 **日期**：2026-07-20  
 **路径**：B（分层流水线）  
 **产品定义**：可玩的民俗文化馆 —— Notion 式章节叙事 × 中国文人器物气质 × 可索引的文化知识网  

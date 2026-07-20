@@ -1,6 +1,6 @@
 {
   "name": "rex-game",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "rex-game — 静态娱乐游戏站（部署 Gitee Pages）。首个游戏：潮汕圣杯占卜。",
   "scripts": {
