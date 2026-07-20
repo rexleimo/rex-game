@@ -41,6 +41,8 @@ import { ActShell } from './theater/ActShell';
 import { DialogueBar } from './theater/DialogueBar';
 import { CutBench } from './theater/CutBench';
 import { UnfoldCeremony } from './theater/UnfoldCeremony';
+import { GalleryWall } from './theater/GalleryWall';
+import { buildShareCard, downloadBlob } from './theater/shareCard';
 import './theater/theater.css';
 
 const WORKS_KEY = 'rex-game:jianzhi:works:v1';
@@ -470,6 +472,24 @@ export function JianzhiGame() {
     setRevealImage(engine.exportPNG(2));
     setPhase('reveal');
   }, [activeObjective, flashToast, playChime]);
+
+  const handleShareWork = useCallback(
+    async (work: SavedWork) => {
+      try {
+        const combo = detectCombos(work.motifIds, JIANZHI_COMBOS)[0];
+        const blob = await buildShareCard({
+          workPng: work.dataUrl,
+          title: work.name,
+          phrase: combo?.phrase ?? null,
+        });
+        downloadBlob(blob, `纸上生花-${work.name}.png`);
+        flashToast('分享卡已生成 · 开始下载');
+      } catch {
+        flashToast('分享卡生成失败,请重试');
+      }
+    },
+    [flashToast],
+  );
 
   const enterLesson = useCallback(
     (lesson: JianzhiLesson) => {
@@ -1140,21 +1160,12 @@ export function JianzhiGame() {
 
             {codexTab === 'works' && (
               <>
-                {works.length === 0 ? (
-                  <p className={styles.focusNote}>还没有作品。去「自习台」剪一张，再点「存入作品」吧。</p>
-                ) : (
-                  <div className={styles.worksGrid}>
-                    {works.map((w) => (
-                      <button key={w.id} type="button" className={styles.workCard} onClick={() => setPreview(w)}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={w.dataUrl} alt={w.name} />
-                        <span>{w.name}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
+                <GalleryWall
+                  works={works}
+                  phraseOf={(w) => detectCombos(w.motifIds, JIANZHI_COMBOS)[0]?.phrase ?? null}
+                  onShare={handleShareWork}
+                  onPreview={(w) => setPreview(w)}
+                />
 
             <div className={styles.backRow}>
               <button type="button" className={styles.ghostBtn} onClick={() => setView('map')}>
