@@ -19,3 +19,6 @@ next-env.d.ts
 
 # Brainstorm visual companion
 .superpowers/
+
+# 字体子集原文件缓存(~50MB)
+resources/fonts-src/

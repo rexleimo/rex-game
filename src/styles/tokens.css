@@ -34,3 +34,19 @@
   --g-section-gap: clamp(7.5rem, 15vw, 12.5rem);
   --g-radius: 2px;
 }
+
+/* —— 自托管字体子集(pnpm fonts 生成,1447 字) —— */
+@font-face {
+  font-family: 'Noto Serif SC';
+  src: url('/fonts/NotoSerifSC-subset.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  src: url('/fonts/NotoSansSC-subset.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

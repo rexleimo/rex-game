@@ -77,16 +77,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="zh-CN">
       <head>
-        {/* 中文字体：思源宋体（展示）+ 思源黑体（正文）—— 后续可本地化托管 */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        {/* 自托管字体子集(public/fonts,pnpm fonts 生成):preload 展示 serif,正文 sans 随 @font-face swap */}
         <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
+          rel="preload"
+          href="/fonts/NotoSerifSC-subset.woff2"
+          as="font"
+          type="font/woff2"
           crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap"
-          rel="stylesheet"
         />
       </head>
       <body>{children}</body>

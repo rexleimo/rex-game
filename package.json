@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "fonts": "bash scripts/fonts-subset.sh",
     "lint": "next lint",
     "preview": "npm run build && npx serve out -l 3040"
   },
