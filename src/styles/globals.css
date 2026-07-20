@@ -205,75 +205,100 @@ h3 {
   animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* 剪纸游戏页脚文化说明 */
+/* 剪纸游戏页脚文化说明 — 单列叠放，避免左栏短右栏高导致大片空暗底 */
 .jz-guide {
-  max-width: 1120px;
+  max-width: 920px;
   margin: 8px auto 60px;
-  padding: 28px clamp(16px, 3vw, 40px) 0;
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: clamp(20px, 4vw, 48px);
-  align-items: start;
+  padding: 36px clamp(16px, 3vw, 40px) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.jz-guide__rail {
+  padding: 1.6rem 1.5rem 1.4rem;
+  border: 1px solid color-mix(in srgb, var(--g-gold, #c9a24b) 28%, transparent);
+  border-radius: 8px;
+  background:
+    radial-gradient(80% 80% at 0% 0%, color-mix(in srgb, var(--g-cinnabar, #c82e21) 12%, transparent), transparent 55%),
+    var(--g-float, #1a130c);
+}
+.jz-guide__rail > p:first-child {
+  margin: 0 0 0.55rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--g-gold, #c9a24b);
 }
 .jz-guide__rail h2 {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(28px, 4vw, 40px);
-  color: var(--c-surface);
+  font-family: var(--g-font-display, var(--font-display));
+  font-weight: 700;
+  font-size: clamp(26px, 4vw, 36px);
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+  color: var(--g-text-hi, #f5ede0);
   margin: 0 0 14px;
 }
 .jz-guide__rail p {
-  font-family: var(--font-body);
+  font-family: var(--g-font-body, var(--font-body));
   font-size: 0.96rem;
-  line-height: 1.75;
-  color: var(--c-text-invert);
-  opacity: 0.86;
+  line-height: 1.8;
+  color: var(--g-text, rgba(232, 220, 196, 0.72));
   margin: 0 0 12px;
 }
 .jz-guide__notice {
   background: linear-gradient(180deg, #f7f0de, #efe4ca);
-  color: var(--c-text);
-  border: 1px solid var(--line-gold);
-  border-radius: var(--r);
-  padding: 20px;
+  color: var(--c-text, #1a120b);
+  border: 1px solid color-mix(in srgb, var(--g-gold, #c9a24b) 40%, transparent);
+  border-radius: 8px;
+  padding: 22px 24px;
 }
 .jz-guide__notice strong {
-  font-family: var(--font-display);
+  font-family: var(--g-font-display, var(--font-display));
   font-size: 1.05rem;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  letter-spacing: 0.08em;
+  color: #1a120b;
 }
 .jz-guide__notice ul {
   margin: 0;
   padding-left: 18px;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  line-height: 1.7;
-  color: var(--c-text-soft);
+  font-family: var(--g-font-body, var(--font-body));
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: rgba(26, 18, 11, 0.72);
 }
 .jz-guide__notice li { margin-bottom: 8px; }
 .jz-guide__rail a {
-  color: var(--c-gold-bright);
+  color: var(--g-gold-hi, #e8cf9a);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .jz-guide__notice dt {
   font-weight: 700;
   margin: 0.85rem 0 0.3rem;
-  color: var(--c-text);
+  color: #1a120b;
 }
 .jz-guide__notice dd {
   margin: 0;
   font-size: 0.88rem;
   line-height: 1.7;
-  color: var(--c-text-soft);
+  color: rgba(26, 18, 11, 0.68);
 }
 .jz-guide__notice dl {
   margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.15rem 1.5rem;
 }
-
-@media (max-width: 860px) {
-  .jz-guide { grid-template-columns: 1fr; }
+/* FAQ 双列填满，避免单列过长 */
+@media (min-width: 720px) {
+  .jz-guide__notice dl {
+    grid-template-columns: 1fr 1fr;
+  }
+  .jz-guide__notice dl > div {
+    break-inside: avoid;
+  }
 }
 
 /* 首页「更多展品」 */

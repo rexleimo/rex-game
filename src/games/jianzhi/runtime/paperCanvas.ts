@@ -5,7 +5,8 @@ import { getMotif } from '../content/motifs';
 const PAPER_FILL_TOP = '#c8342b';
 const PAPER_FILL_BOTTOM = '#a5281f';
 const PAPER_EDGE = 'rgba(80, 18, 14, 0.55)';
-const MOTIF_SCALE = 0.4;
+/** 折面戳印尺度：略放大，便于在红纸上辨认镂空轮廓 */
+const MOTIF_SCALE = 0.46;
 const CUT_WIDTH = 0.032;
 /** Unfold reveal duration when motion is allowed (ms). */
 const UNFOLD_DURATION_MS = 1050;

@@ -898,20 +898,19 @@ export function JianzhiGame() {
                         </button>
                       ))}
                     </div>
-                  </div>
-                )}
-
-                {tool === 'motif' && selectedMotifDef && (
-                  <div className={styles.card}>
-                    <p className={styles.sideLabel}>
-                      当前纹样 · {evidenceLabel(selectedMotifDef.evidence)}
-                    </p>
-                    <strong>
-                      {selectedMotifDef.name}{' '}
-                      <small>{selectedMotifDef.pinyin}</small>
-                    </strong>
-                    <p className={styles.focusNote}>{selectedMotifDef.meaning}</p>
-                    <p className={styles.focusNote}>{selectedMotifDef.lesson}</p>
+                    {selectedMotifDef && (
+                      <div className={styles.motifDetail}>
+                        <p className={styles.sideLabel}>
+                          当前 · {evidenceLabel(selectedMotifDef.evidence)}
+                        </p>
+                        <strong>
+                          {selectedMotifDef.name}{' '}
+                          <small>{selectedMotifDef.pinyin}</small>
+                        </strong>
+                        <p className={styles.focusNote}>{selectedMotifDef.meaning}</p>
+                        <p className={styles.focusNote}>{selectedMotifDef.lesson}</p>
+                      </div>
+                    )}
                   </div>
                 )}
 
