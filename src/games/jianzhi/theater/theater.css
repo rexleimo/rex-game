@@ -387,3 +387,20 @@
     display: none;
   }
 }
+
+/* —— 纸纹理叠加(剪纸台/画布框) —— */
+.th-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/assets/jianzhi/paper-red.webp');
+  background-size: 420px;
+  opacity: 0.06;
+  pointer-events: none;
+}
+.th-stage {
+  position: relative;
+}
+.th-stage > * {
+  position: relative;
+}
