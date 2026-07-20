@@ -1,0 +1,159 @@
+/* 游戏沉浸壳原语 —— Spec 4。仅 --g-* token，无硬编码 hex。
+ * spec: docs/superpowers/specs/2026-07-20-jiaobei-yingge-shell-design.md
+ */
+
+.gs-root {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  color: var(--g-cream);
+  background: var(--g-abyss);
+  font-family: var(--g-font-body);
+}
+
+.gs-head {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) auto minmax(8rem, 1fr);
+  align-items: center;
+  min-height: 64px;
+  padding: 0 clamp(1rem, 3vw, 3rem);
+  color: var(--g-text);
+  border-bottom: 1px solid color-mix(in srgb, var(--g-gold) 22%, transparent);
+  background: color-mix(in srgb, var(--g-lacquer) 88%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.gs-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--g-dur-micro) var(--g-ease);
+}
+.gs-back svg {
+  width: 1rem;
+  height: 1rem;
+}
+.gs-back:hover {
+  color: var(--g-gold-hi);
+}
+
+.gs-title {
+  margin: 0;
+  color: var(--g-text-hi);
+  font-family: var(--g-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-align: center;
+}
+
+.gs-edition {
+  justify-self: end;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--g-text-dim);
+}
+
+.gs-body {
+  min-width: 0;
+  min-height: 0;
+}
+
+.gs-eyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--g-gold);
+}
+
+.gs-panel {
+  border: 1px solid color-mix(in srgb, var(--g-gold) 22%, transparent);
+  border-radius: var(--g-radius);
+  background: var(--g-float);
+}
+
+.gs-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.85rem 1.8rem;
+  border: 1px solid transparent;
+  border-radius: var(--g-radius);
+  font-family: var(--g-font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    transform var(--g-dur-micro) var(--g-ease),
+    box-shadow var(--g-dur-micro) var(--g-ease),
+    background var(--g-dur-micro) var(--g-ease),
+    border-color var(--g-dur-micro) var(--g-ease),
+    color var(--g-dur-micro) var(--g-ease);
+}
+.gs-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+.gs-btn--primary {
+  background: var(--g-cinnabar);
+  color: var(--g-paper);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--g-cinnabar) 40%, transparent);
+}
+.gs-btn--primary:hover:not(:disabled) {
+  background: var(--g-cinnabar-hi);
+  transform: translateY(-2px);
+}
+.gs-btn--ghost {
+  border-color: color-mix(in srgb, var(--g-gold) 50%, transparent);
+  color: var(--g-gold);
+  background: transparent;
+}
+.gs-btn--ghost:hover:not(:disabled) {
+  border-color: var(--g-gold);
+  background: color-mix(in srgb, var(--g-gold) 10%, transparent);
+  transform: translateY(-2px);
+}
+
+.gs-root :focus-visible {
+  outline: 2px solid var(--g-gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .gs-head {
+    grid-template-columns: auto 1fr;
+    min-height: 56px;
+  }
+  .gs-title {
+    justify-self: end;
+    font-size: 0.86rem;
+    letter-spacing: 0.18em;
+  }
+  .gs-edition {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gs-btn,
+  .gs-back {
+    transition: none;
+  }
+  .gs-btn--primary:hover:not(:disabled),
+  .gs-btn--ghost:hover:not(:disabled) {
+    transform: none;
+  }
+}
