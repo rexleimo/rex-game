@@ -24,6 +24,8 @@ import type {
 } from './core/types';
 import type { YinggeRuntimeHandle } from './runtime/createYinggeGame';
 import styles from './YinggeGame.module.css';
+import { GameChrome } from '@/components/game/GameChrome';
+import '@/styles/game-shell.css';
 
 const SETTINGS_KEY = 'rex-game:yingge:settings:v1';
 const PROGRESS_KEY = 'rex-game:yingge:campaign:v2';
@@ -173,13 +175,8 @@ export function YinggeGame() {
       <div className="yg-grain" aria-hidden />
 
       {view === 'menu' && (
+        <GameChrome title="潮汕英歌" edition={`已开放 ${progress.unlocked} / ${YINGGE_CHAPTERS.length}`}>
         <div className="yg-start">
-          <header className="yg-start-rail">
-            <p>REX GAME / 非遗互动展品 02</p>
-            <p>CHAOSHAN YINGGE</p>
-            <span>已开放 {progress.unlocked} / {YINGGE_CHAPTERS.length}</span>
-          </header>
-
           <div className="yg-start-stage">
             <section className="yg-start-copy">
               <p className="yg-eyebrow">巡游开路 / 合槌成阵</p>
@@ -187,7 +184,7 @@ export function YinggeGame() {
               <p className="yg-start-intro">带领英歌队沿乡里巡游，以槌法击散游戏化的瘴气阻障，在自由格斗中踩准锣鼓、切换队形，完成一场有气势的战舞会演。</p>
 
               <nav className="yg-start-menu" aria-label="开始菜单">
-                <button className="is-primary" type="button" onClick={() => void beginPerformance()}>
+                <button className="is-primary gs-btn--primary" type="button" onClick={() => void beginPerformance()}>
                   <span>01</span><strong>主线演出</strong><small>继续：{selectedChapter.title}</small>
                 </button>
                 <button type="button" onClick={() => setView('chapters')}>
@@ -221,9 +218,11 @@ export function YinggeGame() {
             <span>进度保存于本地</span>
           </footer>
         </div>
+        </GameChrome>
       )}
 
       {view === 'guide' && (
+        <GameChrome title="潮汕英歌" edition="巡游手册">
         <div className="yg-guide">
           <header className="yg-guide-head">
             <div>
@@ -232,8 +231,8 @@ export function YinggeGame() {
               <p>先辨认阻障，再选择槌法和阵形；最后听准鼓心出槌。三项配合正确，才会获得最高伤害、士气与合队成绩。</p>
             </div>
             <div className="yg-guide-head-actions">
-              <button className="yg-secondary" type="button" onClick={() => setView('menu')}>返回菜单</button>
-              <button className="yg-primary" type="button" onClick={() => void beginPerformance()}>看完 · 击鼓开演</button>
+              <button className="gs-btn gs-btn--ghost" type="button" onClick={() => setView('menu')}>返回菜单</button>
+              <button className="gs-btn gs-btn--primary" type="button" onClick={() => void beginPerformance()}>看完 · 击鼓开演</button>
             </div>
           </header>
 
@@ -281,12 +280,14 @@ export function YinggeGame() {
 
           <footer className="yg-guide-foot">
             <p><strong>文化说明：</strong>这里的槌法名称属于游戏交互化表达，不代表潮汕各地英歌队统一使用同一套动作称谓。</p>
-            <button className="yg-primary" type="button" onClick={() => void beginPerformance()}>我已看懂 · 开始巡游</button>
+            <button className="gs-btn gs-btn--primary" type="button" onClick={() => void beginPerformance()}>我已看懂 · 开始巡游</button>
           </footer>
         </div>
+        </GameChrome>
       )}
 
       {view === 'chapters' && (
+        <GameChrome title="潮汕英歌" edition="章节选择">
         <div className="yg-shell">
           <header className="yg-masthead">
             <div>
@@ -302,10 +303,10 @@ export function YinggeGame() {
               <p className="yg-dropcap">战舞开路，合槌成阵。</p>
               <p>敌对形象只代表游戏化的瘴气与巡游阻障，不把真实神祇塑造成普通敌人。你可以自由出槌；踩中锣鼓重拍会获得残影、伤害与士气奖励。</p>
               <div className="yg-actions">
-                <button className="yg-primary" type="button" onClick={() => void beginPerformance()}>击鼓开演</button>
-                <button className="yg-secondary" type="button" onClick={() => setView('guide')}>巡游手册</button>
-                <button className="yg-secondary" type="button" onClick={() => setView('archive')}>文化档案</button>
-                <button className="yg-secondary" type="button" onClick={() => setView('menu')}>返回开始菜单</button>
+                <button className="gs-btn gs-btn--primary" type="button" onClick={() => void beginPerformance()}>击鼓开演</button>
+                <button className="gs-btn gs-btn--ghost" type="button" onClick={() => setView('guide')}>巡游手册</button>
+                <button className="gs-btn gs-btn--ghost" type="button" onClick={() => setView('archive')}>文化档案</button>
+                <button className="gs-btn gs-btn--ghost" type="button" onClick={() => setView('menu')}>返回开始菜单</button>
               </div>
               {runtimeError && <p className="yg-error" role="alert">{runtimeError}</p>}
             </div>
@@ -357,9 +358,11 @@ export function YinggeGame() {
 
 
         </div>
+        </GameChrome>
       )}
 
       {view === 'settings' && (
+        <GameChrome title="潮汕英歌" edition="游戏设置">
         <div className="yg-shell">
           <header className="yg-masthead">
             <div>
@@ -390,20 +393,21 @@ export function YinggeGame() {
             </div>
           </section>
           <div className="yg-actions">
-            <button className="yg-primary" type="button" onClick={() => setView('menu')}>返回开始菜单</button>
-            <button className="yg-secondary" type="button" onClick={() => setView('chapters')}>进入章节选择</button>
+            <button className="gs-btn gs-btn--primary" type="button" onClick={() => setView('menu')}>返回开始菜单</button>
+            <button className="gs-btn gs-btn--ghost" type="button" onClick={() => setView('chapters')}>进入章节选择</button>
           </div>
         </div>
+        </GameChrome>
       )}
 
       {view === 'playing' && (
         <div className="yg-performance">
           <div className="yg-performance-bar">
-            <button type="button" onClick={leavePerformance}>退出巡游</button>
+            <button className="gs-btn gs-btn--ghost" type="button" onClick={leavePerformance}>退出巡游</button>
             <p>{selectedChapter.title} <span>{selectedChapter.tempoLabel}</span></p>
             <div className="yg-performance-tools">
               <span>不是乱打：看破障提示 · 选槌法 · 合阵形 · 踩鼓心</span>
-              <button type="button" onClick={() => runtimeRef.current?.togglePause()}>暂停</button>
+              <button className="gs-btn gs-btn--ghost" type="button" onClick={() => runtimeRef.current?.togglePause()}>暂停</button>
             </div>
           </div>
           <div className="yg-canvas" ref={canvasHost} />
@@ -412,13 +416,14 @@ export function YinggeGame() {
           {runtimeError && (
             <div className="yg-runtime-error" role="alert">
               <p>{runtimeError}</p>
-              <button type="button" onClick={leavePerformance}>返回章节</button>
+              <button className="gs-btn gs-btn--ghost" type="button" onClick={leavePerformance}>返回章节</button>
             </div>
           )}
         </div>
       )}
 
       {view === 'result' && result && (
+        <GameChrome title="潮汕英歌" edition="演出结果">
         <div className="yg-result">
           <div className="yg-result-mark">
             <span>{result.victory ? '本场评定' : '巡游未竟'}</span>
@@ -437,18 +442,20 @@ export function YinggeGame() {
             </div>
             <p className="yg-unlock">{result.victory ? `本章文化档案已收入：${selectedChapter.culturalFocus}` : `剩余体力 ${result.remainingHp} · 失败不会解锁后续章节`}</p>
             <div className="yg-actions">
-              <button className="yg-primary" type="button" onClick={() => void beginPerformance()}>重新挑战</button>
+              <button className="gs-btn gs-btn--primary" type="button" onClick={() => void beginPerformance()}>重新挑战</button>
               {result.victory && selectedChapter.order < YINGGE_CHAPTERS.length && (
-                <button className="yg-secondary" type="button" onClick={playNextChapter}>下一章</button>
+                <button className="gs-btn gs-btn--ghost" type="button" onClick={playNextChapter}>下一章</button>
               )}
-              <button className="yg-secondary" type="button" onClick={() => setView('chapters')}>返回章节</button>
-              {result.victory && <button className="yg-secondary" type="button" onClick={() => setView('archive')}>查看新档案</button>}
+              <button className="gs-btn gs-btn--ghost" type="button" onClick={() => setView('chapters')}>返回章节</button>
+              {result.victory && <button className="gs-btn gs-btn--ghost" type="button" onClick={() => setView('archive')}>查看新档案</button>}
             </div>
           </div>
         </div>
+        </GameChrome>
       )}
 
       {view === 'archive' && (
+        <GameChrome title="潮汕英歌" edition="文化档案">
         <div className="yg-archive">
           <header>
             <div>
@@ -456,7 +463,7 @@ export function YinggeGame() {
               <h2>文化档案</h2>
               <p>资料记载、民间流传与游戏化演绎分开标识。英歌各地有别，不用一个版本覆盖全部地方传统。</p>
             </div>
-            <button type="button" onClick={() => setView(result ? 'result' : 'menu')}>返回</button>
+            <button className="gs-btn gs-btn--ghost" type="button" onClick={() => setView(result ? 'result' : 'menu')}>返回</button>
           </header>
           <div className="yg-archive-grid">
             {unlockedCulture.map((entry, index) => (
@@ -471,6 +478,7 @@ export function YinggeGame() {
             ))}
           </div>
         </div>
+        </GameChrome>
       )}
     </section>
   );

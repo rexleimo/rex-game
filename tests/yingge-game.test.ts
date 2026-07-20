@@ -246,3 +246,14 @@ test('the game is registered and exposed as a statically rendered culture page',
   assert.match(gameSource, /文化档案/);
   assert.match(gameSource, /音画校准/);
 });
+
+test('YinggeGame shell imports GameChrome and gs button classes on non-play views', () => {
+  assert.match(gameSource, /from ['"]@\/components\/game\/GameChrome['"]/);
+  assert.match(gameSource, /game-shell\.css/);
+  assert.match(gameSource, /gs-btn--primary/);
+  assert.match(gameSource, /gs-btn--ghost/);
+  assert.ok(
+    gameSource.includes('<GameChrome') || gameSource.includes('gs-head'),
+    'expected GameChrome or gs-head on yingge shell',
+  );
+});
