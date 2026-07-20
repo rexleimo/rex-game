@@ -28,7 +28,11 @@ test('registry lists all first-batch culture pages with SEO minimums', () => {
     assert.ok(paths.has(path), `missing ${path}`);
   }
   for (const page of pages) {
-    assert.ok(page.quickAnswer.length >= 3, `${page.path} needs ≥3 quickAnswer sentences`);
+    assert.ok(page.quickAnswer.length >= 1, `${page.path} needs quickAnswer sentences`);
+    assert.ok(
+      page.quickAnswer.join('').length <= 80,
+      `${page.path} quickAnswer should stay ≤80 chars (spec 2 GEO 规范)`,
+    );
     assert.ok(page.faq.length >= 4, `${page.path} needs ≥4 FAQ`);
     assert.ok(page.sources.length >= 1, `${page.path} needs sources`);
     assert.ok(page.h1.length > 0);
