@@ -40,6 +40,7 @@ import { TheaterMap } from './theater/TheaterMap';
 import { ActShell } from './theater/ActShell';
 import { DialogueBar } from './theater/DialogueBar';
 import { CutBench } from './theater/CutBench';
+import { UnfoldCeremony } from './theater/UnfoldCeremony';
 import './theater/theater.css';
 
 const WORKS_KEY = 'rex-game:jianzhi:works:v1';
@@ -200,6 +201,7 @@ export function JianzhiGame() {
   const [preview, setPreview] = useState<SavedWork | null>(null);
   const [revealPhrase, setRevealPhrase] = useState('');
   const [revealPrinciple, setRevealPrinciple] = useState('');
+  const [revealImage, setRevealImage] = useState('');
   const [quizPick, setQuizPick] = useState<number | null>(null);
   const [quizExplainVisible, setQuizExplainVisible] = useState(false);
   const [resultReward, setResultReward] = useState('');
@@ -465,6 +467,7 @@ export function JianzhiGame() {
     }
     setRevealPhrase(phrase);
     setRevealPrinciple(principle);
+    setRevealImage(engine.exportPNG(2));
     setPhase('reveal');
   }, [activeObjective, flashToast, playChime]);
 
@@ -905,18 +908,13 @@ export function JianzhiGame() {
           )}
 
           {phase === 'reveal' && (
-            <div className={styles.reveal} role="dialog" aria-label="吉语揭晓">
-              <div className={styles.revealInner}>
-                <p className={styles.sideLabel}>展开见花</p>
-                <h2 className={styles.revealPhrase}>{revealPhrase || '功课达成'}</h2>
-                <p className={styles.revealPrinciple}>{revealPrinciple}</p>
-                <div className={styles.revealActions}>
-                  <button type="button" className={styles.primaryBtn} onClick={goQuizOrResult}>
-                    继续
-                  </button>
-                </div>
-              </div>
-            </div>
+            <UnfoldCeremony
+              image={revealImage}
+              phrase={revealPhrase || null}
+              principle={revealPrinciple || null}
+              reducedMotion={settings.reducedMotion}
+              onClose={goQuizOrResult}
+            />
           )}
 
           {phase === 'quiz' && activeQuiz && (

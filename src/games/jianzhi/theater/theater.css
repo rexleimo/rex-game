@@ -284,3 +284,106 @@
 .th-skip {
   color: var(--g-text-dim);
 }
+
+/* —— 展开电影时刻 —— */
+.th-ceremony {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.6rem;
+  background: rgba(10, 7, 5, 0.96);
+  overflow: hidden;
+}
+.th-ceremony-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(50% 45% at 50% 46%, rgba(200, 46, 33, 0.35), transparent 70%);
+  animation: th-glow 2.2s var(--g-ease) both;
+}
+@keyframes th-glow {
+  from { opacity: 0; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+.th-ceremony-img {
+  position: relative;
+  width: min(64vw, 52vh);
+  border: 10px solid #f7f1e6;
+  outline: 2px solid var(--g-gold);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.7);
+  animation: th-zoom 1.2s var(--g-ease) both;
+}
+@keyframes th-zoom {
+  from { opacity: 0; transform: scale(0.6) rotate(-4deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+.th-ceremony-particles i {
+  position: absolute;
+  left: calc(8% + (var(--p) * 6%));
+  top: 55%;
+  width: 6px;
+  height: 6px;
+  background: var(--g-gold-hi);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  opacity: 0;
+  animation: th-spark 1.6s calc(var(--p) * 90ms) var(--g-ease) both;
+}
+@keyframes th-spark {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-42vh) scale(1.1) rotate(120deg); }
+}
+.th-ceremony-phrase {
+  position: relative;
+  text-align: center;
+  animation: th-phrase 0.9s var(--g-ease) both;
+}
+.th-ceremony-rebus {
+  margin: 0;
+  font-family: var(--g-font-display);
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  letter-spacing: 0.2em;
+  background: linear-gradient(120deg, #f5ede0 30%, var(--g-gold) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.th-ceremony-principle {
+  margin: 0.6rem 0 0;
+  font-size: 14px;
+  color: var(--g-text);
+}
+@keyframes th-phrase {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+.th-ceremony.stage-zoom .th-ceremony-phrase {
+  visibility: hidden;
+}
+.th-ceremony-skip {
+  position: absolute;
+  right: 4vw;
+  bottom: 4vh;
+  padding: 10px 20px;
+  background: none;
+  border: 1px solid rgba(201, 162, 75, 0.5);
+  border-radius: 2px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--g-gold);
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) {
+  .th-ceremony-glow,
+  .th-ceremony-img,
+  .th-ceremony-particles i,
+  .th-ceremony-phrase {
+    animation: none !important;
+  }
+  .th-ceremony-particles {
+    display: none;
+  }
+}
