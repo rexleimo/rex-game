@@ -64,8 +64,10 @@ html:has(.theme-gallery) body {
   border: 0;
 }
 
-/* —— 按钮:朱砂实底(主)/ 描金幽灵(次) —— */
-.g-btn {
+/* —— 按钮:朱砂实底(主)/ 描金幽灵(次) ——
+ * 含 .theme-gallery a.g-btn* 以压过 a { color: inherit } */
+.g-btn,
+.theme-gallery a.g-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -74,28 +76,36 @@ html:has(.theme-gallery) body {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.22em;
+  text-decoration: none;
   transition:
     transform var(--g-dur-micro) var(--g-ease),
     box-shadow var(--g-dur-micro) var(--g-ease),
     background var(--g-dur-micro) var(--g-ease),
-    border-color var(--g-dur-micro) var(--g-ease);
+    border-color var(--g-dur-micro) var(--g-ease),
+    color var(--g-dur-micro) var(--g-ease);
 }
-.g-btn--primary {
+.g-btn--primary,
+.theme-gallery a.g-btn--primary {
   background: var(--g-cinnabar);
   color: var(--g-paper);
   box-shadow: 0 10px 30px rgba(200, 46, 33, 0.35);
 }
-.g-btn--primary:hover {
+.g-btn--primary:hover,
+.theme-gallery a.g-btn--primary:hover {
   background: var(--g-cinnabar-hi);
+  color: var(--g-paper);
   transform: translateY(-2px);
 }
-.g-btn--ghost {
+.g-btn--ghost,
+.theme-gallery a.g-btn--ghost {
   border: 1px solid rgba(201, 162, 75, 0.5);
   color: var(--g-gold);
 }
-.g-btn--ghost:hover {
+.g-btn--ghost:hover,
+.theme-gallery a.g-btn--ghost:hover {
   border-color: var(--g-gold);
   background: rgba(201, 162, 75, 0.08);
+  color: var(--g-gold-hi);
   transform: translateY(-2px);
 }
 
@@ -828,19 +838,30 @@ html:has(.theme-gallery) body {
   letter-spacing: 0.1em;
   color: var(--g-paper);
 }
+/* 选择器须压过 .theme-gallery a { color: inherit }，否则字色继承成浅米，米底上看不清 */
+.theme-gallery a.ccta__btn,
 .ccta__btn {
   flex: none;
+  display: inline-flex;
+  align-items: center;
   background: var(--g-paper);
   color: var(--g-cinnabar-deep);
   border-radius: 2px;
   padding: 0.8rem 1.8rem;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.18em;
-  transition: transform var(--g-dur-micro) var(--g-ease);
+  text-decoration: none;
+  transition:
+    transform var(--g-dur-micro) var(--g-ease),
+    background var(--g-dur-micro) var(--g-ease),
+    color var(--g-dur-micro) var(--g-ease);
 }
+.theme-gallery a.ccta__btn:hover,
 .ccta__btn:hover {
   transform: translateY(-2px);
+  background: var(--g-cream);
+  color: var(--g-cinnabar);
 }
 @media (max-width: 760px) {
   .ccta__inner {
