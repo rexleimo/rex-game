@@ -1,5 +1,19 @@
 /* Museum Light — marketing / culture chrome (DESIGN.md) */
 
+/* When a museum shell is present, paint the document body too (avoids dark altar
+   edges / overscroll showing through a paper page). */
+html:has(.theme-museum) body {
+  color: #1a120b;
+  background: #f7f1e6;
+  background-image:
+    radial-gradient(120% 80% at 50% -20%, rgba(201, 162, 75, 0.08), transparent 50%),
+    radial-gradient(90% 50% at 100% 100%, rgba(178, 44, 37, 0.04), transparent 45%);
+}
+
+html:has(.theme-museum) body::before {
+  opacity: 0.03;
+}
+
 .theme-museum {
   --c-primary: #b22c25;
   --c-primary-hover: #96241e;

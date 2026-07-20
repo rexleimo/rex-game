@@ -252,6 +252,25 @@ h3 {
   color: var(--c-text-soft);
 }
 .jz-guide__notice li { margin-bottom: 8px; }
+.jz-guide__rail a {
+  color: var(--c-gold-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.jz-guide__notice dt {
+  font-weight: 700;
+  margin: 0.85rem 0 0.3rem;
+  color: var(--c-text);
+}
+.jz-guide__notice dd {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--c-text-soft);
+}
+.jz-guide__notice dl {
+  margin: 0;
+}
 
 @media (max-width: 860px) {
   .jz-guide { grid-template-columns: 1fr; }

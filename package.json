@@ -5,11 +5,12 @@
   "description": "rex-game — 静态娱乐游戏站（部署 Gitee Pages）。首个游戏：潮汕圣杯占卜。",
   "scripts": {
     "dev": "next dev -p 3030",
+    "dev:clean": "rm -rf .next && next dev -p 3030",
     "build": "next build",
     "start": "next start",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
     "lint": "next lint",
-    "preview": "npm run build && npx serve out"
+    "preview": "npm run build && npx serve out -l 3040"
   },
   "dependencies": {
     "@babylonjs/core": "^7.54.0",

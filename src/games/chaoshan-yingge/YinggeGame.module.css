@@ -475,8 +475,16 @@
 .root :global(.yingge-guide) { padding: 72px max(24px, calc((100vw - 1200px) / 2)); color: #eee2c8; background: #171411; }
 .root :global(.yingge-guide__rail) { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: 8vw; padding-bottom: 60px; border-bottom: 1px solid #5f5143; }
 .root :global(.yingge-guide h2) { margin: 0; font-family: "Noto Serif SC", serif; font-size: clamp(42px, 5vw, 76px); line-height: 1.1; }
-.root :global(.yingge-guide p), .root :global(.yingge-guide li) { color: #c7b99e; line-height: 1.9; }
-.root :global(.yingge-guide ul) { margin: 0; padding-left: 1.2em; }
+.root :global(.yingge-guide p),
+.root :global(.yingge-guide li),
+.root :global(.yingge-guide dt),
+.root :global(.yingge-guide dd) { color: #c7b99e; line-height: 1.9; }
+.root :global(.yingge-guide dt) { margin: 1rem 0 0.35rem; color: #eee2c8; font-weight: 700; }
+.root :global(.yingge-guide dd) { margin: 0; }
+.root :global(.yingge-guide ul),
+.root :global(.yingge-guide dl) { margin: 0; padding-left: 0; }
+.root :global(.yingge-guide ul) { padding-left: 1.2em; }
+.root :global(.yingge-guide a) { color: #e4c479; text-decoration: underline; text-underline-offset: 3px; }
 .root :global(.yingge-guide__notice) { margin: 40px 0 0; padding: 24px; border-left: 8px solid var(--yg-red-bright); background: #211c17; }
 
 @keyframes yg-sway {
