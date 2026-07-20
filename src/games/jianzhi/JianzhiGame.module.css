@@ -336,49 +336,64 @@
 
 .canvasFrame {
   position: relative;
-  padding: clamp(16px, 3vw, 28px);
+  padding: clamp(18px, 3.2vw, 32px);
+  /* 暖漆木框：金箔高光 + 褐木，不是死黑 */
   background:
-    radial-gradient(ellipse at 30% 20%, rgba(201, 162, 75, 0.12), transparent 55%),
-    linear-gradient(145deg, #3a2618 0%, var(--jz-wood) 45%, #1c120c 100%);
-  border: 1px solid rgba(201, 162, 75, 0.35);
-  border-radius: calc(var(--jz-radius) + 4px);
-  box-shadow: var(--jz-shadow);
+    radial-gradient(ellipse 70% 55% at 22% 12%, rgba(232, 207, 154, 0.22), transparent 58%),
+    radial-gradient(ellipse 50% 40% at 88% 90%, rgba(166, 51, 43, 0.1), transparent 50%),
+    linear-gradient(152deg, #5a3d28 0%, #3a2618 38%, #2a1b12 72%, #241610 100%);
+  border: 1px solid rgba(201, 162, 75, 0.42);
+  border-radius: calc(var(--jz-radius) + 6px);
+  box-shadow:
+    0 1px 0 rgba(232, 207, 154, 0.12) inset,
+    0 18px 40px -22px rgba(20, 10, 6, 0.55);
 }
 
-/* 镂空洞后须是深色展台：destination-out 透出此底，红底会让纹样几乎不可见 */
+/*
+ * 镂空透出层 = 宣纸托裱（非纯黑）。
+ * destination-out 后洞口呈暖米白，对比红纸清晰，且像真正窗花托在宣纸上。
+ */
 .canvasHost {
   width: 100%;
   max-width: 560px;
   margin: 0 auto;
-  padding: 12px;
+  padding: 14px;
   background:
-    radial-gradient(ellipse at 50% 42%, rgba(200, 46, 33, 0.12), transparent 58%),
-    var(--g-abyss, #0a0705);
-  border-radius: var(--jz-radius-sm);
+    radial-gradient(ellipse 90% 70% at 50% 40%, #fffdf7 0%, transparent 62%),
+    linear-gradient(168deg, #faf6ec 0%, #f3ead6 42%, #e9dcc4 100%);
+  border-radius: 10px;
   box-shadow:
-    inset 0 0 0 1px rgba(201, 162, 75, 0.14),
-    inset 0 0 40px rgba(0, 0, 0, 0.35),
-    0 10px 28px -10px rgba(0, 0, 0, 0.65);
+    inset 0 0 0 1px rgba(201, 162, 75, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -12px 28px rgba(120, 80, 40, 0.06),
+    0 4px 14px -6px rgba(40, 22, 12, 0.28);
 }
 
 .canvasHost canvas {
   display: block;
   width: 100%;
-  border-radius: 6px;
-  /* 红纸浮在深漆展台上，剪口边缘更清晰 */
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+  border-radius: 7px;
+  /* 红纸轻轻浮在宣纸托上 */
+  box-shadow:
+    0 1px 0 rgba(255, 250, 240, 0.35),
+    0 10px 26px -12px rgba(120, 28, 22, 0.42),
+    0 2px 6px -2px rgba(40, 16, 12, 0.25);
 }
 
-/* Controls — 暗场壳 + 朱/金主次（对齐 v2 / 剧场） */
+/* Controls — 暖暗浮层 + 朱/金主次（避免死黑面板） */
 .controls {
   display: flex;
   flex-direction: column;
   gap: 14px;
   padding: 16px 18px;
-  background: var(--g-float, #1a130c);
-  border: 1px solid color-mix(in srgb, var(--g-gold, #c9a24b) 28%, transparent);
+  background:
+    radial-gradient(ellipse 80% 60% at 0% 0%, rgba(201, 162, 75, 0.08), transparent 55%),
+    linear-gradient(165deg, #241a12 0%, #1a130c 100%);
+  border: 1px solid color-mix(in srgb, var(--g-gold, #c9a24b) 32%, transparent);
   border-radius: var(--jz-radius);
-  box-shadow: 0 12px 32px -18px rgba(0, 0, 0, 0.55);
+  box-shadow:
+    0 1px 0 rgba(232, 207, 154, 0.06) inset,
+    0 12px 32px -18px rgba(20, 10, 6, 0.45);
   color: var(--g-cream, #e8dcc4);
 }
 
@@ -515,10 +530,14 @@
 
 .card {
   padding: 16px 18px;
-  background: var(--g-float, #1a130c);
-  border: 1px solid color-mix(in srgb, var(--g-gold, #c9a24b) 22%, transparent);
-  border-radius: 6px;
-  box-shadow: 0 10px 28px -16px rgba(0, 0, 0, 0.5);
+  background:
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(201, 162, 75, 0.07), transparent 50%),
+    linear-gradient(165deg, #261c14 0%, #1c140e 100%);
+  border: 1px solid color-mix(in srgb, var(--g-gold, #c9a24b) 26%, transparent);
+  border-radius: 8px;
+  box-shadow:
+    0 1px 0 rgba(232, 207, 154, 0.05) inset,
+    0 10px 28px -16px rgba(20, 10, 6, 0.45);
   color: var(--g-cream, #e8dcc4);
 }
 
@@ -667,11 +686,12 @@
   align-items: center;
   text-align: center;
   padding: 9px 4px;
-  border: 1px solid color-mix(in srgb, var(--g-gold, #c9a24b) 28%, transparent);
-  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--g-gold, #c9a24b) 30%, transparent);
+  border-radius: 6px;
   color: var(--g-cream, #e8dcc4);
-  background: var(--g-card, #241a10);
-  box-shadow: none;
+  /* 暖褐芯片，略提亮，别做成墨块 */
+  background: linear-gradient(180deg, #2e2218 0%, #241a12 100%);
+  box-shadow: 0 1px 0 rgba(232, 207, 154, 0.06) inset;
   transition: transform 0.12s ease, background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
 }
 
