@@ -99,6 +99,25 @@ html:has(.theme-gallery) body {
   transform: translateY(-2px);
 }
 
+/* —— 滚动显现(配合 Reveal 组件) —— */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity var(--g-dur-enter) var(--g-ease),
+    transform var(--g-dur-enter) var(--g-ease);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* —— 动效降级:全站只剩透明度过渡 —— */
 @media (prefers-reduced-motion: reduce) {
   .theme-gallery *,
