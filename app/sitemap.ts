@@ -21,6 +21,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
     {
+      url: 'https://game.rexai.top/llms.txt',
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.3,
+    },
+    {
       url: 'https://game.rexai.top/culture/',
       lastModified,
       changeFrequency: 'weekly',

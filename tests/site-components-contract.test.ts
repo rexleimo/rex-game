@@ -13,10 +13,10 @@ test('CultureDocument wires quick answer FAQ sources and play CTA', () => {
   assert.match(src, /JsonLd|buildCulturePageGraph/);
 });
 
-test('SiteHeader exposes culture and about nav', () => {
-  const src = readFileSync(new URL('src/components/site/SiteHeader.tsx', root), 'utf8');
+test('GalleryHeader exposes culture and about nav', () => {
+  const src = readFileSync(new URL('src/components/site/GalleryHeader.tsx', root), 'utf8');
   assert.match(src, /SITE_NAV/);
-  assert.match(src, /REX GAME/);
+  assert.match(src, /REX-GAME/);
   const site = readFileSync(new URL('src/content/site.ts', root), 'utf8');
   assert.match(site, /文化馆/);
   assert.match(site, /关于/);

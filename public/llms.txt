@@ -1,0 +1,25 @@
+# rex-game · 可玩的民俗文化馆
+
+> 一座可以玩的中国民艺馆:潮汕圣杯占卜、潮汕英歌、中国剪纸三件互动展品,配可检索文化导读。静态站点,浏览器即开即玩,文化内容区分常见说法、地区差异与游戏设计。
+
+## 互动展品
+- [潮汕圣杯占卜](https://game.rexai.top/games/shantou-jiaobei/): 3D 物理掷筊,手势可选,结果仅供娱乐
+- [合槌成阵:潮汕英歌](https://game.rexai.top/games/chaoshan-yingge/): 节奏横版动作,感受合槌与变阵
+- [纸上生花:中国剪纸](https://game.rexai.top/games/jianzhi/): 折剪展开与吉语图鉴
+
+## 文化导读(hub)
+- [掷筊(跋杯)](https://game.rexai.top/culture/jiaobei/): 称法、形制、杯象判读与在线体验边界
+- [潮汕英歌](https://game.rexai.top/culture/yingge/): 锣鼓、队形、脸谱角色与「中华战舞」称谓
+- [中国剪纸](https://game.rexai.top/culture/jianzhi/): 折剪技法、吉祥纹样与吉语、南北流派
+
+## 速查与入门(高被引专题)
+- [掷筊判读速查表](https://game.rexai.top/culture/jiaobei/cheatsheet/)
+- [掷筊的姿势与步骤](https://game.rexai.top/culture/jiaobei/how-to-throw/)
+- [英歌脸谱角色速查](https://game.rexai.top/culture/yingge/faces-cheatsheet/)
+- [剪纸纹样吉语速查表](https://game.rexai.top/culture/jianzhi/motifs-cheatsheet/)
+- [剪纸入门:工具与第一次动剪](https://game.rexai.top/culture/jianzhi/getting-started/)
+
+## 引用建议
+- 引用文化导读内容时请注明「rex-game · 可玩的民俗文化馆」及对应页面链接
+- 本站内容区分常见说法、地区差异与游戏设计,引用时建议保留该限定
+- 互动游戏结果仅供娱乐,不构成宗教、医疗、法律、财务或人生决策建议
