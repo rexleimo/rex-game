@@ -16,3 +16,6 @@ next-env.d.ts
 # editor
 .vscode/
 .idea/
+
+# Brainstorm visual companion
+.superpowers/
