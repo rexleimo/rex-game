@@ -10,6 +10,21 @@ test('ActShell renders act progress, scene and children', () => {
   assert.match(src, /th-scene/);
   assert.match(src, /SceneArt/);
   assert.match(src, /children/);
+  // C 图优先 / B art / A 皆无隐藏；练功房用 badge 而非假进度
+  assert.match(src, /showScene/);
+  assert.match(src, /th-act-badge/);
+});
+
+test('SceneArt includes dedicated practice studio art', () => {
+  const src = readFileSync(new URL('src/games/jianzhi/theater/SceneArt.tsx', root), 'utf8');
+  assert.match(src, /practice/);
+  assert.match(src, /练 功 房/);
+});
+
+test('PRACTICE_ACT uses practice scene art not reunion placeholder', () => {
+  const src = readFileSync(new URL('src/games/jianzhi/JianzhiGame.tsx', root), 'utf8');
+  assert.match(src, /art:\s*'practice'/);
+  assert.doesNotMatch(src, /PRACTICE_ACT[\s\S]{0,200}art:\s*'reunion'/);
 });
 
 test('DialogueBar plays lines sequentially and can finish', () => {

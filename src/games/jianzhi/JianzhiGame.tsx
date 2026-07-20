@@ -61,7 +61,12 @@ const PRACTICE_ACT = {
   no: '练功房',
   theme: '自由折剪',
   curtainHint: '',
-  scene: { art: 'reunion' as const, caption: '练功房 · 自由折剪' },
+  // B：专用 practice 场景 SVG；C：若日后有大图可填 image（优先于 art）
+  scene: {
+    art: 'practice' as const,
+    caption: '木案 · 自由落剪',
+    // image: '/assets/jianzhi/scenes/scene-practice.webp',
+  },
   character: { name: '纸灵', avatar: '灵', role: '陪练' },
   lessonIds: [],
   unlocked: true,
@@ -749,7 +754,7 @@ export function JianzhiGame() {
             <ActShell
               act={lessonAct ?? PRACTICE_ACT}
               lessonIndex={actLessonIndex}
-              lessonCount={lessonAct ? lessonAct.lessons.length : 1}
+              lessonCount={lessonAct ? lessonAct.lessons.length : 0}
               onBack={leaveWorkshop}
             >
           {phase === 'reading' && activeObjective ? (

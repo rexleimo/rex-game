@@ -255,13 +255,71 @@ export function createPaperCanvas(
     }
   }
 
+  /** 折叠态未激活区域：盖上深红「折背」，勿用 destination-out（会把活动面红纸一起抠掉） */
+  function drawFoldedBack(c: CanvasRenderingContext2D) {
+    if (!folded || revealT >= 0.999) return;
+    if (foldConfig.clip === 'rect' && foldConfig.rect) {
+      const [x0, y0, x1, y1] = foldConfig.rect;
+      const ax0 = x0 + (0 - x0) * revealT;
+      const ay0 = y0 + (0 - y0) * revealT;
+      const ax1 = x1 + (1 - x1) * revealT;
+      const ay1 = y1 + (1 - y1) * revealT;
+      const px = (v: number) => v * size;
+      c.save();
+      // 折背底色（比正面红纸更深）
+      const back = c.createLinearGradient(0, 0, size, size);
+      back.addColorStop(0, '#7a241c');
+      back.addColorStop(1, '#5a1814');
+      c.fillStyle = back;
+      // 左 | 右 | 上（活动列内）| 下（活动列内）
+      if (ax0 > 0.001) c.fillRect(0, 0, px(ax0), size);
+      if (ax1 < 0.999) c.fillRect(px(ax1), 0, size - px(ax1), size);
+      if (ay0 > 0.001) c.fillRect(px(ax0), 0, px(ax1 - ax0), px(ay0));
+      if (ay1 < 0.999) c.fillRect(px(ax0), px(ay1), px(ax1 - ax0), size - px(ay1));
+      // 轻压暗，增强「折到下面」
+      c.fillStyle = 'rgba(20, 6, 4, 0.22)';
+      if (ax0 > 0.001) c.fillRect(0, 0, px(ax0), size);
+      if (ax1 < 0.999) c.fillRect(px(ax1), 0, size - px(ax1), size);
+      if (ay0 > 0.001) c.fillRect(px(ax0), 0, px(ax1 - ax0), px(ay0));
+      if (ay1 < 0.999) c.fillRect(px(ax0), px(ay1), px(ax1 - ax0), size - px(ay1));
+      c.restore();
+    } else if (foldConfig.clip === 'sector') {
+      const step = (2 * Math.PI) / ROSETTE_N;
+      const half = step / 2 + (Math.PI - step / 2) * revealT;
+      const R = size * 0.74;
+      const cx = size / 2;
+      const cy = size / 2;
+      c.save();
+      // evenodd：整幅矩形减去扇形活动区 = 折背
+      c.fillStyle = '#6a1f18';
+      c.beginPath();
+      c.rect(0, 0, size, size);
+      c.moveTo(cx, cy);
+      c.arc(cx, cy, R, -half, half, false);
+      c.closePath();
+      c.fill('evenodd');
+      c.fillStyle = 'rgba(20, 6, 4, 0.22)';
+      c.beginPath();
+      c.rect(0, 0, size, size);
+      c.moveTo(cx, cy);
+      c.arc(cx, cy, R, -half, half, false);
+      c.closePath();
+      c.fill('evenodd');
+      c.restore();
+    }
+  }
+
   function render() {
     const c = ctx!;
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
     c.clearRect(0, 0, size, size);
+    // 1) 整张红纸（不 clip）— 折起后未剪面仍是纸，不是展台底色
+    drawPaper(c);
+    // 2) 折叠态：未激活面画成折背
+    drawFoldedBack(c);
+    // 3) 仅在活动折面镂空
     c.save();
     applyClip(c);
-    drawPaper(c);
     c.globalCompositeOperation = 'destination-out';
     for (const mark of marks) drawMark(c, mark);
     if (currentStroke && currentStroke.points.length > 0) drawMark(c, { type: 'stroke', ...currentStroke });

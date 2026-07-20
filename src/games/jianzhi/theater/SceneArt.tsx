@@ -1,5 +1,7 @@
-// 幕场景 SVG:场景大图上线前的默认视觉;四幕各一组几何意象(暗场金红)
-export function SceneArt({ art }: { art: 'newyear' | 'wedding' | 'silk' | 'reunion' }) {
+// 幕场景 SVG：大图上线前的默认视觉；含练功房专用意象
+export type SceneArtKind = 'newyear' | 'wedding' | 'silk' | 'reunion' | 'practice';
+
+export function SceneArt({ art }: { art: SceneArtKind }) {
   if (art === 'newyear') {
     return (
       <svg className="th-scene-art" viewBox="0 0 800 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
@@ -73,6 +75,65 @@ export function SceneArt({ art }: { art: 'newyear' | 'wedding' | 'silk' | 'reuni
       </svg>
     );
   }
+  if (art === 'practice') {
+    // 练功房：木案 + 红纸菱 + 剪刀剪影，避免借团圆幕占位
+    return (
+      <svg className="th-scene-art" viewBox="0 0 800 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="sa-desk" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#3A2618" />
+            <stop offset="100%" stopColor="#1C120C" />
+          </linearGradient>
+          <radialGradient id="sa-glow" cx="50%" cy="40%" r="55%">
+            <stop offset="0%" stopColor="#C9A24B" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#C9A24B" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="800" height="240" fill="#120B07" />
+        <rect width="800" height="240" fill="url(#sa-glow)" />
+        {/* 木案台面 */}
+        <rect x="80" y="150" width="640" height="70" rx="4" fill="url(#sa-desk)" />
+        <rect x="80" y="150" width="640" height="8" fill="#C9A24B" opacity="0.25" />
+        {/* 红纸 */}
+        <rect x="300" y="70" width="120" height="120" rx="6" fill="#C82E21" />
+        <rect x="308" y="78" width="104" height="104" rx="3" fill="none" stroke="#E8CF9A" strokeWidth="1.5" opacity="0.35" />
+        {/* 窗花菱形镂空示意 */}
+        <g fill="#F7F1E6" opacity="0.92">
+          <rect x="344" y="114" width="32" height="32" transform="rotate(45 360 130)" />
+        </g>
+        <g fill="#120B07" opacity="0.35">
+          <rect x="352" y="122" width="16" height="16" transform="rotate(45 360 130)" />
+        </g>
+        {/* 剪刀（简化几何） */}
+        <g transform="translate(470 95)" stroke="#E8CF9A" strokeWidth="3" fill="none" strokeLinecap="round">
+          <circle cx="0" cy="0" r="10" />
+          <circle cx="28" cy="0" r="10" />
+          <path d="M8 6 L40 48" />
+          <path d="M20 6 L-8 48" />
+          <circle cx="14" cy="8" r="3" fill="#C9A24B" stroke="none" />
+        </g>
+        {/* 散落纹样点缀 */}
+        <g fill="#C82E21" opacity="0.55">
+          <circle cx="200" cy="120" r="5" />
+          <circle cx="220" cy="135" r="3.5" />
+          <circle cx="580" cy="125" r="4" />
+        </g>
+        <text
+          x="400"
+          y="48"
+          textAnchor="middle"
+          fill="#E8CF9A"
+          fontSize="13"
+          letterSpacing="6"
+          fontFamily="serif"
+          opacity="0.75"
+        >
+          练 功 房
+        </text>
+      </svg>
+    );
+  }
+  // reunion 默认
   return (
     <svg className="th-scene-art" viewBox="0 0 800 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
