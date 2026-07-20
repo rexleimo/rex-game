@@ -654,3 +654,40 @@ html:has(.theme-gallery) body {
     padding-left: 0;
   }
 }
+
+/* —— 关于页暗场文档 —— */
+.g-doc {
+  max-width: 44rem;
+  margin-inline: auto;
+  padding: 5rem 4vw 7rem;
+}
+.g-doc h1 {
+  margin: 0.6rem 0 1.6rem;
+  font-family: var(--g-font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  color: var(--g-text-hi);
+}
+.g-doc h2 {
+  margin: 2.8rem 0 0.7rem;
+  font-family: var(--g-font-display);
+  font-size: 1.35rem;
+  letter-spacing: 0.1em;
+  color: var(--g-gold);
+}
+.g-doc p {
+  margin: 0 0 1.1rem;
+  color: var(--g-text);
+}
+.g-doc strong {
+  color: var(--g-cream);
+}
+.g-doc a {
+  color: var(--g-gold);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.g-doc a:hover {
+  color: var(--g-gold-hi);
+}

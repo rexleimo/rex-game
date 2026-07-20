@@ -9,11 +9,11 @@ import '@/styles/jiaobei.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://game.rexai.top'),
   title: {
-    default: 'rex-game · 趣玩小游戏站',
+    default: 'rex-game · 可玩的民俗文化馆',
     template: '%s · rex-game',
   },
   description:
-    'rex-game —— 浏览器中的民俗文化馆。潮汕圣杯、潮汕英歌、中国剪纸：可玩展品与可检索文化导读，无需下载。',
+    '一座可以玩的中国民艺馆:潮汕圣杯占卜、潮汕英歌、中国剪纸——可玩展品与可检索文化导读,无需下载,即开即玩。',
   applicationName: 'rex-game',
   authors: [{ name: 'rexai', url: 'https://game.rexai.top' }],
   keywords: [
@@ -49,8 +49,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'zh_CN',
     siteName: 'rex-game',
-    title: '潮汕圣杯占卜 · rex-game',
-    description: '双手合十，掷筊问愿 —— 圣杯、笑杯、阴杯，神明如何回你？',
+    title: 'rex-game · 可玩的民俗文化馆',
+    description: '一座可以玩的中国民艺馆:掷筊问愿、英歌合槌、折剪生花,即开即玩。',
     url: 'https://game.rexai.top',
     images: [
       {
@@ -63,14 +63,14 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '潮汕圣杯占卜 · rex-game',
-    description: '双手合十，掷筊问愿 —— 圣杯、笑杯、阴杯，神明如何回你？',
+    title: 'rex-game · 可玩的民俗文化馆',
+    description: '一座可以玩的中国民艺馆:掷筊问愿、英歌合槌、折剪生花,即开即玩。',
     images: ['/assets/jiaobei-hero.png'],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#17100b',
+  themeColor: '#0A0705',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { SiteFooter } from '@/components/site/SiteFooter';
-import { SiteHeader } from '@/components/site/SiteHeader';
+import { GalleryFooter } from '@/components/site/GalleryFooter';
+import { GalleryHeader } from '@/components/site/GalleryHeader';
 import { SITE_DISCLAIMER, SITE_ORIGIN } from '@/content/site';
 import { JsonLd } from '@/components/site/JsonLd';
 
@@ -28,11 +28,11 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="theme-museum site-root">
+    <div className="theme-gallery">
       <JsonLd data={structuredData} />
-      <SiteHeader />
-      <main className="culture-doc">
-        <p className="site-hero__kicker">关于</p>
+      <GalleryHeader />
+      <main className="g-doc">
+        <p className="g-label">关于</p>
         <h1>rex-game · 可玩的民俗文化馆</h1>
         <p>
           本站把潮汕掷筊、潮汕英歌、中国剪纸等主题做成浏览器即可打开的互动展品，并辅以可检索的文化说明页。目标是
@@ -64,7 +64,7 @@ export default function AboutPage() {
           </p>
         </section>
       </main>
-      <SiteFooter />
+      <GalleryFooter />
     </div>
   );
 }
