@@ -25,7 +25,7 @@ export const games: GameMeta[] = [
   {
     id: 'shantou-jiaobei',
     name: '潮汕圣杯占卜',
-    tagline: '双手合十，掷筊问愿 —— 圣杯、笑杯、阴杯，神明如何回你？',
+    tagline: '双手合十,掷筊问愿——圣杯、笑杯、阴杯,看神明如何回你。',
     cover: '/assets/jiaobei-hero.png',
     href: '/games/shantou-jiaobei',
     badge: '新',
@@ -34,7 +34,7 @@ export const games: GameMeta[] = [
   {
     id: 'chaoshan-yingge',
     name: '合槌成阵：潮汕英歌',
-    tagline: '听鼓落槌，随队而行——在节奏与队形中认识潮汕英歌。',
+    tagline: '听鼓落槌,随队而行——在节奏与队形中认识「中华战舞」。',
     cover: '/assets/yingge/cover.svg',
     href: '/games/chaoshan-yingge',
     badge: '新作',
@@ -43,7 +43,7 @@ export const games: GameMeta[] = [
   {
     id: 'jianzhi',
     name: '纸上生花：中国剪纸',
-    tagline: '跟纸灵学徒：读帖、折剪、展开读懂吉语。',
+    tagline: '跟纸灵学徒:读帖、折剪、展开,读懂一纸吉语。',
     cover: '/assets/jianzhi/cover.svg',
     href: '/games/jianzhi',
     badge: '新作',
