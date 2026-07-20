@@ -22,3 +22,6 @@ next-env.d.ts
 
 # 字体子集原文件缓存(~50MB)
 resources/fonts-src/
+
+# AI 生图中间产物(大文件,管线可复现)
+generated/
