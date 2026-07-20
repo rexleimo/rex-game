@@ -37,6 +37,9 @@ import type {
 import styles from './JianzhiGame.module.css';
 import { useTheater } from './theater/useTheater';
 import { TheaterMap } from './theater/TheaterMap';
+import { ActShell } from './theater/ActShell';
+import { DialogueBar } from './theater/DialogueBar';
+import { CutBench } from './theater/CutBench';
 import './theater/theater.css';
 
 const WORKS_KEY = 'rex-game:jianzhi:works:v1';
@@ -48,6 +51,20 @@ const FOLD_OPTIONS: Array<{ id: FoldMode; label: string; hint: string }> = [
   { id: 'four', label: '四折', hint: '四向对称，窗花首选' },
   { id: 'rosette', label: '团花', hint: '旋转放射，丝路团花' },
 ];
+
+const PRACTICE_ACT = {
+  id: 'practice' as never,
+  order: 0,
+  no: '练功房',
+  theme: '自由折剪',
+  curtainHint: '',
+  scene: { art: 'reunion' as const, caption: '练功房 · 自由折剪' },
+  character: { name: '纸灵', avatar: '灵', role: '陪练' },
+  lessonIds: [],
+  unlocked: true,
+  lit: false,
+  lessons: [],
+};
 
 type View = 'enter' | 'map' | 'workshop' | 'codex' | 'settings';
 type ToolMode = 'motif' | 'cut';
@@ -197,6 +214,9 @@ export function JianzhiGame() {
   if (!audioRef.current) audioRef.current = createPaperAudio();
 
   const acts = useTheater(progress);
+  const lessonAct = activeLesson ? acts.find((a) => a.lessonIds.includes(activeLesson.id)) ?? null : null;
+  const actLessonIndex =
+    lessonAct && activeLesson ? lessonAct.lessons.findIndex((l) => l.id === activeLesson.id) + 1 : 1;
 
   const activeObjective = activeLesson ?? activeCommission;
   const isPractice = !activeLesson && !activeCommission;
@@ -684,12 +704,12 @@ export function JianzhiGame() {
                 })}
               </section>
             )}
-          </div>
         </div>
       )}
 
       {view === 'workshop' && (
         <div className={styles.workshop}>
+          {false && (
           <div className={styles.workshopBar}>
             <button type="button" className={styles.barBack} onClick={leaveWorkshop}>
               ← 功课地图
@@ -701,8 +721,23 @@ export function JianzhiGame() {
             </span>
           </div>
 
+          )}
+
+            <ActShell
+              act={lessonAct ?? PRACTICE_ACT}
+              lessonIndex={actLessonIndex}
+              lessonCount={lessonAct ? lessonAct.lessons.length : 1}
+              onBack={leaveWorkshop}
+            >
           {phase === 'reading' && activeObjective ? (
             <div className={styles.workshopBody} style={{ gridTemplateColumns: '1fr' }}>
+              {lessonAct ? (
+                <DialogueBar
+                  character={lessonAct.character}
+                  lines={activeObjective.narrative}
+                  onDone={beginCraft}
+                />
+              ) : null}
               <div className={styles.reading} role="region" aria-label="拜帖研读">
                 <h2 className={styles.readingTitle}>
                   {activeLesson ? '拜帖 · 先读再剪' : '委托拜帖 · 先读再剪'}
@@ -719,7 +754,7 @@ export function JianzhiGame() {
                   <strong>聚焦</strong>
                   <p style={{ margin: '6px 0 0' }}>{activeObjective.reading.focus}</p>
                 </div>
-                {activeObjective.narrative.map((line, i) => (
+                {lessonAct ? null : activeObjective.narrative.map((line, i) => (
                   <div key={i} className={styles.readingBlock}>
                     <p style={{ margin: 0 }}>{line}</p>
                   </div>
@@ -731,77 +766,21 @@ export function JianzhiGame() {
             </div>
           ) : (
             <div className={styles.workshopBody}>
-              <div className={styles.stage}>
-                <div className={styles.canvasFrame}>
-                  <div ref={canvasHost} className={styles.canvasHost} />
-                </div>
-
-                <div className={styles.controls}>
-                  <div className={styles.foldRow} role="group" aria-label="折法">
-                    {FOLD_OPTIONS.map((opt) => (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        className={`${styles.foldBtn} ${effectiveFold === opt.id ? styles.foldActive : ''}`}
-                        title={foldLocked ? `本课指定：${opt.hint}` : opt.hint}
-                        disabled={foldLocked}
-                        aria-disabled={foldLocked}
-                        onClick={() => {
-                          if (foldLocked) return;
-                          setFold(opt.id);
-                        }}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                  <div className={styles.toolRow}>
-                    <button
-                      type="button"
-                      className={`${styles.toolBtn} ${tool === 'motif' ? styles.toolActive : ''}`}
-                      onClick={() => setTool('motif')}
-                    >
-                      纹样戳印
-                    </button>
-                    <button
-                      type="button"
-                      className={`${styles.toolBtn} ${tool === 'cut' ? styles.toolActive : ''}`}
-                      onClick={() => setTool('cut')}
-                    >
-                      自由剪
-                    </button>
-                    <span className={styles.toolHint}>
-                      {tool === 'motif' ? '点折面落剪，纹样自动对称' : '在折面里拖动，划出镂空'}
-                    </span>
-                  </div>
-                  <div className={styles.actionRow}>
-                    <button type="button" className={styles.actionBtn} onClick={() => engineRef.current?.undo()}>
-                      撤销
-                    </button>
-                    <button type="button" className={styles.actionBtn} onClick={() => engineRef.current?.clear()}>
-                      清空
-                    </button>
-                    <button type="button" className={styles.actionBtn} onClick={() => engineRef.current?.fold()}>
-                      继续剪
-                    </button>
-                    <button
-                      type="button"
-                      className={`${styles.actionBtn} ${styles.unfoldBtn} ${objectiveReady ? styles.unfoldReady : ''}`}
-                      onClick={handleUnfold}
-                    >
-                      展开 ✦
-                    </button>
-                  </div>
-                  <div className={styles.saveRow}>
-                    <button type="button" className={styles.ghostBtn} onClick={saveWork}>
-                      存入作品
-                    </button>
-                    <button type="button" className={styles.ghostBtn} onClick={downloadCurrent}>
-                      下载图片
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <CutBench
+                canvasHostRef={canvasHost}
+                effectiveFold={effectiveFold}
+                foldLocked={foldLocked}
+                onFoldChange={setFold}
+                tool={tool}
+                onToolChange={setTool}
+                onUndo={() => engineRef.current?.undo()}
+                onClear={() => engineRef.current?.clear()}
+                onContinue={() => engineRef.current?.fold()}
+                onUnfold={handleUnfold}
+                unfoldReady={objectiveReady}
+                onSave={saveWork}
+                onDownload={downloadCurrent}
+              />
 
               <aside className={styles.side}>
                 {targetCombo && (
@@ -1012,6 +991,7 @@ export function JianzhiGame() {
               </div>
             </div>
           )}
+            </ActShell>
         </div>
       )}
 

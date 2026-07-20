@@ -158,3 +158,129 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* —— 幕内(ActShell) —— */
+.th-act {
+  width: min(1120px, 96vw);
+  margin-inline: auto;
+  padding-bottom: 6vh;
+}
+.th-act-top {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(201, 162, 75, 0.2);
+}
+.th-back {
+  padding: 6px 14px;
+  background: none;
+  border: 1px solid rgba(201, 162, 75, 0.4);
+  border-radius: 2px;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--g-gold);
+  cursor: pointer;
+}
+.th-act-name {
+  font-family: var(--g-font-display);
+  font-size: 17px;
+  letter-spacing: 0.15em;
+  color: var(--g-text-hi);
+}
+.th-act-progress {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+.th-act-progress i {
+  width: 26px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(201, 162, 75, 0.25);
+}
+.th-act-progress i.on {
+  background: var(--g-gold);
+  box-shadow: 0 0 8px rgba(201, 162, 75, 0.6);
+}
+.th-scene {
+  position: relative;
+  height: clamp(140px, 22vw, 220px);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(201, 162, 75, 0.15);
+}
+.th-scene-art,
+.th-scene-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.th-scene-cap {
+  position: absolute;
+  right: 18px;
+  bottom: 10px;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: rgba(232, 220, 196, 0.55);
+}
+.th-stage {
+  padding-top: 1.2rem;
+}
+
+/* —— 台词条(DialogueBar) —— */
+.th-dialog {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 1rem 1.2rem;
+  margin-top: 1rem;
+  background: rgba(18, 11, 7, 0.9);
+  border: 1px solid rgba(201, 162, 75, 0.25);
+  border-radius: 10px;
+}
+.th-avatar {
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(201, 162, 75, 0.6);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--g-gold-hi), #8a6b2f);
+  font-family: var(--g-font-display);
+  font-size: 19px;
+  color: #33200f;
+}
+.th-bubble {
+  flex: 1;
+}
+.th-who {
+  margin-bottom: 4px;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--g-gold);
+}
+.th-line {
+  margin: 0;
+  font-family: var(--g-font-display);
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--g-text-hi);
+}
+.th-next,
+.th-skip {
+  align-self: flex-end;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--g-gold);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.th-skip {
+  color: var(--g-text-dim);
+}
