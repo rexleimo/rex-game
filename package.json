@@ -11,6 +11,7 @@
     "test": "node --experimental-strip-types --test tests/*.test.ts",
     "fonts": "bash scripts/fonts-subset.sh",
     "og": "node scripts/generate-og.mjs",
+    "og:culture": "node --experimental-strip-types scripts/generate-culture-og.mjs",
     "lint": "next lint",
     "preview": "npm run build && npx serve out -l 3040"
   },

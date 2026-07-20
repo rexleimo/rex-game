@@ -18,6 +18,7 @@ export async function generateMetadata({
   const { hub, topic } = await params;
   const page = getCulturePage(hub, topic);
   if (!page) return {};
+  const ogImage = page.ogImage ?? `/assets/og/culture-${page.hub}-${page.slug}.png`;
   return {
     title: page.title,
     description: page.description,
@@ -27,6 +28,7 @@ export async function generateMetadata({
       title: page.title,
       description: page.description,
       url: `${SITE_ORIGIN}${page.path}`,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: page.title }],
     },
   };
 }
