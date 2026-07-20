@@ -1,0 +1,160 @@
+/* 纸上剧场 · 全局样式(引用 --g-* token;.th-* 命名空间) */
+.th-root {
+  min-height: 100vh;
+  background:
+    radial-gradient(90% 60% at 72% 0%, rgba(200, 46, 33, 0.14) 0%, transparent 55%),
+    var(--g-abyss);
+  color: var(--g-cream);
+  font-family: var(--g-font-body);
+}
+.th-kicker {
+  margin: 0 0 0.6rem;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  color: var(--g-gold);
+}
+.th-title {
+  margin: 0;
+  font-family: var(--g-font-display);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  letter-spacing: 0.06em;
+  color: var(--g-text-hi);
+}
+.th-sub {
+  margin: 0.8rem 0 0;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--g-text);
+}
+
+/* —— 幕布地图 —— */
+.th-map {
+  width: min(1080px, 94vw);
+  margin-inline: auto;
+  padding: 6vh 0 8vh;
+}
+.th-map-head {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+.th-curtains {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+.th-curtain {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-height: 220px;
+  padding: 1.4rem 1.2rem;
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid rgba(201, 162, 75, 0.35);
+  border-radius: 8px;
+  background: linear-gradient(120deg, rgba(168, 30, 20, 0.85), rgba(200, 46, 33, 0.55));
+  color: var(--g-paper);
+  overflow: hidden;
+  transition:
+    transform var(--g-dur-micro) var(--g-ease),
+    box-shadow var(--g-dur-micro) var(--g-ease),
+    border-color var(--g-dur-micro) var(--g-ease);
+}
+.th-curtain::before,
+.th-curtain::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 22%;
+  background: linear-gradient(90deg, rgba(10, 7, 5, 0.35), transparent);
+  transition: transform var(--g-dur-enter) var(--g-ease);
+  pointer-events: none;
+}
+.th-curtain::before {
+  left: 0;
+}
+.th-curtain::after {
+  right: 0;
+  transform: scaleX(-1);
+}
+.th-curtain:not(.is-locked):hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(200, 30, 20, 0.35);
+}
+.th-curtain:not(.is-locked):hover::before {
+  transform: translateX(-70%);
+}
+.th-curtain:not(.is-locked):hover::after {
+  transform: scaleX(-1) translateX(-70%);
+}
+.th-curtain.is-lit {
+  border-color: var(--g-gold);
+  box-shadow: 0 0 24px rgba(201, 162, 75, 0.25);
+}
+.th-curtain.is-locked {
+  cursor: not-allowed;
+  background: linear-gradient(120deg, var(--g-card), var(--g-float));
+  color: var(--g-text-dim);
+  border-color: rgba(201, 162, 75, 0.15);
+}
+.th-curtain-state {
+  padding: 2px 8px;
+  border: 1px solid rgba(247, 241, 230, 0.4);
+  border-radius: 2px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+}
+.th-curtain.is-locked .th-curtain-state {
+  border-color: rgba(232, 220, 196, 0.2);
+}
+.th-curtain-no {
+  margin-top: auto;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  opacity: 0.85;
+}
+.th-curtain-theme {
+  font-family: var(--g-font-display);
+  font-size: 22px;
+  letter-spacing: 0.08em;
+}
+.th-curtain-hint {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  opacity: 0.75;
+}
+.th-map-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2.2rem;
+  margin-top: 3rem;
+}
+.th-map-nav button {
+  padding: 0 0 4px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid rgba(201, 162, 75, 0.35);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--g-gold);
+  cursor: pointer;
+}
+.th-map-nav button:hover {
+  color: var(--g-gold-hi);
+}
+@media (max-width: 860px) {
+  .th-curtains {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .th-curtain {
+    min-height: 170px;
+  }
+}
+@media (max-width: 520px) {
+  .th-curtains {
+    grid-template-columns: 1fr;
+  }
+}

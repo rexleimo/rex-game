@@ -35,6 +35,9 @@ import type {
   SavedWork,
 } from './core/types';
 import styles from './JianzhiGame.module.css';
+import { useTheater } from './theater/useTheater';
+import { TheaterMap } from './theater/TheaterMap';
+import './theater/theater.css';
 
 const WORKS_KEY = 'rex-game:jianzhi:works:v1';
 const SETTINGS_KEY = 'rex-game:jianzhi:settings:v1';
@@ -192,6 +195,8 @@ export function JianzhiGame() {
   const finalizingRef = useRef(false);
   const audioRef = useRef<ReturnType<typeof createPaperAudio> | null>(null);
   if (!audioRef.current) audioRef.current = createPaperAudio();
+
+  const acts = useTheater(progress);
 
   const activeObjective = activeLesson ?? activeCommission;
   const isPractice = !activeLesson && !activeCommission;
@@ -611,7 +616,7 @@ export function JianzhiGame() {
   }, []);
 
   return (
-    <section className={styles.root} aria-label="纸上生花：剪纸文化游戏">
+    <section className={`${styles.root} th-root`} aria-label="纸上生花：剪纸文化游戏">
       {toast && (
         <div className={styles.toast} role="status">
           {toast}
@@ -635,59 +640,21 @@ export function JianzhiGame() {
 
       {view === 'map' && (
         <div className={styles.shell}>
-          <div className={styles.map}>
-            <header className={styles.mapHeader}>
-              <div>
-                <p className={styles.wordmark}>纸上生花</p>
-                <h1 className={styles.heroTitle} style={{ fontSize: 'clamp(28px, 4vw, 40px)' }}>
-                  功课地图
-                </h1>
-                <p className={styles.heroLead} style={{ fontSize: '0.95rem' }}>
-                  已解锁 {progress.curriculumUnlocked} / {LESSON_COUNT}
-                  {progress.graduated ? ' · 已出师' : ''}
-                  {' · '}已收录纹样 {progress.collectedMotifIds.length}/{MOTIFS.length}
-                </p>
-              </div>
-              <div className={styles.seal} aria-hidden>
-                纸<br />上
-              </div>
-            </header>
-
-            <Subnav active="map" onNavigate={navigateFromSubnav} />
-
-            <div className={styles.lessonTrack}>
-              {JIANZHI_LESSONS.map((lesson) => {
-                const locked = lesson.order > progress.curriculumUnlocked;
-                const done = progress.completedLessons.includes(lesson.id);
-                const current = !locked && !done && lesson.order === progress.curriculumUnlocked;
-                const cls = [
-                  styles.lessonCard,
-                  locked ? styles.lessonLocked : '',
-                  done ? styles.lessonDone : '',
-                  current ? styles.lessonCurrent : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ');
-                return (
-                  <button
-                    key={lesson.id}
-                    type="button"
-                    className={cls}
-                    disabled={locked}
-                    onClick={() => enterLesson(lesson)}
-                  >
-                    <span className={styles.sideLabel}>
-                      {String(lesson.order).padStart(2, '0')} · {lesson.region}
-                    </span>
-                    <strong>{lesson.title}</strong>
-                    <small>{lesson.subtitle}</small>
-                    <em>
-                      {locked ? '未解锁' : done ? '已完成' : current ? '当前功课' : '可重温'}
-                    </em>
-                  </button>
-                );
-              })}
-            </div>
+          <TheaterMap
+            acts={acts}
+            onEnterAct={(act) => {
+              const target =
+                act.lessons.find((l) => !progress.completedLessons.includes(l.id)) ?? act.lessons[0];
+              if (target) enterLesson(target);
+            }}
+            onOpenCodex={() => setView('codex')}
+            onOpenWorks={() => {
+              setCodexTab('works');
+              setView('codex');
+            }}
+            onPractice={startPractice}
+            onOpenSettings={() => setView('settings')}
+          />
 
             {progress.graduated && (
               <section className={styles.commissionSection} aria-label="时令委托">
