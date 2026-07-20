@@ -3,7 +3,6 @@ import '@/styles/globals.css';
 import '@/styles/tokens.css';
 import '@/styles/gallery.css';
 import '@/styles/museum.css';
-import '@/styles/home.css';
 import '@/styles/jiaobei.css';
 
 export const metadata: Metadata = {
