@@ -1,0 +1,36 @@
+/* 设计系统 v2「数字民艺」tokens —— 方向 C 当代数字艺术
+ * 色值/动效以 spec §6 为唯一来源,禁散落硬编码。
+ * spec: docs/superpowers/specs/2026-07-20-design-system-v2-homepage-design.md
+ */
+:root {
+  /* 底色阶梯 */
+  --g-abyss: #0A0705;
+  --g-lacquer: #120B07;
+  --g-float: #1A130C;
+  --g-card: #241A10;
+  /* 朱 */
+  --g-cinnabar-hi: #E8452F;
+  --g-cinnabar: #C82E21;
+  --g-cinnabar-deep: #A81E14;
+  /* 金 */
+  --g-gold: #C9A24B;
+  --g-gold-hi: #E8CF9A;
+  /* 纸 */
+  --g-paper: #F7F1E6;
+  --g-cream: #E8DCC4;
+  /* 文本阶梯 */
+  --g-text-hi: #F5EDE0;
+  --g-text: rgba(232, 220, 196, 0.68);
+  --g-text-dim: rgba(232, 220, 196, 0.45);
+  /* 字族(自托管 @font-face 见 T7;栈内为系统回退) */
+  --g-font-display: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  --g-font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  /* 动效 */
+  --g-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --g-dur-micro: 200ms;
+  --g-dur-enter: 500ms;
+  --g-dur-hero: 900ms;
+  /* 节奏 */
+  --g-section-gap: clamp(7.5rem, 15vw, 12.5rem);
+  --g-radius: 2px;
+}

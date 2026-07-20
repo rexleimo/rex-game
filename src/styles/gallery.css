@@ -1,0 +1,111 @@
+/* 方向 C「数字民艺」基底 —— 首页/关于页 v2 外壳。
+ * 仅服务 .theme-gallery 子树;文化页仍用 museum.css,互不干扰。
+ * spec: docs/superpowers/specs/2026-07-20-design-system-v2-homepage-design.md
+ */
+
+html:has(.theme-gallery) body {
+  background: var(--g-abyss);
+}
+
+.theme-gallery {
+  min-height: 100vh;
+  background:
+    radial-gradient(90% 60% at 72% 0%, rgba(200, 46, 33, 0.14) 0%, transparent 55%),
+    var(--g-abyss);
+  color: var(--g-cream);
+  font-family: var(--g-font-body);
+  font-size: 16.5px;
+  line-height: 1.85;
+  -webkit-font-smoothing: antialiased;
+}
+.theme-gallery ::selection {
+  background: var(--g-cinnabar);
+  color: var(--g-paper);
+}
+.theme-gallery a {
+  color: inherit;
+  text-decoration: none;
+}
+.theme-gallery :focus-visible {
+  outline: 2px solid var(--g-gold);
+  outline-offset: 3px;
+}
+
+/* —— 布局与排版原语 —— */
+.g-container {
+  width: min(1120px, 92vw);
+  margin-inline: auto;
+}
+.g-section {
+  padding-block: calc(var(--g-section-gap) / 2);
+}
+.g-label {
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--g-gold);
+}
+.g-display {
+  margin: 0;
+  font-family: var(--g-font-display);
+  font-weight: 700;
+  line-height: 1.14;
+  color: var(--g-text-hi);
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* —— 按钮:朱砂实底(主)/ 描金幽灵(次) —— */
+.g-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 2.2rem;
+  border-radius: var(--g-radius);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  transition:
+    transform var(--g-dur-micro) var(--g-ease),
+    box-shadow var(--g-dur-micro) var(--g-ease),
+    background var(--g-dur-micro) var(--g-ease),
+    border-color var(--g-dur-micro) var(--g-ease);
+}
+.g-btn--primary {
+  background: var(--g-cinnabar);
+  color: var(--g-paper);
+  box-shadow: 0 10px 30px rgba(200, 46, 33, 0.35);
+}
+.g-btn--primary:hover {
+  background: var(--g-cinnabar-hi);
+  transform: translateY(-2px);
+}
+.g-btn--ghost {
+  border: 1px solid rgba(201, 162, 75, 0.5);
+  color: var(--g-gold);
+}
+.g-btn--ghost:hover {
+  border-color: var(--g-gold);
+  background: rgba(201, 162, 75, 0.08);
+  transform: translateY(-2px);
+}
+
+/* —— 动效降级:全站只剩透明度过渡 —— */
+@media (prefers-reduced-motion: reduce) {
+  .theme-gallery *,
+  .theme-gallery *::before,
+  .theme-gallery *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
