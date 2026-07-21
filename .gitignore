@@ -8,10 +8,14 @@ node_modules/
 out/
 next-env.d.ts
 
+# typescript
+*.tsbuildinfo
+
 # misc
 .DS_Store
 *.pem
 .env*.local
+.env
 
 # editor
 .vscode/
@@ -25,3 +29,22 @@ resources/fonts-src/
 
 # AI 生图中间产物(大文件,管线可复现)
 generated/
+
+# 本地调试/截图/e2e 临时产物（勿提交远程）
+aios/temp/
+
+# AIOS 运行时状态（会话、计划、ContextDB 写出）
+.aios/
+
+# AI 客户端本地投影 / 同步产物（机器本地，不入远程）
+.claude/
+.codex/
+.gemini/
+.grok/
+.hermes/
+.opencode/
+.rex-harness/
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+opencode.json
