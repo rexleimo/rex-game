@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { GalleryFooter } from '@/components/site/GalleryFooter';
 import { GalleryHeader } from '@/components/site/GalleryHeader';
-import { QuickAnswer } from '@/components/site/QuickAnswer';
+import { QuickAnswerBar } from '@/components/site/QuickAnswerBar';
 import { listCultureHubs, listCulturePages } from '@/content/culture/registry';
 import { SITE_DISCLAIMER, SITE_ORIGIN } from '@/content/site';
 import { JsonLd } from '@/components/site/JsonLd';
@@ -41,12 +41,12 @@ export default function CultureIndexPage() {
     <div className="theme-gallery">
       <JsonLd data={structuredData} />
       <GalleryHeader />
-      <main className="culture-index">
-        <p className="g-label">文化馆</p>
-        <h1 style={{ fontFamily: 'var(--g-font-display)', fontSize: 'clamp(1.9rem,4vw,2.6rem)', margin: '0.4rem 0 0' }}>
-          可读、可核、可玩的民俗导读
-        </h1>
-        <QuickAnswer
+      <main className="culture-index g-container">
+        <header className="culture-index__header">
+          <p className="g-label">文化馆</p>
+          <h1 className="culture-index__h1">可读、可核、可玩的民俗导读</h1>
+        </header>
+        <QuickAnswerBar
           sentences={[
             '文化馆把三件展品背后的称法、形制、节奏与吉语写成可检索的说明页。',
             '每页提供快速回答、术语、FAQ 与来源链接，并标明常见说法、地区差异与游戏设计。',
@@ -54,27 +54,31 @@ export default function CultureIndexPage() {
             '准备好了就进入对应游戏，在浏览器里动手感受。',
           ]}
         />
-        <h2 style={{ fontFamily: 'var(--g-font-display)', marginTop: '2rem' }}>主题枢纽</h2>
-        <div className="gateway">
-          {hubs.map((hub) => (
-            <Link className="gateway__card" key={hub.path} href={hub.path}>
-              <span className="gateway__q">{hub.h1}</span>
-              <span className="gateway__teaser">{hub.description}</span>
-              <span className="gateway__count">进入主题 →</span>
-            </Link>
-          ))}
-        </div>
-        <h2 style={{ fontFamily: 'var(--g-font-display)', marginTop: '2.5rem' }}>专题阅读</h2>
-        <div className="gateway">
-          {topics.map((topic) => (
-            <Link className="gateway__card" key={topic.path} href={topic.path}>
-              <span className="gateway__q">{topic.h1}</span>
-              <span className="gateway__teaser">{topic.description}</span>
-              <span className="gateway__count">专题导读 →</span>
-            </Link>
-          ))}
-        </div>
-        <p className="culture-doc__disclaimer">{SITE_DISCLAIMER}</p>
+        <section className="culture-index__section">
+          <h2 className="culture-index__h2">主题枢纽</h2>
+          <div className="gateway">
+            {hubs.map((hub) => (
+              <Link className="gateway__card" key={hub.path} href={hub.path}>
+                <span className="gateway__q">{hub.h1}</span>
+                <span className="gateway__teaser">{hub.description}</span>
+                <span className="gateway__count">进入主题 →</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+        <section className="culture-index__section">
+          <h2 className="culture-index__h2">专题阅读</h2>
+          <div className="gateway">
+            {topics.map((topic) => (
+              <Link className="gateway__card" key={topic.path} href={topic.path}>
+                <span className="gateway__q">{topic.h1}</span>
+                <span className="gateway__teaser">{topic.description}</span>
+                <span className="gateway__count">专题导读 →</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+        <p className="culture-index__disclaimer">{SITE_DISCLAIMER}</p>
       </main>
       <GalleryFooter />
     </div>

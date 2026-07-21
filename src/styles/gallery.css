@@ -574,7 +574,7 @@ html:has(.theme-gallery) body {
 .gateway {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.2rem;
+  gap: 1.6rem;
 }
 .gateway__card {
   display: flex;
@@ -907,4 +907,71 @@ html:has(.theme-gallery) body {
   font-size: 11px;
   letter-spacing: 0.15em;
   color: var(--g-gold);
+}
+
+/* —— 文化页索引 (/culture):覆盖 museum.css 的浅色 .culture-index —— */
+.theme-gallery .culture-index {
+  max-width: none;
+  margin: 0;
+  padding: 4.5rem 0 6rem;
+  color: var(--g-text);
+}
+.theme-gallery .culture-index__header {
+  display: grid;
+  gap: 0.65rem;
+  margin-bottom: 2.4rem;
+}
+.theme-gallery .culture-index__h1 {
+  margin: 0;
+  font-family: var(--g-font-display);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  line-height: 1.18;
+  letter-spacing: 0.04em;
+  color: var(--g-text-hi);
+}
+.theme-gallery .culture-index__section {
+  margin-top: 4.5rem;
+}
+.theme-gallery .culture-index__section:first-of-type {
+  margin-top: 3.5rem;
+}
+.theme-gallery .culture-index__h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  margin: 0 0 1.6rem;
+  font-family: var(--g-font-display);
+  font-size: clamp(1.35rem, 2.4vw, 1.65rem);
+  letter-spacing: 0.08em;
+  color: var(--g-gold);
+}
+.theme-gallery .culture-index__h2::before {
+  content: '';
+  flex: 0 0 1.4rem;
+  height: 1px;
+  background: var(--g-gold);
+  opacity: 0.6;
+  transform: translateY(-0.3em);
+}
+.theme-gallery .culture-index__disclaimer {
+  margin: 5rem 0 0;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(201, 162, 75, 0.16);
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--g-text-dim);
+}
+@media (max-width: 760px) {
+  .theme-gallery .culture-index {
+    padding: 3rem 0 4rem;
+  }
+  .theme-gallery .culture-index__section {
+    margin-top: 3rem;
+  }
+  .theme-gallery .culture-index__section:first-of-type {
+    margin-top: 2.4rem;
+  }
+  .theme-gallery .culture-index__disclaimer {
+    margin-top: 3.5rem;
+  }
 }
