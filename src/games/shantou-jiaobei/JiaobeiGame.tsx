@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { GameChrome } from '@/components/game/GameChrome';
+import { FirstPlayGuide } from '@/components/game/FirstPlayGuide';
 import '@/styles/game-shell.css';
 import { IntroScene } from './scenes/IntroScene';
 import { OfferingScene } from './scenes/OfferingScene';
@@ -65,6 +66,16 @@ export function JiaobeiGame() {
 
   return (
     <main className={`jiaobei jiaobei--${phase}`}>
+      <FirstPlayGuide
+        storageKey="rex-game:jiaobei:first-play-guide:v1"
+        title="三掷完成一次体验"
+        description="这是文化互动体验，不替代真实礼俗。摄像头只是可选方式，按钮也能完成全程。"
+        steps={[
+          '点击“开始掷筊”，可先写下或说出心愿，也可以直接跳过。',
+          '等待筊杯就绪后，合十手势或点击按钮完成每一次掷杯。',
+          '连续完成三掷后，查看本次体验的杯象说明。',
+        ]}
+      />
       <GameChrome title="潮汕圣杯" edition={EDITION[phase]}>
         {phase === 'intro' && (
           <IntroScene

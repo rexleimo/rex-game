@@ -24,6 +24,7 @@ import type {
 } from './core/types';
 import type { YinggeRuntimeHandle } from './runtime/createYinggeGame';
 import styles from './YinggeGame.module.css';
+import { FirstPlayGuide } from '@/components/game/FirstPlayGuide';
 import { GameChrome } from '@/components/game/GameChrome';
 import '@/styles/game-shell.css';
 
@@ -172,6 +173,16 @@ export function YinggeGame() {
 
   return (
     <section className={styles.root} aria-label="潮汕英歌横版动作游戏">
+      <FirstPlayGuide
+        storageKey="rex-game:yingge:first-play-guide:v1"
+        title="先听鼓点，再合槌成阵"
+        description="第一场演出从最基础的节奏和阵形开始，按提示出槌即可逐步熟悉战舞。"
+        steps={[
+          '点击“主线演出”进入已开放的第一章。',
+          '跟随场内提示用 J、K、L 出槌；A、D 可以调整站位。',
+          '按 Shift 换阵，Space 合槌；踩准鼓点会获得更高气势。',
+        ]}
+      />
       <div className="yg-grain" aria-hidden />
 
       {view === 'menu' && (

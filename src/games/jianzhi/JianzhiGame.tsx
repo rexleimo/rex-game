@@ -44,6 +44,8 @@ import { UnfoldCeremony } from './theater/UnfoldCeremony';
 import { GalleryWall } from './theater/GalleryWall';
 import { buildShareCard, downloadBlob } from './theater/shareCard';
 import './theater/theater.css';
+import { FirstPlayGuide } from '@/components/game/FirstPlayGuide';
+import '@/styles/game-shell.css';
 
 const WORKS_KEY = 'rex-game:jianzhi:works:v1';
 const SETTINGS_KEY = 'rex-game:jianzhi:settings:v1';
@@ -665,6 +667,16 @@ export function JianzhiGame() {
 
   return (
     <section className={`${styles.root} th-root`} aria-label="纸上生花：剪纸文化游戏">
+      <FirstPlayGuide
+        storageKey="rex-game:jianzhi:first-play-guide:v1"
+        title="三步开始剪纸工坊"
+        description="先完成第一课，熟悉读帖、折剪与展开的节奏；没有剪纸经验也能直接开始。"
+        steps={[
+          '进入功课地图，选择发亮的第一课开始读帖。',
+          '按任务提示选择纹样或剪刀，在折纸区域完成剪裁。',
+          '展开作品并完成小测，收下新的纹样与文化记录。',
+        ]}
+      />
       {toast && (
         <div className={styles.toast} role="status">
           {toast}
