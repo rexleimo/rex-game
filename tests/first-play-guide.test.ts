@@ -36,6 +36,7 @@ test('first-play completion is isolated by game storage key', () => {
 test('every playable game configures its own first-play guide', () => {
   const root = new URL('../', import.meta.url);
   const games = [
+    ['src/games/shanhai-shiyi/ShanhaiGame.tsx', 'rex-game:shanhai-shiyi:guide:v1'],
     ['src/games/jianzhi/JianzhiGame.tsx', 'rex-game:jianzhi:first-play-guide:v1'],
     ['src/games/chaoshan-yingge/YinggeGame.tsx', 'rex-game:yingge:first-play-guide:v1'],
     ['src/games/shantou-jiaobei/JiaobeiGame.tsx', 'rex-game:jiaobei:first-play-guide:v1'],

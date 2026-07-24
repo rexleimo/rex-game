@@ -16,7 +16,7 @@ export function HomeHero() {
             中国<em>民艺馆</em>
           </h1>
           <p className="hero__lead">
-            掷筊问愿、英歌合槌、折剪生花——三件民俗展品,无需下载,即开即玩;玩完再读背后的称法、节奏与吉语。
+            修器物读典故、掷筊问愿、英歌合槌、折剪生花——可玩文化展品,无需下载,即开即玩;边玩边了解背后的故事与称法。
           </p>
           <div className="hero__actions">
             <Link className="g-btn g-btn--primary" href={featured?.href ?? '/culture/'}>
@@ -29,7 +29,7 @@ export function HomeHero() {
         </div>
         <HeroInstallation />
       </div>
-      <p className="hero__scrollhint">向下滚动 · 逛三件展品</p>
+      <p className="hero__scrollhint">向下滚动 · 逛展品</p>
     </section>
   );
 }

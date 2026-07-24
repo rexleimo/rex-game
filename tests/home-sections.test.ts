@@ -7,12 +7,14 @@ const root = new URL('../', import.meta.url);
 test('ExhibitSection: numbered label, dual entries, approved taglines', () => {
   const src = readFileSync(new URL('src/components/site/ExhibitSection.tsx', root), 'utf8');
   assert.match(src, /No\.01/);
-  assert.match(src, /No\.03/);
+  assert.match(src, /No\.04/);
   assert.match(src, /cultureHref/);
+  assert.match(src, /开始拾遗/);
   assert.match(src, /开始占卜/);
   assert.match(src, /加入巡游/);
   assert.match(src, /开始创作/);
   const registry = readFileSync(new URL('src/core/gamesRegistry.ts', root), 'utf8');
+  assert.match(registry, /山海拾遗/);
   assert.match(registry, /看神明如何回你/);
   assert.match(registry, /中华战舞/);
   assert.match(registry, /读懂一纸吉语/);

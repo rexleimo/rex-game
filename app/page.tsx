@@ -12,6 +12,7 @@ import { JsonLd } from '@/components/site/JsonLd';
 import { SITE_ORIGIN } from '@/content/site';
 
 const CULTURE_BY_GAME: Record<string, string> = {
+  'shanhai-shiyi': '/games/shanhai-shiyi/',
   'shantou-jiaobei': '/culture/jiaobei/',
   'chaoshan-yingge': '/culture/yingge/',
   jianzhi: '/culture/jianzhi/',
@@ -20,10 +21,10 @@ const CULTURE_BY_GAME: Record<string, string> = {
 export const metadata: Metadata = {
   title: { absolute: 'rex-game · 可玩的民俗文化馆' },
   description:
-    '一座可以玩的中国民艺馆:潮汕圣杯占卜、潮汕英歌、中国剪纸——三件民俗展品无需下载即开即玩,文化说明可检索。',
+    '一座可以玩的中国民艺馆:山海拾遗、潮汕圣杯、英歌与剪纸——文化展品无需下载即开即玩,边玩边学。',
   openGraph: {
     title: 'rex-game · 可玩的民俗文化馆',
-    description: '一座可以玩的中国民艺馆:掷筊问愿、英歌合槌、折剪生花。',
+    description: '一座可以玩的中国民艺馆:修器物读典故、掷筊问愿、英歌合槌、折剪生花。',
     url: SITE_ORIGIN,
   },
 };
@@ -70,7 +71,7 @@ export default function HomePage() {
         <HomeHero />
 
         <section className="g-section g-container" id="exhibits" aria-labelledby="exhibits-title">
-          <GallerySectionHeader index="〇一" title="三件可玩,三道门径" note="每个游戏 = 一件可玩展品" />
+          <GallerySectionHeader index="〇一" title="可玩展品,多道门径" note="每个游戏 = 一件可玩展品" />
           <h2 id="exhibits-title" className="visually-hidden">
             展品列表
           </h2>

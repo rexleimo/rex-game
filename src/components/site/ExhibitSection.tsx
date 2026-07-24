@@ -6,20 +6,26 @@ const EXHIBIT_META: Record<
   string,
   { no: string; tags: string; playLabel: string; cultureLabel: string }
 > = {
-  'shantou-jiaobei': {
+  'shanhai-shiyi': {
     no: 'No.01',
+    tags: '修复互动 · 文化卡片',
+    playLabel: '开始拾遗',
+    cultureLabel: '修器物读典故',
+  },
+  'shantou-jiaobei': {
+    no: 'No.02',
     tags: '3D 物理 · 手势可选',
     playLabel: '开始占卜',
     cultureLabel: '掷筊怎么看',
   },
   'chaoshan-yingge': {
-    no: 'No.02',
+    no: 'No.03',
     tags: '节奏判定 · 横版动作',
     playLabel: '加入巡游',
     cultureLabel: '英歌的脸谱与角色',
   },
   jianzhi: {
-    no: 'No.03',
+    no: 'No.04',
     tags: '折剪展开 · 图鉴收集',
     playLabel: '开始创作',
     cultureLabel: '纹样里的吉祥话',
@@ -27,6 +33,26 @@ const EXHIBIT_META: Record<
 };
 
 function ExhibitGlyph({ id }: { id: string }) {
+  if (id === 'shanhai-shiyi') {
+    return (
+      <svg viewBox="0 0 72 64" role="img" aria-label="青铜鼎">
+        <path
+          d="M18 14 L28 4 L34 10 M54 14 L44 4 L38 10"
+          fill="none"
+          stroke="#C9A24B"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+        <path
+          d="M14 18 Q10 36 20 48 L52 48 Q62 36 58 18 Q40 8 14 18 Z"
+          fill="#6B7F6A"
+          stroke="#C9A24B"
+          strokeWidth="2"
+        />
+        <path d="M24 48 L20 60 M36 48 L36 62 M48 48 L52 60" stroke="#C9A24B" strokeWidth="3" strokeLinecap="round" />
+      </svg>
+    );
+  }
   if (id === 'shantou-jiaobei') {
     return (
       <svg viewBox="0 0 70 46" role="img" aria-label="筊杯">

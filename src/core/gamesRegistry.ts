@@ -3,7 +3,12 @@
  * 新增游戏 = 加一条记录 + 创建 app/games/<id>/page.tsx。
  */
 
-export type GameId = 'shantou-jiaobei' | 'chaoshan-yingge' | (string & {});
+export type GameId =
+  | 'shantou-jiaobei'
+  | 'chaoshan-yingge'
+  | 'jianzhi'
+  | 'shanhai-shiyi'
+  | (string & {});
 
 export interface GameMeta {
   id: GameId;
@@ -22,6 +27,15 @@ export interface GameMeta {
 }
 
 export const games: GameMeta[] = [
+  {
+    id: 'shanhai-shiyi',
+    name: '山海拾遗',
+    tagline: '修一件器物，读懂一段中国故事——中原礼器与文化卡片。',
+    cover: '/assets/shanhai/cover.webp',
+    href: '/games/shanhai-shiyi',
+    badge: '新作',
+    accent: '#6B7F6A',
+  },
   {
     id: 'shantou-jiaobei',
     name: '潮汕圣杯占卜',

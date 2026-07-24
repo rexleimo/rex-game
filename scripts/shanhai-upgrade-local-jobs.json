@@ -1,0 +1,487 @@
+[
+  {
+    "id": "A-R01-N-010",
+    "name": "山海册·中原页",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: classic of mountains and seas book page mythical map no readable text. Card concept: 山海册·中原页. 把《山海经》当作古老的博物与奇闻笔记来打开。"
+  },
+  {
+    "id": "A-R01-N-025",
+    "name": "中原在哪里",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: soft abstract cultural map with region symbols arranged elegantly. Card concept: 中原在哪里. 「中原」是文化地理概念，不只有一个点。"
+  },
+  {
+    "id": "A-R01-N-026",
+    "name": "铭文为什么重要",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze vessel with soft abstract inscription texture not readable. Card concept: 铭文为什么重要. 字把器物变成可核对的历史线索。"
+  },
+  {
+    "id": "A-R01-N-028",
+    "name": "组合与场景",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze ritual vessels ding and gui educational still life. Card concept: 组合与场景. 礼器常常成组出现，而不是孤零零一件。"
+  },
+  {
+    "id": "A-R01-N-029",
+    "name": "今日一器·怎么看展",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: museum gallery spotlight on a single bronze silhouette visitor viewpoint. Card concept: 今日一器·怎么看展. 看展三问：叫什么、干什么、为何美。"
+  },
+  {
+    "id": "A-R01-SR-030",
+    "name": "中原礼器小谱",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant catalog cover still life with 3-4 small cultural objects of the region arranged as a museum summary card. Card concept: 中原礼器小谱. 把本区学过的印象收成一张总谱。"
+  },
+  {
+    "id": "A-R03-N-003",
+    "name": "巴蜀知一张",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: single iconic cultural object teaching card for the region. Card concept: 巴蜀知一张. 巴与蜀：西南山地与盆地里的古老文明印象。"
+  },
+  {
+    "id": "A-R03-R-006",
+    "name": "栈道印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Bashu bronze mask mountain path or related educational vignette. Card concept: 栈道印象. 崖壁上的木梁之路，是山地交通的勇敢发明。"
+  },
+  {
+    "id": "A-R03-N-007",
+    "name": "蜀道难",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Bashu bronze mask mountain path or related educational vignette. Card concept: 蜀道难. 诗句把地理的险，变成可以传诵的文化记忆。"
+  },
+  {
+    "id": "A-R03-N-008",
+    "name": "三星堆印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze vessel with soft abstract inscription texture not readable. Card concept: 三星堆印象. 一处让世界重新打量古蜀的名字。"
+  },
+  {
+    "id": "A-R03-N-009",
+    "name": "金与铜的搭配",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Bashu bronze mask mountain path or related educational vignette. Card concept: 金与铜的搭配. 贵金属与青铜可以一起讲礼仪故事。"
+  },
+  {
+    "id": "A-R03-N-011",
+    "name": "盆地与山脉",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Bashu bronze mask mountain path or related educational vignette. Card concept: 盆地与山脉. 平原孕育聚落，山脉塑造道路与想象。"
+  },
+  {
+    "id": "A-R03-N-012",
+    "name": "盐与交通",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Bashu bronze mask mountain path or related educational vignette. Card concept: 盐与交通. 盐等资源，推动路与人的往来。"
+  },
+  {
+    "id": "A-R03-N-013",
+    "name": "想象与证据",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: museum handbook and careful scholarly still life about evidence and respect. Card concept: 想象与证据. 古蜀很神奇，但解释要守证据。"
+  },
+  {
+    "id": "A-R03-N-015",
+    "name": "与中原交流",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant Chinese cultural symbol still life. Card concept: 与中原交流. 独特不等于隔绝。"
+  },
+  {
+    "id": "A-R03-N-016",
+    "name": "大熊猫不是古蜀青铜",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Bashu bronze mask mountain path or related educational vignette. Card concept: 大熊猫不是古蜀青铜. 现生动物名片 ≠ 直接等同某件青铜神器。"
+  },
+  {
+    "id": "A-R03-R-017",
+    "name": "玉璋印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: soft jade bi disc metaphor for virtue. Card concept: 玉璋印象. 长条瑞玉也在西南礼仪世界中出现。"
+  },
+  {
+    "id": "A-R03-N-018",
+    "name": "看展：先震撼后提问",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: museum gallery spotlight on a single bronze silhouette visitor viewpoint. Card concept: 看展：先震撼后提问. 允许心跳加速，然后问：这是什么？为何这样？"
+  },
+  {
+    "id": "A-R03-N-019",
+    "name": "方言与地名余韵",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant Chinese cultural symbol still life. Card concept: 方言与地名余韵. 活着的口语与地名，也是区域文化的线索。"
+  },
+  {
+    "id": "A-R03-SR-020",
+    "name": "巴蜀小谱",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant catalog cover still life with 3-4 small cultural objects of the region arranged as a museum summary card. Card concept: 巴蜀小谱. 纵目、金面、神树、蜀道——带走巴蜀四印象。"
+  },
+  {
+    "id": "A-R02-N-003",
+    "name": "楚地知一张",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: single iconic cultural object teaching card for the region. Card concept: 楚地知一张. 楚：江汉之间的古国与文化传统。"
+  },
+  {
+    "id": "A-R02-N-007",
+    "name": "楚辞入门",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chu culture phoenix lacquer red black gold river mist poetry mood. Card concept: 楚辞入门. 《楚辞》是南方诗歌传统的重要源头。"
+  },
+  {
+    "id": "A-R02-R-008",
+    "name": "香草意象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chu culture phoenix lacquer red black gold river mist poetry mood. Card concept: 香草意象. 香草在楚辞里，常象征美好与高洁。"
+  },
+  {
+    "id": "A-R02-N-010",
+    "name": "中原与楚地对照",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: soft abstract cultural map with region symbols arranged elegantly. Card concept: 中原与楚地对照. 庄严与浪漫，是两种可并存的美。"
+  },
+  {
+    "id": "A-R02-N-013",
+    "name": "漆：木与光",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chu culture phoenix lacquer red black gold river mist poetry mood. Card concept: 漆：木与光. 大漆附着于木，生成可触摸的光泽。"
+  },
+  {
+    "id": "A-R02-N-014",
+    "name": "巫祀表述边界",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant Chinese cultural symbol still life. Card concept: 巫祀表述边界. 理解历史中的巫祀文化，不等于宣导迷信。"
+  },
+  {
+    "id": "A-R02-N-016",
+    "name": "江汉与物产",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze casting molds or kiln craft tools educational still life. Card concept: 江汉与物产. 水网、林木与矿物，托起工艺与想象。"
+  },
+  {
+    "id": "A-R02-N-018",
+    "name": "屈原印象卡",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze vessel with soft abstract inscription texture not readable. Card concept: 屈原印象卡. 楚辞传统与屈原的名字紧密相连。"
+  },
+  {
+    "id": "A-R02-N-019",
+    "name": "端午与楚地记忆",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chu culture phoenix lacquer red black gold river mist poetry mood. Card concept: 端午与楚地记忆. 端午把诗歌、江河与民俗编织在一起。"
+  },
+  {
+    "id": "A-R02-SR-020",
+    "name": "楚地小谱",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant catalog cover still life with 3-4 small cultural objects of the region arranged as a museum summary card. Card concept: 楚地小谱. 凤、漆、诗、江——带走楚地四字印象。"
+  },
+  {
+    "id": "A-R08-N-005",
+    "name": "海丝知一张",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: single iconic cultural object teaching card for the region. Card concept: 海丝知一张. 海上丝绸之路：海洋上的交往网络。"
+  },
+  {
+    "id": "A-R08-N-006",
+    "name": "季风航海",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: maritime silk road ship harbor porcelain trade soft sea horizon. Card concept: 季风航海. 风有季节，船有班期。"
+  },
+  {
+    "id": "A-R08-N-007",
+    "name": "港口城市",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: maritime silk road ship harbor porcelain trade soft sea horizon. Card concept: 港口城市. 港不只是码头，是翻译与混成的剧场。"
+  },
+  {
+    "id": "A-R08-N-008",
+    "name": "郑和印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: maritime silk road ship harbor porcelain trade soft sea horizon. Card concept: 郑和印象. 大规模远航的公共历史记忆坐标。"
+  },
+  {
+    "id": "A-R08-N-009",
+    "name": "翻译与通事",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: maritime silk road ship harbor porcelain trade soft sea horizon. Card concept: 翻译与通事. 没有翻译，货物到了，意思还在海上。"
+  },
+  {
+    "id": "A-R08-N-010",
+    "name": "宗教建筑余韵",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: maritime silk road ship harbor porcelain trade soft sea horizon. Card concept: 宗教建筑余韵. 港口的天际线，有时包含外来的屋顶轮廓。"
+  },
+  {
+    "id": "A-R08-N-011",
+    "name": "沉船考古",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: museum handbook and careful scholarly still life about evidence and respect. Card concept: 沉船考古. 海底的货舱，是忽然停住的航程。"
+  },
+  {
+    "id": "A-R08-N-012",
+    "name": "茶瓷丝三角",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 茶瓷丝三角. 中国出海的常见「三件套」印象。"
+  },
+  {
+    "id": "A-R08-N-013",
+    "name": "陆丝与海丝",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 陆丝与海丝. 沙漠驼铃与海上帆影，是姊妹篇。"
+  },
+  {
+    "id": "A-R08-N-014",
+    "name": "侨批与家书印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze vessel with soft abstract inscription texture not readable. Card concept: 侨批与家书印象. 钱与字一起漂洋，连着两头的家。"
+  },
+  {
+    "id": "A-R08-N-015",
+    "name": "互鉴不是单向",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: maritime silk road ship harbor porcelain trade soft sea horizon. Card concept: 互鉴不是单向. 船来船往，影响往往是双向的。"
+  },
+  {
+    "id": "A-R08-N-017",
+    "name": "语词借来借去",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: maritime silk road ship harbor porcelain trade soft sea horizon. Card concept: 语词借来借去. 港口方言里，藏着外来的音节。"
+  },
+  {
+    "id": "A-R08-N-018",
+    "name": "风险与勇气",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: maritime silk road ship harbor porcelain trade soft sea horizon. Card concept: 风险与勇气. 风暴、礁石与疾病，是航程的隐形税。"
+  },
+  {
+    "id": "A-R08-N-019",
+    "name": "七区合图",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze ritual vessels ding and gui educational still life. Card concept: 七区合图. 从鼎到帆，中国故事需要整张地图。"
+  },
+  {
+    "id": "A-R08-SR-020",
+    "name": "海丝小谱",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant catalog cover still life with 3-4 small cultural objects of the region arranged as a museum summary card. Card concept: 海丝小谱. 船、针、瓷、香——带走海洋四印象。"
+  },
+  {
+    "id": "A-R04-N-003",
+    "name": "江南知一张",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: single iconic cultural object teaching card for the region. Card concept: 江南知一张. 江南：水网、市镇与雅致生活的文化地理。"
+  },
+  {
+    "id": "A-R04-N-007",
+    "name": "文人雅集",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 文人雅集. 以文会友：诗、书、画、茶可以在同一张桌子上。"
+  },
+  {
+    "id": "A-R04-N-009",
+    "name": "窑火与分工",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze casting molds or kiln craft tools educational still life. Card concept: 窑火与分工. 一只瓷，经过泥土、拉坯、上釉与火。"
+  },
+  {
+    "id": "A-R04-N-010",
+    "name": "丝与绣",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 丝与绣. 江南的柔，有一半写在丝线上。"
+  },
+  {
+    "id": "A-R04-N-011",
+    "name": "月色与水",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 月色与水. 诗词里的江南，常被月光与波光一起写亮。"
+  },
+  {
+    "id": "A-R04-N-012",
+    "name": "市镇与商贸",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 市镇与商贸. 桥边的市声，也是文明的一种节奏。"
+  },
+  {
+    "id": "A-R04-N-013",
+    "name": "对照：鼎与瓷",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze ritual vessels ding and gui educational still life. Card concept: 对照：鼎与瓷. 青铜的礼与瓷器的日用雅致，都是中国。"
+  },
+  {
+    "id": "A-R04-N-014",
+    "name": "园林不是盆景全部",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 园林不是盆景全部. 游园请尊重花木与规矩，别只剩打卡。"
+  },
+  {
+    "id": "A-R04-N-016",
+    "name": "书画四事印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 书画四事印象. 笔墨纸砚，是文人书桌上的基本装备。"
+  },
+  {
+    "id": "A-R04-N-017",
+    "name": "烟雨气质",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 烟雨气质. 潮湿的空气，也参与了审美。"
+  },
+  {
+    "id": "A-R04-N-018",
+    "name": "工艺传承",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze casting molds or kiln craft tools educational still life. Card concept: 工艺传承. 手艺活在人的手上，也活在尊重里。"
+  },
+  {
+    "id": "A-R04-N-019",
+    "name": "四区对照小结",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze ritual vessels ding and gui educational still life. Card concept: 四区对照小结. 鼎、凤、纵目、瓷——四张不同的中国脸。"
+  },
+  {
+    "id": "A-R04-SR-020",
+    "name": "江南小谱",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant catalog cover still life with 3-4 small cultural objects of the region arranged as a museum summary card. Card concept: 江南小谱. 瓷、园、扇、茶——带走江南四字温柔。"
+  },
+  {
+    "id": "A-R05-SR-003",
+    "name": "关隘城楼意象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: northern silk road pass grassland camel horse gate tower mood. Card concept: 关隘城楼意象. 门洞与敌楼，把「边界」变成可以站上去的建筑。"
+  },
+  {
+    "id": "A-R05-N-006",
+    "name": "塞北知一张",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: single iconic cultural object teaching card for the region. Card concept: 塞北知一张. 塞北：长城以北与边地交通的文化地理印象。"
+  },
+  {
+    "id": "A-R05-N-007",
+    "name": "丝路是路网",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Jiangnan celadon garden mist silk scholarly vignette. Card concept: 丝路是路网. 不是一条直线，而是绿洲串起的网络。"
+  },
+  {
+    "id": "A-R05-N-008",
+    "name": "互市与交换",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: northern silk road pass grassland camel horse gate tower mood. Card concept: 互市与交换. 边界上的市场，让刀剑有时让位于秤杆。"
+  },
+  {
+    "id": "A-R05-N-009",
+    "name": "边塞诗入口",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: northern silk road pass grassland camel horse gate tower mood. Card concept: 边塞诗入口. 诗把风沙、月光与乡愁写成可背诵的记忆。"
+  },
+  {
+    "id": "A-R05-N-010",
+    "name": "胡汉不是对立标签",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: northern silk road pass grassland camel horse gate tower mood. Card concept: 胡汉不是对立标签. 历史上的交往复杂，忌用简单对立概括一切。"
+  },
+  {
+    "id": "A-R05-N-012",
+    "name": "皮毛与技艺",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze casting molds or kiln craft tools educational still life. Card concept: 皮毛与技艺. 御寒材料背后，是一整套手艺与生态知识。"
+  },
+  {
+    "id": "A-R05-N-013",
+    "name": "音乐与长调印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: ritual chime bells or steppe long song mood. Card concept: 音乐与长调印象. 辽阔的音域，像把地平线唱长。"
+  },
+  {
+    "id": "A-R05-N-014",
+    "name": "对照五区",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze ritual vessels ding and gui educational still life. Card concept: 对照五区. 鼎、凤、纵目、瓷、马——五张不同的地图。"
+  },
+  {
+    "id": "A-R05-N-015",
+    "name": "长城的多重角色",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: northern silk road pass grassland camel horse gate tower mood. Card concept: 长城的多重角色. 墙可以是防，也可以是线与记忆。"
+  },
+  {
+    "id": "A-R05-R-016",
+    "name": "玉门/阳关印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: soft jade bi disc metaphor for virtue. Card concept: 玉门/阳关印象. 诗里的关名，把地理变成乡愁的坐标。"
+  },
+  {
+    "id": "A-R05-N-017",
+    "name": "生态与敬畏",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: museum handbook and careful scholarly still life about evidence and respect. Card concept: 生态与敬畏. 草原与荒漠脆弱，文化欣赏不该变成破坏。"
+  },
+  {
+    "id": "A-R05-N-018",
+    "name": "粟特与中介印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: northern silk road pass grassland camel horse gate tower mood. Card concept: 粟特与中介印象. 路上常有擅长贸易与翻译的中介人群。"
+  },
+  {
+    "id": "A-R05-N-019",
+    "name": "看展：边地文物",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: museum gallery spotlight on a single bronze silhouette visitor viewpoint. Card concept: 看展：边地文物. 一件带异域纹样的器物，可能是一场漫长对话的句号。"
+  },
+  {
+    "id": "A-R05-SR-020",
+    "name": "塞北小谱",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant catalog cover still life with 3-4 small cultural objects of the region arranged as a museum summary card. Card concept: 塞北小谱. 马、驼、关、诗——带走塞北四印象。"
+  },
+  {
+    "id": "A-R07-N-002",
+    "name": "春节知一张",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: single iconic cultural object teaching card for the region. Card concept: 春节知一张. 岁始团圆、扫尘纳福的公共节奏。"
+  },
+  {
+    "id": "A-R07-N-004",
+    "name": "元宵与灯谜",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese festival seasonal vignette lantern moon or related soft gold red no text. Card concept: 元宵与灯谜. 汤圆的圆，灯谜的巧，都在正月里。"
+  },
+  {
+    "id": "A-R07-N-007",
+    "name": "端午与纪念",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chu culture phoenix lacquer red black gold river mist poetry mood. Card concept: 端午与纪念. 有的地方把屈原的文学记忆编进节日。"
+  },
+  {
+    "id": "A-R07-N-009",
+    "name": "中秋赏月",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese festival seasonal vignette lantern moon or related soft gold red no text. Card concept: 中秋赏月. 抬头看同一轮月，是跨越距离的古老通讯。"
+  },
+  {
+    "id": "A-R07-N-010",
+    "name": "清明踏青",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese festival seasonal vignette lantern moon or related soft gold red no text. Card concept: 清明踏青. 既慎终追远，也走向春天的田野。"
+  },
+  {
+    "id": "A-R07-N-011",
+    "name": "七夕诗笺",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese festival seasonal vignette lantern moon or related soft gold red no text. Card concept: 七夕诗笺. 星桥与诗句，谈的是等待与重逢。"
+  },
+  {
+    "id": "A-R07-N-012",
+    "name": "重阳登高",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese festival seasonal vignette lantern moon or related soft gold red no text. Card concept: 重阳登高. 九月登高，把视野与敬老放在同一条路上。"
+  },
+  {
+    "id": "A-R07-N-013",
+    "name": "冬至一阳",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese festival seasonal vignette lantern moon or related soft gold red no text. Card concept: 冬至一阳. 白昼最短之后，光会一点点回来。"
+  },
+  {
+    "id": "A-R07-N-015",
+    "name": "二十四节气名片",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese festival seasonal vignette lantern moon or related soft gold red no text. Card concept: 二十四节气名片. 把一年切成可感知的物候段落。"
+  },
+  {
+    "id": "A-R07-SR-016",
+    "name": "岁时小谱",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant catalog cover still life with 3-4 small cultural objects of the region arranged as a museum summary card. Card concept: 岁时小谱. 春联、花灯、粽与月——把一年过成故事。"
+  },
+  {
+    "id": "A-R06-N-003",
+    "name": "仙山知一张",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: single iconic cultural object teaching card for the region. Card concept: 仙山知一张. 本展区：把《山海经》的奇想读成可参观的想象地图。"
+  },
+  {
+    "id": "A-R06-N-007",
+    "name": "经载与史证",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: classic of mountains and seas book page mythical map no readable text. Card concept: 经载与史证. 角标提醒你：这是文献想象，还是可核验的物。"
+  },
+  {
+    "id": "A-R06-N-008",
+    "name": "博物传统",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: classic of mountains and seas book page mythical map no readable text. Card concept: 博物传统. 把远方的物与名，一页页收进册子。"
+  },
+  {
+    "id": "A-R06-N-009",
+    "name": "西王母印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese mythic mountain immortal beast classical fantasy refined not scary. Card concept: 西王母印象. 昆仑叙事里常出现的神性人物坐标。"
+  },
+  {
+    "id": "A-R06-N-010",
+    "name": "精卫印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese mythic mountain immortal beast classical fantasy refined not scary. Card concept: 精卫印象. 小鸟衔石填海，是意志的寓言。"
+  },
+  {
+    "id": "A-R06-N-011",
+    "name": "夸父印象",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: Chinese mythic mountain immortal beast classical fantasy refined not scary. Card concept: 夸父印象. 追日的脚步，量出古典的豪迈。"
+  },
+  {
+    "id": "A-R06-N-012",
+    "name": "名物与图像",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: bronze vessel with soft abstract inscription texture not readable. Card concept: 名物与图像. 经文只有字，后人给它画了上千年。"
+  },
+  {
+    "id": "A-R06-N-013",
+    "name": "勿迷信操作",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: museum handbook and careful scholarly still life about evidence and respect. Card concept: 勿迷信操作. 神话可读、可画，不教迷信法术。"
+  },
+  {
+    "id": "A-R06-N-014",
+    "name": "与五区对照",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: classic of mountains and seas book page mythical map no readable text. Card concept: 与五区对照. 史证器物与经载想象，是两条腿走路。"
+  },
+  {
+    "id": "A-R06-N-015",
+    "name": "海外传播中的山海",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: classic of mountains and seas book page mythical map no readable text. Card concept: 海外传播中的山海. 异兽图像正成为跨文化的「中国奇想」名片。"
+  },
+  {
+    "id": "A-R06-N-017",
+    "name": "读经三法",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: classic of mountains and seas book page mythical map no readable text. Card concept: 读经三法. 好奇、对照、不武断。"
+  },
+  {
+    "id": "A-R06-N-018",
+    "name": "山经与海经",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: classic of mountains and seas book page mythical map no readable text. Card concept: 山经与海经. 书名里就有山与海的两扇门。"
+  },
+  {
+    "id": "A-R06-N-019",
+    "name": "再创作伦理",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: museum handbook and careful scholarly still life about evidence and respect. Card concept: 再创作伦理. 可以改写，请标明你在改写。"
+  },
+  {
+    "id": "A-R06-SR-020",
+    "name": "仙山小谱",
+    "prompt": "New Chinese style digital museum educational illustration, refined modern Chinese illustration, soft xuan paper texture, elegant muted palette, museum spotlight, single symbolic subject or vignette centered, clean soft background, no readable Chinese characters, no text, no watermark, no logo, high detail, artistic recreation. Theme: elegant catalog cover still life with 3-4 small cultural objects of the region arranged as a museum summary card. Card concept: 仙山小谱. 昆仑、异兽、经册——带走想象的海拔。"
+  }
+]
