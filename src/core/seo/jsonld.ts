@@ -36,6 +36,51 @@ export function buildWebPageJsonLd(
     description: page.description,
     inLanguage: 'zh-CN',
     dateModified: page.dateModified,
+    isPartOf: { '@id': `${SITE_ORIGIN}/#website` },
+    mainEntity: { '@id': `${url}#article` },
+  };
+}
+
+export function buildCultureArticleJsonLd(page: CulturePage) {
+  const url = `${SITE_ORIGIN}${page.path}`;
+  const image =
+    page.ogImage ??
+    (page.kind === 'hub'
+      ? `/assets/og/culture-${page.hub}.png`
+      : `/assets/og/culture-${page.hub}-${page.slug}.png`);
+
+  return {
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    mainEntityOfPage: { '@id': `${url}#webpage` },
+    headline: page.h1,
+    description: page.description,
+    abstract: page.quickAnswer.join(''),
+    image: `${SITE_ORIGIN}${image}`,
+    inLanguage: 'zh-CN',
+    dateModified: page.dateModified,
+    keywords: page.keywords.join('，'),
+    articleSection: page.sections.map((section) => section.title),
+    author: {
+      '@type': 'Organization',
+      name: 'rex-game',
+      url: SITE_ORIGIN,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'rex-game',
+      url: SITE_ORIGIN,
+    },
+    about: (page.terms ?? []).map((term) => ({
+      '@type': 'DefinedTerm',
+      name: term.name,
+      description: term.meaning,
+    })),
+    citation: page.sources.map((source) => ({
+      '@type': 'CreativeWork',
+      name: source.name,
+      url: source.href,
+    })),
   };
 }
 
@@ -56,6 +101,7 @@ const HUB_LABEL: Record<string, string> = {
   jiaobei: '潮汕掷筊',
   yingge: '潮汕英歌',
   jianzhi: '中国剪纸',
+  jieqi: '二十四节气',
 };
 
 export function cultureBreadcrumbItems(page: CulturePage): { name: string; path: string }[] {
@@ -76,6 +122,7 @@ export function cultureBreadcrumbItems(page: CulturePage): { name: string; path:
 export function buildCulturePageGraph(page: CulturePage) {
   const graph: object[] = [
     buildWebPageJsonLd(page),
+    buildCultureArticleJsonLd(page),
     buildBreadcrumbJsonLd(cultureBreadcrumbItems(page)),
     buildFaqJsonLd(page.faq),
   ];

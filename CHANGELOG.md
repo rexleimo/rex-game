@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0 - 2026-07-25
+
+### Added
+- New game **二十四节气 · 农时拼图** (`/games/ershisi-jieqi/`): season/year sort, phenology memory match, quiz, and 24-term codex with local progress.
+- Culture hub `/culture/jieqi/` and homepage exhibit registration.
+
 ## 0.3.0 - 2026-07-20
 
 ### Added

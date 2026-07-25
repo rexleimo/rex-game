@@ -579,6 +579,14 @@ html:has(.theme-gallery) body {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.6rem;
 }
+.gateway--hubs {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 960px) {
+  .gateway--hubs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 .gateway__card {
   display: flex;
   flex-direction: column;
@@ -915,7 +923,7 @@ html:has(.theme-gallery) body {
 /* —— 文化页索引 (/culture):覆盖 museum.css 的浅色 .culture-index —— */
 .theme-gallery .culture-index {
   max-width: none;
-  margin: 0;
+  margin: 0 auto;
   padding: 4.5rem 0 6rem;
   color: var(--g-text);
 }

@@ -1,4 +1,4 @@
-export type CultureHubId = 'jiaobei' | 'yingge' | 'jianzhi';
+export type CultureHubId = 'jiaobei' | 'yingge' | 'jianzhi' | 'jieqi';
 
 export type EvidenceLevel = 'recorded' | 'oral-tradition' | 'game-design';
 

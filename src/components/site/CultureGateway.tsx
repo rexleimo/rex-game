@@ -3,6 +3,12 @@ import { Reveal } from './Reveal';
 
 const GATEWAYS = [
   {
+    q: '节气 · 一年如何被拆成 24 段?',
+    teaser: '四立、二至二分、物候与农时——用排序和配对把时序装进手指记忆。',
+    count: '1 篇导读',
+    href: '/culture/jieqi/',
+  },
+  {
     q: '掷筊 · 圣杯怎么看?',
     teaser: '一平一凸为圣杯,两平为笑杯……快速回答 + 判读口诀 + 线上与庙里的差别。',
     count: '3 篇导读',

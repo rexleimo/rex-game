@@ -8,6 +8,7 @@ export type GameId =
   | 'chaoshan-yingge'
   | 'jianzhi'
   | 'shanhai-shiyi'
+  | 'ershisi-jieqi'
   | (string & {});
 
 export interface GameMeta {
@@ -28,12 +29,21 @@ export interface GameMeta {
 
 export const games: GameMeta[] = [
   {
+    id: 'ershisi-jieqi',
+    name: '二十四节气 · 农时拼图',
+    tagline: '排序、物候配对与节气问答——把一年拆成 24 段可玩的时间。',
+    cover: '/assets/jieqi/cover.svg',
+    href: '/games/ershisi-jieqi',
+    badge: '新作',
+    accent: '#C9A24B',
+  },
+  {
     id: 'shanhai-shiyi',
     name: '山海拾遗',
     tagline: '修一件器物，读懂一段中国故事——中原礼器与文化卡片。',
     cover: '/assets/shanhai/cover.webp',
     href: '/games/shanhai-shiyi',
-    badge: '新作',
+    badge: '馆藏',
     accent: '#6B7F6A',
   },
   {

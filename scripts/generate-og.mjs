@@ -10,7 +10,8 @@ const SYMBOLS = {
   jiaobei: `<path d="M900 220 a90 90 0 0 0 0 150 a68 68 0 0 1 0 -150z" fill="#C9A24B"/><path d="M1030 220 a90 90 0 0 1 0 150 a68 68 0 0 0 0 -150z" fill="#C9A24B" opacity="0.85"/>`,
   yingge: `<g transform="translate(880,150)"><rect x="30" y="0" width="16" height="200" rx="8" fill="#E8CF9A" transform="rotate(18 38 100)"/><rect x="170" y="0" width="16" height="200" rx="8" fill="#E8CF9A" transform="rotate(-18 178 100)"/><circle cx="120" cy="150" r="66" fill="none" stroke="#C82E21" stroke-width="14"/><circle cx="120" cy="150" r="20" fill="#C9A24B"/></g>`,
   jianzhi: `<g transform="translate(860,150)"><polygon points="120,0 240,120 120,240 0,120" fill="#C82E21"/><polygon points="120,48 192,120 120,192 48,120" fill="#0A0705"/><polygon points="120,82 158,120 120,158 82,120" fill="#D23627"/></g>`,
-};
+    jieqi: `<g transform="translate(900,200)"><circle cx="80" cy="80" r="90" fill="none" stroke="#C9A24B" stroke-width="4"/><circle cx="80" cy="80" r="52" fill="none" stroke="#C82E21" stroke-width="6"/><circle cx="80" cy="-10" r="10" fill="#6B9B6E"/><circle cx="170" cy="80" r="10" fill="#C9A24B"/><circle cx="80" cy="170" r="10" fill="#C87A3A"/><circle cx="-10" cy="80" r="10" fill="#6A8CA8"/></g>`,
+  };
 
 export function buildOgSvg({ title, subtitle, symbol = 'home' }) {
   const safeTitle = esc(title);

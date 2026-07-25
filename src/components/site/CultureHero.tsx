@@ -1,7 +1,12 @@
 import { Breadcrumb } from './Breadcrumb';
 import type { CulturePage } from '@/content/culture/types';
 
-const SYMBOL_LABEL = { jiaobei: '筊杯金月', yingge: '英歌双槌', jianzhi: '剪纸红菱' } as const;
+const SYMBOL_LABEL = {
+  jiaobei: '筊杯金月',
+  yingge: '英歌双槌',
+  jianzhi: '剪纸红菱',
+  jieqi: '节气金环',
+} as const;
 
 function HeroSymbol({ symbol }: { symbol?: CulturePage['symbol'] }) {
   if (symbol === 'yingge') {
@@ -20,6 +25,18 @@ function HeroSymbol({ symbol }: { symbol?: CulturePage['symbol'] }) {
         <polygon points="32,2 62,32 32,62 2,32" fill="#C82E21" />
         <polygon points="32,14 50,32 32,50 14,32" fill="#0A0705" />
         <polygon points="32,22 42,32 32,42 22,32" fill="#D23627" />
+      </svg>
+    );
+  }
+  if (symbol === 'jieqi') {
+    return (
+      <svg viewBox="0 0 72 72" role="img" aria-label={SYMBOL_LABEL.jieqi}>
+        <circle cx="36" cy="36" r="30" fill="none" stroke="#C9A24B" strokeWidth="2" />
+        <circle cx="36" cy="36" r="18" fill="none" stroke="#C82E21" strokeWidth="2.5" />
+        <circle cx="36" cy="6" r="3.5" fill="#6B9B6E" />
+        <circle cx="66" cy="36" r="3.5" fill="#C9A24B" />
+        <circle cx="36" cy="66" r="3.5" fill="#C87A3A" />
+        <circle cx="6" cy="36" r="3.5" fill="#6A8CA8" />
       </svg>
     );
   }

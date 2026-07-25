@@ -48,7 +48,7 @@ export default function CultureIndexPage() {
         </header>
         <QuickAnswerBar
           sentences={[
-            '文化馆把三件展品背后的称法、形制、节奏与吉语写成可检索的说明页。',
+            '文化馆把展品背后的称法、形制、节律与吉语写成可检索的说明页。',
             '每页提供快速回答、术语、FAQ 与来源链接，并标明常见说法、地区差异与游戏设计。',
             '说明页服务理解与收录；重要决定请勿依赖在线互动结果。',
             '准备好了就进入对应游戏，在浏览器里动手感受。',
@@ -56,7 +56,7 @@ export default function CultureIndexPage() {
         />
         <section className="culture-index__section">
           <h2 className="culture-index__h2">主题枢纽</h2>
-          <div className="gateway">
+          <div className="gateway gateway--hubs">
             {hubs.map((hub) => (
               <Link className="gateway__card" key={hub.path} href={hub.path}>
                 <span className="gateway__q">{hub.h1}</span>

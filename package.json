@@ -1,8 +1,8 @@
 {
   "name": "rex-game",
-  "version": "0.4.0",
-  "private": true,
-  "description": "rex-game — 静态娱乐游戏站（部署 Gitee Pages）。首个游戏：潮汕圣杯占卜。",
+  "version": "0.5.0",
+    "private": true,
+    "description": "rex-game — 可玩的民俗文化馆（部署 Gitee Pages）。含二十四节气、山海拾遗、圣杯、英歌、剪纸。",
   "scripts": {
     "dev": "next dev -p 3030",
     "dev:clean": "rm -rf .next && next dev -p 3030",

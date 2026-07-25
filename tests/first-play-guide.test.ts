@@ -40,6 +40,7 @@ test('every playable game configures its own first-play guide', () => {
     ['src/games/jianzhi/JianzhiGame.tsx', 'rex-game:jianzhi:first-play-guide:v1'],
     ['src/games/chaoshan-yingge/YinggeGame.tsx', 'rex-game:yingge:first-play-guide:v1'],
     ['src/games/shantou-jiaobei/JiaobeiGame.tsx', 'rex-game:jiaobei:first-play-guide:v1'],
+    ['src/games/ershisi-jieqi/JieqiGame.tsx', 'rex-game:jieqi:first-play-guide:v1'],
   ];
 
   for (const [path, storageKey] of games) {

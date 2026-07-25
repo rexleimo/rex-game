@@ -1,9 +1,9 @@
 {
   "session": "(new)",
   "status": "running",
-  "updated": "2026-07-23T10:48:08.143Z",
+  "updated": "2026-07-25T00:21:17.264Z",
   "space": "default",
-  "agent": "grok-build",
+  "agent": "hermes-agent",
   "registryPath": ".aios/context-db/index.json",
   "sources": []
 }

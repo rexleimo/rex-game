@@ -5,6 +5,7 @@ import { Breadcrumb } from './Breadcrumb';
 import { CultureCtaBanner } from './CultureCtaBanner';
 import { CultureHero } from './CultureHero';
 import { QuickAnswerBar } from './QuickAnswerBar';
+import { CultureSupplement } from './CultureSupplement';
 
 export function CultureHubGallery({
   page,
@@ -29,6 +30,7 @@ export function CultureHubGallery({
               ))}
             </section>
           ))}
+          <CultureSupplement page={page} />
         </div>
       </div>
       <section className="g-section g-container" aria-labelledby="hub-topics">

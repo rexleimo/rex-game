@@ -40,7 +40,7 @@ test('registry lists all first-batch culture pages with SEO minimums', () => {
     assert.ok(page.gameHref.startsWith('/games/'));
     assert.match(page.dateModified, /^\d{4}-\d{2}-\d{2}$/);
   }
-  assert.equal(listCultureHubs().length, 3);
+  assert.equal(listCultureHubs().length, 4);
 });
 
 test('getCulturePage resolves hub and topic', () => {
