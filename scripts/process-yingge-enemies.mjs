@@ -3,12 +3,14 @@ import { dirname, join } from 'node:path';
 
 import sharp from 'sharp';
 
-const root = join(process.cwd(), 'public', 'assets', 'yingge', 'game', 'enemies');
+// 生图原始 PNG 存放在 resources/（不随 public/ 发到 Pages），产物 webp 落回 public/。
+const sourceRoot = join(process.cwd(), 'resources', 'yingge-src', 'game', 'enemies');
+const outputRoot = join(process.cwd(), 'public', 'assets', 'yingge', 'game', 'enemies');
 const enemyKinds = ['ash-wisp', 'flanker', 'pouncer', 'swarm', 'tile-guard', 'miasma-chief'];
 
 for (const kind of enemyKinds) {
-  const input = join(root, kind, 'idle-source', 'rexai-1.png');
-  const output = join(root, kind, 'idle.webp');
+  const input = join(sourceRoot, kind, 'idle-source', 'rexai-1.png');
+  const output = join(outputRoot, kind, 'idle.webp');
   const { data, info } = await sharp(input).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
 
   for (let offset = 0; offset < data.length; offset += info.channels) {

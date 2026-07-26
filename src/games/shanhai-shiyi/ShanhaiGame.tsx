@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { FirstPlayGuide } from '@/components/game/FirstPlayGuide';
 import { GameChrome } from '@/components/game/GameChrome';
+import { useGameOpen } from '@/core/analytics/useGameOpen';
+import { trackGameFinish, trackGameStart, trackStepComplete } from '@/core/analytics';
 import '@/styles/game-shell.css';
 
 import { getArtifactArt } from './content/artifactArt';
@@ -28,6 +30,7 @@ import { ShapePuzzle } from './restore/ShapePuzzle';
 import styles from './ShanhaiGame.module.css';
 
 export function ShanhaiGame() {
+  useGameOpen('shanhai-shiyi');
   const [progress, setProgress] = useState<ShanhaiProgress | null>(null);
   const [view, setView] = useState<ViewId>('home');
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -78,6 +81,7 @@ export function ShanhaiGame() {
     setPostRestore(false);
     setAcked(Boolean(progress?.artifacts[id]?.readCore));
     setView('restore');
+    trackGameStart('shanhai-shiyi', 'restore');
   };
 
   const openCard = (id: string, fromRestore = false) => {
@@ -95,12 +99,14 @@ export function ShanhaiGame() {
     setAcked(false);
     setView('card');
     showToast(`修复完成 · 评价 ${next.artifacts[card.id]?.grade ?? ''}`);
+    trackGameFinish('shanhai-shiyi', 'restore', next.artifacts[card.id]?.grade ?? 'done');
   };
 
   const onAck = () => {
     if (!progress || !activeId) return;
     commit(markReadCore(progress, activeId));
     setAcked(true);
+    trackStepComplete('shanhai-shiyi', 'restore', 'lore-read');
   };
 
   const copyTellable = async (text: string) => {

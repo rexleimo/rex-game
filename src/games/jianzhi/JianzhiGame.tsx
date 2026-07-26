@@ -2,6 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useGameOpen } from '@/core/analytics/useGameOpen';
+import { trackGameFinish, trackGameStart, trackShareClick } from '@/core/analytics';
+
 import { MOTIFS, getMotif } from './content/motifs';
 import { JIANZHI_LESSONS, LESSON_COUNT, getLesson } from './content/lessons';
 import { JIANZHI_COMMISSIONS, getCommission } from './content/commissions';
@@ -194,6 +197,7 @@ function Subnav({
 }
 
 export function JianzhiGame() {
+  useGameOpen('jianzhi');
   const [view, setView] = useState<View>('enter');
   const [fold, setFold] = useState<FoldMode>('book');
   const [tool, setTool] = useState<ToolMode>('motif');
@@ -413,6 +417,8 @@ export function JianzhiGame() {
     setResultReward(reward);
     setPhase('result');
     playChime();
+    if (activeLesson) trackGameFinish('jianzhi', 'lesson', activeLesson.id);
+    else if (activeCommission) trackGameFinish('jianzhi', 'commission', activeCommission.id);
   }, [activeObjective, activeLesson, activeCommission, placedIds, playChime]);
 
   const goQuizOrResult = useCallback(() => {
@@ -491,6 +497,7 @@ export function JianzhiGame() {
         });
         downloadBlob(blob, `纸上生花-${work.name}.png`);
         flashToast('分享卡已生成 · 开始下载');
+        trackShareClick('jianzhi', 'gallery');
       } catch {
         flashToast('分享卡生成失败,请重试');
       }
@@ -514,6 +521,7 @@ export function JianzhiGame() {
       resetQuizState();
       setPhase('reading');
       setView('workshop');
+      trackGameStart('jianzhi', 'lesson');
     },
     [progress.curriculumUnlocked, progress.discoveredCombos, resetQuizState],
   );
@@ -534,6 +542,7 @@ export function JianzhiGame() {
       resetQuizState();
       setPhase('reading');
       setView('workshop');
+      trackGameStart('jianzhi', 'commission');
     },
     [progress.graduated, progress.discoveredCombos, resetQuizState],
   );

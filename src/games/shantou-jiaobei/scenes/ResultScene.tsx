@@ -3,19 +3,8 @@
 import { useEffect, useState } from 'react';
 import type { CupResult, GameState, WishCategory } from '../JiaobeiGame';
 import { CupResultGlyph } from '../components/CupResultGlyph';
-
-/** 三掷汇总判定 → 整体结论 */
-function verdict(throws: CupResult[]): { key: string; tone: string } {
-  const sheng = throws.filter((t) => t === 'sheng').length;
-  const xiao = throws.filter((t) => t === 'xiao').length;
-  if (sheng === 3) return { key: 'all-sheng', tone: 'sheng' };
-  if (xiao === 3) return { key: 'all-xiao', tone: 'xiao' };
-  if (sheng >= 2) return { key: 'mostly-sheng', tone: 'sheng' };
-  if (throws.filter((t) => t === 'yin').length >= 2) return { key: 'mostly-yin', tone: 'yin' };
-  return { key: 'mixed', tone: 'xiao' };
-}
-
-type VerdictKey = 'all-sheng' | 'mostly-sheng' | 'all-xiao' | 'mostly-yin' | 'mixed';
+import { verdict } from '../core/verdict';
+import type { VerdictKey } from '../core/verdict';
 
 const DEFAULT_CATEGORY: WishCategory = '其他';
 

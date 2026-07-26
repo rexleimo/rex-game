@@ -14,7 +14,8 @@ const introSource = readFileSync(new URL(
   '../src/games/shantou-jiaobei/scenes/IntroScene.tsx',
   import.meta.url,
 ), 'utf8');
-const heroAsset = new URL('../public/assets/jiaobei-hero.png', import.meta.url);
+const heroAsset = new URL('../public/assets/jiaobei-hero.webp', import.meta.url);
+const heroOgAsset = new URL('../public/assets/jiaobei-hero.png', import.meta.url);
 
 const cameraPanelSource = readFileSync(new URL(
   '../src/games/shantou-jiaobei/vision/CameraPosePanel.tsx',
@@ -96,11 +97,12 @@ test('the ready stage gives the player a clear idle cue before the first throw',
 
 test('the home exhibition lists jiaobei via registry cover asset', () => {
   assert.ok(existsSync(heroAsset), 'the home needs the actual rendered jiaobei hero still');
+  assert.ok(existsSync(heroOgAsset), 'social crawlers still need the PNG hero for OG cards');
   assert.match(homeSource, /ExhibitCard|theme-museum|exhibits/);
   assert.match(homeSource, /games\.map/);
   assert.doesNotMatch(homeSource, /GameCard/);
   const registry = readFileSync(new URL('../src/core/gamesRegistry.ts', import.meta.url), 'utf8');
-  assert.match(registry, /jiaobei-hero\.png/);
+  assert.match(registry, /jiaobei-hero\.webp/);
 });
 
 test('the result view reveals its interpretation without adding a game phase', () => {

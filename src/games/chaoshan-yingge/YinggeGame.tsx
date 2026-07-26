@@ -26,6 +26,8 @@ import type { YinggeRuntimeHandle } from './runtime/createYinggeGame';
 import styles from './YinggeGame.module.css';
 import { FirstPlayGuide } from '@/components/game/FirstPlayGuide';
 import { GameChrome } from '@/components/game/GameChrome';
+import { useGameOpen } from '@/core/analytics/useGameOpen';
+import { trackGameFinish, trackGameStart } from '@/core/analytics';
 import '@/styles/game-shell.css';
 
 const SETTINGS_KEY = 'rex-game:yingge:settings:v1';
@@ -52,6 +54,7 @@ function evidenceLabel(entry: CultureEntry) {
 }
 
 export function YinggeGame() {
+  useGameOpen('chaoshan-yingge');
   const [view, setView] = useState<View>('menu');
   const [selectedChapter, setSelectedChapter] = useState(YINGGE_CHAPTERS[0]);
   const [config, setConfig] = useState<YinggeGameConfig>(DEFAULT_CONFIG);
@@ -116,6 +119,7 @@ export function YinggeGame() {
               return nextProgress;
             });
             stopRuntime();
+            trackGameFinish('chaoshan-yingge', selectedChapter.id, outcome.victory ? 'win' : 'lose');
             setView('result');
           },
         });
@@ -154,6 +158,7 @@ export function YinggeGame() {
       await context.resume();
     }
     setView('playing');
+    trackGameStart('chaoshan-yingge', chapter.id);
   };
 
   const leavePerformance = () => {

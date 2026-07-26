@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { CultureLink } from '@/components/site/CultureLink';
 
 import { YinggeGame } from '@/games/chaoshan-yingge/YinggeGame';
 import styles from '@/games/chaoshan-yingge/YinggeGame.module.css';
@@ -69,11 +69,11 @@ export default function ChaoshanYinggePage() {
               <p key={sentence.slice(0, 24)}>{sentence}</p>
             ))}
             <p>
-              <Link href="/culture/yingge/">阅读完整文化枢纽 →</Link>
+              <CultureLink from="chaoshan-yingge" href="/culture/yingge/">阅读完整文化枢纽 →</CultureLink>
               {' · '}
-              <Link href="/culture/yingge/rhythm-and-formation/">鼓点与队形</Link>
+              <CultureLink from="chaoshan-yingge" href="/culture/yingge/rhythm-and-formation/">鼓点与队形</CultureLink>
               {' · '}
-              <Link href="/culture/yingge/faces-and-roles/">脸谱与角色</Link>
+              <CultureLink from="chaoshan-yingge" href="/culture/yingge/faces-and-roles/">脸谱与角色</CultureLink>
             </p>
           </div>
         </div>

@@ -1,6 +1,9 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { useGameOpen } from '@/core/analytics/useGameOpen';
+import { trackGameFinish, trackGameStart, trackStepComplete } from '@/core/analytics';
+import { verdict } from './core/verdict';
 import { GameChrome } from '@/components/game/GameChrome';
 import { FirstPlayGuide } from '@/components/game/FirstPlayGuide';
 import '@/styles/game-shell.css';
@@ -40,6 +43,7 @@ const EDITION: Record<Phase, string> = {
  * （合十静心的 5 秒即「请愿」时刻，不再单设心愿输入页）
  */
 export function JiaobeiGame() {
+  useGameOpen('shantou-jiaobei');
   const [phase, setPhase] = useState<Phase>('intro');
   const [state, setState] = useState<GameState>(INITIAL);
 
@@ -49,8 +53,10 @@ export function JiaobeiGame() {
     (result: CupResult) => {
       setState((s) => {
         const throws = [...s.throws, result];
+        trackStepComplete('shantou-jiaobei', 'divination', `throw-${throws.length}`);
         // 三掷完成 → 结果页
         if (throws.length >= 3) {
+          trackGameFinish('shantou-jiaobei', 'divination', verdict(throws).key);
           setTimeout(() => go('result'), 900);
         }
         return { ...s, throws };
@@ -83,6 +89,7 @@ export function JiaobeiGame() {
               // 在用户手势内解锁音频，并播准备音
               sfx.unlock();
               sfx.playPrepare();
+              trackGameStart('shantou-jiaobei', 'divination');
               go('offering');
             }}
           />

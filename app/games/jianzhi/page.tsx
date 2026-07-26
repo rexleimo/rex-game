@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { CultureLink } from '@/components/site/CultureLink';
 
 import { JianzhiGame } from '@/games/jianzhi/JianzhiGame';
 import { getCulturePage } from '@/content/culture/registry';
@@ -83,11 +83,11 @@ export default function JianzhiPage() {
               <p key={sentence.slice(0, 24)}>{sentence}</p>
             ))}
             <p>
-              <Link href="/culture/jianzhi/">阅读完整文化枢纽 →</Link>
+              <CultureLink from="jianzhi" href="/culture/jianzhi/">阅读完整文化枢纽 →</CultureLink>
               {' · '}
-              <Link href="/culture/jianzhi/fold-and-cut/">对称折剪</Link>
+              <CultureLink from="jianzhi" href="/culture/jianzhi/fold-and-cut/">对称折剪</CultureLink>
               {' · '}
-              <Link href="/culture/jianzhi/auspicious-motifs/">吉祥纹样</Link>
+              <CultureLink from="jianzhi" href="/culture/jianzhi/auspicious-motifs/">吉祥纹样</CultureLink>
             </p>
           </div>
         </div>

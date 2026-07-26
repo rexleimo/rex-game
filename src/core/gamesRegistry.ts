@@ -50,7 +50,7 @@ export const games: GameMeta[] = [
     id: 'shantou-jiaobei',
     name: '潮汕圣杯占卜',
     tagline: '双手合十,掷筊问愿——圣杯、笑杯、阴杯,看神明如何回你。',
-    cover: '/assets/jiaobei-hero.png',
+    cover: '/assets/jiaobei-hero.webp',
     href: '/games/shantou-jiaobei',
     badge: '新',
     accent: '#A6332B',

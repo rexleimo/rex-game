@@ -34,7 +34,18 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Run tests
+        run: pnpm test
+
+      - name: Audit public/ for unreferenced assets
+        run: pnpm assets:check
+
       - name: Build static site
+        env:
+          # 静态导出：埋点配置在构建期内联进产物，故必须在这一步注入。
+          # 未配置 secret 时构建照常通过，埋点自动降级为 no-op。
+          NEXT_PUBLIC_ANALYTICS_PROVIDER: ga4
+          NEXT_PUBLIC_ANALYTICS_SITE_ID: ${{ secrets.ANALYTICS_SITE_ID }}
         run: pnpm build
 
       - name: Upload artifact

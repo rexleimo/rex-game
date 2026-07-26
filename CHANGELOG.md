@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+### Added
+- Privacy-first analytics core (`src/core/analytics/`): provider-agnostic adapter for GA4/umami/plausible, six funnel events (`game_open` / `game_start` / `step_complete` / `game_finish` / `share_click` / `culture_click`), pre-load event queue, DNT + GPC opt-out, no-op when unconfigured.
+- `scripts/assets-audit.mjs` — classifies every file in `public/` as runtime-referenced, build-only, or orphaned; `pnpm assets:check` fails CI on the latter two.
+- CI now runs the test suite and the asset audit before building.
+
+### Changed
+- Moved 25 AI image-generation source PNGs (44.9 MB) out of `public/` into `resources/yingge-src/`; they were shipped to Pages despite never being requested by the browser. Deploy payload dropped from 80 MB to 35 MB.
+- Homepage jiaobei cover now uses a 17 KB WebP instead of the 628 KB PNG (the PNG stays for OG cards).
+- Extracted jiaobei `verdict()` into `core/verdict.ts` so the result screen and the finish event share one judgement.
+- README rewritten: it documented one game and Gitee Pages; the site has five games and deploys to GitHub Pages.
+
+### Removed
+- Four orphaned assets unreferenced since the initial deploy (`cover.png`, `cup_sheng/xiao/yin.png`).
+
 ## 0.5.0 - 2026-07-25
 
 ### Added

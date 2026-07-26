@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { AnalyticsScript } from '@/core/analytics';
 import '@/styles/globals.css';
 import '@/styles/tokens.css';
 import '@/styles/gallery.css';
@@ -85,7 +86,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           crossOrigin="anonymous"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <AnalyticsScript />
+      </body>
     </html>
   );
 }

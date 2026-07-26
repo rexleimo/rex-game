@@ -9,6 +9,8 @@
     "build": "next build",
     "start": "next start",
     "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "assets:audit": "node scripts/assets-audit.mjs",
+    "assets:check": "node scripts/assets-audit.mjs --check",
     "fonts": "bash scripts/fonts-subset.sh",
     "og": "node scripts/generate-og.mjs",
     "og:culture": "node --experimental-strip-types scripts/generate-culture-og.mjs",

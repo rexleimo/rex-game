@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { CultureLink } from '@/components/site/CultureLink';
 
 import { JieqiGame } from '@/games/ershisi-jieqi/JieqiGame';
 import { getCulturePage } from '@/content/culture/registry';
@@ -108,7 +108,7 @@ export default function ErshisiJieqiPage() {
             <p>
               二十四节气依据太阳周年运动划分时间，用来观察季节变化并安排农事。游戏先帮助你记住先后顺序，再通过物候和问答补充常识。
             </p>
-            <Link href="/culture/jieqi/">查看完整文化导读</Link>
+            <CultureLink from="ershisi-jieqi" href="/culture/jieqi/">查看完整文化导读</CultureLink>
           </div>
 
           <div className="jq-guide__grid">

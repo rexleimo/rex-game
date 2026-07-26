@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { CultureLink } from './CultureLink';
 import { Reveal } from './Reveal';
 
 const GATEWAYS = [
@@ -33,11 +33,11 @@ export function CultureGateway() {
     <div className="gateway">
       {GATEWAYS.map((g, i) => (
         <Reveal key={g.href} delay={i * 90}>
-          <Link className="gateway__card" href={g.href}>
+          <CultureLink className="gateway__card" href={g.href} from="home">
             <span className="gateway__q">{g.q}</span>
             <span className="gateway__teaser">{g.teaser}</span>
             <span className="gateway__count">{g.count} →</span>
-          </Link>
+          </CultureLink>
         </Reveal>
       ))}
     </div>

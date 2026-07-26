@@ -1,6 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useGameOpen } from '@/core/analytics/useGameOpen';
+import { trackGameFinish, trackGameStart, trackStepComplete } from '@/core/analytics';
 import { GameChrome } from '@/components/game/GameChrome';
 import { FirstPlayGuide } from '@/components/game/FirstPlayGuide';
 import '@/styles/game-shell.css';
@@ -31,6 +33,7 @@ const EDITION: Record<ViewId, string> = {
 };
 
 export function JieqiGame() {
+  useGameOpen('ershisi-jieqi');
   const [view, setView] = useState<ViewId>('home');
   const [progress, setProgress] = useState<JieqiProgress>(() => loadProgress());
   const [codexId, setCodexId] = useState(termsInOrder()[0]?.id ?? 'lichun');
@@ -64,6 +67,7 @@ export function JieqiGame() {
 
   const openMode = (mode: ModeId) => {
     setSortChecked(false);
+    trackGameStart('ershisi-jieqi', mode);
     setView(mode);
   };
 
@@ -85,6 +89,7 @@ export function JieqiGame() {
       });
       setResult({ mode: 'sort', title, detail, scoreLabel });
       setSortChecked(true);
+      trackGameFinish('ershisi-jieqi', 'sort', payload.correct ? 'win' : 'retry');
     },
     [commit],
   );
@@ -98,6 +103,7 @@ export function JieqiGame() {
         setLastResult(markMatchResult(prev, payload.moves), 'match', title, detail, scoreLabel),
       );
       setResult({ mode: 'match', title, detail, scoreLabel });
+      trackGameFinish('ershisi-jieqi', 'match', 'win');
       setView('result');
     },
     [commit],
@@ -112,6 +118,7 @@ export function JieqiGame() {
         setLastResult(markQuizResult(prev, payload.correct), 'quiz', title, detail, scoreLabel),
       );
       setResult({ mode: 'quiz', title, detail, scoreLabel });
+      trackGameFinish('ershisi-jieqi', 'quiz', payload.score >= 80 ? 'win' : 'pass');
       setView('result');
     },
     [commit],
@@ -121,6 +128,7 @@ export function JieqiGame() {
     if (id) {
       setCodexId(id);
       commit((prev) => markTermRead(prev, id));
+      trackStepComplete('ershisi-jieqi', 'codex', 'term-read');
     }
     setView('codex');
   };
