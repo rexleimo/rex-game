@@ -25,7 +25,7 @@ export function parseProgress(raw: string | null): JiaguProgress {
   try {
     const data = JSON.parse(raw) as Partial<JiaguProgress>;
     if (data.version !== 1) return createInitialProgress();
-    const runs = data.runs && typeof data.runs === 'object' ? data.runs : {};
+    const runs = data.runs && typeof data.runs === 'object' ? (data.runs as Partial<Record<'match' | 'sense' | 'omen' | 'daily', unknown>>) : {};
     return {
       version: 1,
       knownIds: Array.isArray(data.knownIds) ? data.knownIds.filter((x): x is string => typeof x === 'string') : [],

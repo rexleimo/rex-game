@@ -18,6 +18,14 @@ function blankSnapshot(): PassportSnapshot {
   return {
     'shantou-jiaobei': { version: 1, seenCups: [], seenVerdicts: [], completedRuns: 0 },
     'chaoshan-yingge': { unlocked: 1, bestSpirit: {} },
+    jiaguwen: {
+      version: 1,
+      knownIds: [],
+      readIds: [],
+      runs: { match: 0, sense: 0, omen: 0, daily: 0 },
+      bestMatchMoves: null,
+      correctTotal: 0,
+    },
     jianzhi: createInitialJianzhiProgress(),
     'shanhai-shiyi': {
       version: 1,
@@ -143,6 +151,14 @@ describe('passport derivation', () => {
       quizCorrect: 10,
       quizRuns: 2,
       readTermIds: Array.from({ length: 24 }, (_, i) => `t${i}`),
+    };
+    snapshot.jiaguwen = {
+      version: 1,
+      knownIds: Array.from({ length: 24 }, (_, i) => `g${i}`),
+      readIds: Array.from({ length: 24 }, (_, i) => `g${i}`),
+      runs: { match: 1, sense: 1, omen: 1, daily: 1 },
+      bestMatchMoves: 6,
+      correctTotal: 24,
     };
 
     const passport = buildPassport(snapshot);

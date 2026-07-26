@@ -15,6 +15,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['nature'],
     svgPath: 'M10,25 Q10,5 35,5 Q60,5 60,25 Q60,45 35,45 Q10,45 10,25 M32,22 L38,22',
     viewBox: '0 0 70 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'yue',
@@ -26,6 +27,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['nature'],
     svgPath: 'M20,45 Q5,25 20,8 Q28,5 32,10 Q25,25 32,40 Q28,45 20,45',
     viewBox: '0 0 45 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'shan',
@@ -37,6 +39,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['nature'],
     svgPath: 'M5,45 L25,10 L45,45 M25,10 L25,45',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'shui',
@@ -48,6 +51,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['nature'],
     svgPath: 'M25,5 L25,40 M15,15 L10,25 M15,30 L8,35 M35,15 L40,25 M35,30 L42,35 M20,45 L25,40 L30,45',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'mu',
@@ -59,6 +63,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['nature'],
     svgPath: 'M25,5 L25,45 M25,15 L10,5 M25,15 L40,5 M25,30 L10,42 M25,30 L40,42',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'ren',
@@ -70,6 +75,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['body'],
     svgPath: 'M20,50 L28,15 L40,50 M28,15 Q32,5 38,5',
     viewBox: '0 0 50 55',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'nv',
@@ -81,6 +87,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['body'],
     svgPath: 'M15,45 Q15,25 25,15 Q30,10 38,10 M25,15 L25,45 M15,30 L38,30',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'quan',
@@ -92,6 +99,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['body'],
     svgPath: 'M10,35 Q8,20 20,15 Q25,10 35,15 Q42,18 42,30 Q42,40 35,42 Q38,35 32,35 L25,35 L18,35 Q12,35 10,45 L10,35',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'shang',
@@ -103,6 +111,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['action'],
     svgPath: 'M5,35 L45,35 M25,35 L25,10 M20,15 L25,10 L30,15',
     viewBox: '0 0 50 45',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'xia',
@@ -114,6 +123,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['action'],
     svgPath: 'M5,15 L45,15 M25,15 L25,40 M20,35 L25,40 L30,35',
     viewBox: '0 0 50 45',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'da',
@@ -125,6 +135,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['body'],
     svgPath: 'M25,5 L25,45 M25,15 L5,25 M25,15 L45,25 M25,35 L10,45 M25,35 L40,45',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'zhong',
@@ -136,6 +147,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['object'],
     svgPath: 'M22,5 L28,5 L28,45 L22,45 M10,15 Q28,15 45,15 M10,25 Q28,25 45,25',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'tian',
@@ -147,6 +159,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['nature'],
     svgPath: 'M10,10 L40,10 L40,40 L10,40 Z M10,20 L40,20 M10,30 L40,30 M25,10 L25,40',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'mu-eye',
@@ -158,6 +171,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['body'],
     svgPath: 'M15,15 Q25,5 35,15 Q40,25 35,35 Q25,45 15,35 Q10,25 15,15 M25,20 Q28,25 25,30 Q22,25 25,20',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'kou',
@@ -169,6 +183,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['body'],
     svgPath: 'M15,20 Q25,10 35,20 Q38,30 35,40 Q25,45 15,40 Q12,30 15,20',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'huo',
@@ -180,6 +195,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['nature'],
     svgPath: 'M25,45 L25,15 M15,35 L22,20 M35,35 L28,20 M10,45 Q18,30 25,15 Q32,30 40,45 M20,45 L25,35 L30,45',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'yu-rain',
@@ -191,6 +207,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['nature'],
     svgPath: 'M10,15 Q25,5 40,15 L40,22 Q25,18 10,22 Z M15,28 L15,35 M25,28 L25,40 M35,28 L35,35',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'bu',
@@ -202,6 +219,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['ritual'],
     svgPath: 'M25,5 L25,45 M25,20 L15,35 M25,25 L35,35',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'zhen',
@@ -213,6 +231,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['ritual'],
     svgPath: 'M15,15 Q25,8 35,15 L38,30 Q38,40 25,42 Q12,40 12,30 Z M18,15 L25,25 L32,15 M20,30 L30,30',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'wang',
@@ -224,6 +243,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['object'],
     svgPath: 'M10,15 L40,15 M25,15 L25,45 M15,25 L35,25 M12,35 L38,35',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'shou-hunt',
@@ -235,6 +255,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['action'],
     svgPath: 'M10,35 Q8,20 20,15 Q25,10 35,15 M32,35 Q42,35 45,25 M15,40 L25,30 L35,42',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'he',
@@ -246,6 +267,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['nature'],
     svgPath: 'M25,5 Q28,15 30,25 Q32,35 35,42 M25,15 L15,25 M25,15 L35,25 M25,30 L10,35 M25,30 L40,35',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'yang',
@@ -257,6 +279,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['body'],
     svgPath: 'M18,25 Q10,20 12,10 Q18,5 22,12 M32,25 Q40,20 38,10 Q32,5 28,12 M20,25 L25,45 L30,25 M15,30 L35,30',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
   {
     id: 'che',
@@ -268,6 +291,7 @@ export const GLYPHS: OracleGlyph[] = [
     tags: ['object'],
     svgPath: 'M10,20 L40,20 M10,35 L40,35 M15,20 L15,35 M35,20 L35,35 M5,35 Q5,45 15,45 Q25,45 25,35 M25,35 Q25,45 35,45 Q45,45 45,35 M25,10 L35,5',
     viewBox: '0 0 50 50',
+    sourcesNote: '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。',
   },
 ];
 
