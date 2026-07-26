@@ -3,8 +3,9 @@ import { JIAOBEI_PAGES } from './jiaobei.ts';
 import { YINGGE_PAGES } from './yingge.ts';
 import { JIANZHI_PAGES } from './jianzhi.ts';
 import { JIEQI_PAGES } from './jieqi.ts';
+import { JIAGU_PAGES } from './jiagu.ts';
 
-const CULTURE_PAGES: CulturePage[] = [...JIAOBEI_PAGES, ...YINGGE_PAGES, ...JIANZHI_PAGES, ...JIEQI_PAGES];
+const CULTURE_PAGES: CulturePage[] = [...JIAOBEI_PAGES, ...YINGGE_PAGES, ...JIANZHI_PAGES, ...JIEQI_PAGES, ...JIAGU_PAGES];
 
 export function listCulturePages(): CulturePage[] {
   return CULTURE_PAGES;

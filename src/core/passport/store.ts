@@ -2,6 +2,7 @@
 
 import { loadCampaignProgress } from '../../games/chaoshan-yingge/core/progress.ts';
 import { loadProgress as loadJieqiProgress } from '../../games/ershisi-jieqi/core/progress.ts';
+import { loadProgress as loadJiaguProgress } from '../../games/jiaguwen/core/progress.ts';
 import {
   PROGRESS_KEY_V1,
   PROGRESS_KEY_V2,
@@ -34,11 +35,12 @@ function loadJianzhiProgress() {
   }
 }
 
-/** 读取五个游戏的存档。仅在客户端有意义；SSR 期间各自返回初始值。 */
+/** 读取六个游戏的存档。仅在客户端有意义；SSR 期间各自返回初始值。 */
 export function readSnapshot(): PassportSnapshot {
   return {
     'shantou-jiaobei': loadJiaobeiProgress(),
     'chaoshan-yingge': loadCampaignProgress(),
+    jiaguwen: loadJiaguProgress(),
     jianzhi: loadJianzhiProgress(),
     'shanhai-shiyi': loadShanhaiProgress(),
     'ershisi-jieqi': loadJieqiProgress(),
@@ -98,6 +100,19 @@ export function emptyPassport(): PassportState {
   return buildPassport({
     'shantou-jiaobei': { version: 1, seenCups: [], seenVerdicts: [], completedRuns: 0 },
     'chaoshan-yingge': { unlocked: 1, bestSpirit: {} },
+    jiaguwen: {
+      version: 1,
+      knownIds: [],
+      readGlyphIds: [],
+      matchRuns: 0,
+      matchBestMoves: null,
+      senseRuns: 0,
+      senseBest: 0,
+      omenRuns: 0,
+      omenBest: 0,
+      dailyRuns: 0,
+      dailyBest: 0,
+    },
     jianzhi: createInitialJianzhiProgress(),
     'shanhai-shiyi': {
       version: 1,

@@ -9,6 +9,7 @@ export type GameId =
   | 'jianzhi'
   | 'shanhai-shiyi'
   | 'ershisi-jieqi'
+  | 'jiaguwen'
   | (string & {});
 
 export interface GameMeta {
@@ -28,6 +29,15 @@ export interface GameMeta {
 }
 
 export const games: GameMeta[] = [
+  {
+    id: 'jiaguwen',
+    name: '甲骨问契 · 字与卜',
+    tagline: '从象形线条认 24 个甲骨字，再读一句三千年前的问话。',
+    cover: '/assets/jiaguwen/cover.svg',
+    href: '/games/jiaguwen',
+    badge: '新作',
+    accent: '#A03028',
+  },
   {
     id: 'ershisi-jieqi',
     name: '二十四节气 · 农时拼图',

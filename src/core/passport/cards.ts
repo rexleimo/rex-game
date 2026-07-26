@@ -215,7 +215,51 @@ const JIEQI_CARDS: CardDef<'ershisi-jieqi'>[] = [
   },
 ];
 
+const JIAGU_CARDS: CardDef<'jiaguwen'>[] = [
+  {
+    id: 'jiagu-first-match',
+    game: 'jiaguwen',
+    name: '初识骨字',
+    blurb: '甲骨文的每一笔都不是装饰，而是轮廓的简化。',
+    hint: '在甲骨问契完成一次「辨形」配对。',
+    earned: (p) => p.matchRuns >= 1,
+  },
+  {
+    id: 'jiagu-first-sense',
+    game: 'jiaguwen',
+    name: '见形象义',
+    blurb: '日像太阳、月像弯钩——字形本身就是答案。',
+    hint: '在甲骨问契完成一次「契意」选义。',
+    earned: (p) => p.senseRuns >= 1,
+  },
+  {
+    id: 'jiagu-first-omen',
+    game: 'jiaguwen',
+    name: '临骨而问',
+    blurb: '卜辞不是咒语，而是三千年前的人向时间发问的格式。',
+    hint: '在甲骨问契完成一次「卜辞」填空。',
+    earned: (p) => p.omenRuns >= 1,
+  },
+  {
+    id: 'jiagu-daily-run',
+    game: 'jiaguwen',
+    name: '今日三契',
+    blurb: '辨形、契意、卜辞——一局串起三种读骨方式。',
+    hint: '完成一次「今日三契」。',
+    earned: (p) => p.dailyRuns >= 1,
+  },
+  {
+    id: 'jiagu-codex',
+    game: 'jiaguwen',
+    name: '字库通览',
+    blurb: '24 字不多，但足以建立「象形字不是抽象符号」的直觉。',
+    hint: '在字图鉴中浏览全部 24 个甲骨字。',
+    earned: (p) => p.readGlyphIds.length >= 24,
+  },
+];
+
 export const PASSPORT_CARDS: AnyCardDef[] = [
+  ...JIAGU_CARDS,
   ...JIEQI_CARDS,
   ...SHANHAI_CARDS,
   ...JIAOBEI_CARDS,
@@ -224,6 +268,7 @@ export const PASSPORT_CARDS: AnyCardDef[] = [
 ];
 
 export const PASSPORT_GAME_ORDER: PassportGameId[] = [
+  'jiaguwen',
   'ershisi-jieqi',
   'shanhai-shiyi',
   'shantou-jiaobei',

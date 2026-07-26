@@ -38,6 +38,12 @@ const EXHIBIT_META: Record<
     playLabel: '开始拼时',
     cultureLabel: '一年如何分成 24 段',
   },
+  jiaguwen: {
+    no: 'No.06',
+    tags: '象形认字 · 卜辞填空',
+    playLabel: '开始契字',
+    cultureLabel: '字从象出，事因卜存',
+  },
 };
 
 function ExhibitGlyph({ id }: { id: string }) {
@@ -97,6 +103,26 @@ function ExhibitGlyph({ id }: { id: string }) {
           stroke="#E8CF9A"
           strokeWidth="2"
           strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+  if (id === 'jiaguwen') {
+    return (
+      <svg viewBox="0 0 72 72" role="img" aria-label="甲骨与刻辞">
+        <path
+          d="M12 18 Q6 36 14 56 Q36 62 58 56 Q66 36 60 18 Q36 8 12 18 Z"
+          fill="none"
+          stroke="#C9A24B"
+          strokeWidth="2.5"
+        />
+        <path
+          d="M24 22 Q26 16 30 20 M40 22 L40 34 M48 24 L52 30 M30 36 Q34 30 38 36 M26 44 L34 48 M44 42 L50 50"
+          fill="none"
+          stroke="#C82E21"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     );

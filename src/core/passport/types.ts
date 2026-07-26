@@ -1,20 +1,22 @@
 import type { GameId } from '../gamesRegistry.ts';
 import type { CampaignProgress } from '../../games/chaoshan-yingge/core/types.ts';
+import type { JiaguProgress } from '../../games/jiaguwen/core/types.ts';
 import type { JianzhiProgress } from '../../games/jianzhi/core/types.ts';
 import type { JieqiProgress } from '../../games/ershisi-jieqi/core/types.ts';
 import type { ShanhaiProgress } from '../../games/shanhai-shiyi/core/types.ts';
 import type { JiaobeiProgress } from '../../games/shantou-jiaobei/core/progress.ts';
 
 /**
- * 五个游戏的存档快照。
+ * 六个游戏的存档快照。
  *
  * 护照刻意不新建存储：卡牌是各游戏既有进度的纯函数。这样做的代价是护照要认识
- * 五种互不相同的存档形状；换来的是零迁移、零数据丢失风险，以及玩家清掉某个
+ * 六种互不相同的存档形状；换来的是零迁移、零数据丢失风险，以及玩家清掉某个
  * 游戏的存档时护照自动跟着退回——不会出现"游戏说没玩过、护照说集齐了"。
  */
 export interface PassportSnapshot {
   'shantou-jiaobei': JiaobeiProgress;
   'chaoshan-yingge': CampaignProgress;
+  jiaguwen: JiaguProgress;
   jianzhi: JianzhiProgress;
   'shanhai-shiyi': ShanhaiProgress;
   'ershisi-jieqi': JieqiProgress;
