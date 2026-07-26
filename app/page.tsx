@@ -7,6 +7,7 @@ import { GalleryHeader } from '@/components/site/GalleryHeader';
 import { GallerySectionHeader } from '@/components/site/GallerySectionHeader';
 import { HomeClaims } from '@/components/site/HomeClaims';
 import { HomeHero } from '@/components/site/HomeHero';
+import { HomePassportBar } from '@/components/site/HomePassportBar';
 import { HomeTrust } from '@/components/site/HomeTrust';
 import { JsonLd } from '@/components/site/JsonLd';
 import { SITE_ORIGIN } from '@/content/site';
@@ -70,6 +71,8 @@ export default function HomePage() {
       <GalleryHeader ctaHref={games[0]?.href} ctaLabel="进入展厅" />
       <main>
         <HomeHero />
+
+        <HomePassportBar />
 
         <section className="g-section g-container" id="exhibits" aria-labelledby="exhibits-title">
           <GallerySectionHeader index="〇一" title="可玩展品,多道门径" note="每个游戏 = 一件可玩展品" />

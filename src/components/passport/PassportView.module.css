@@ -1,0 +1,232 @@
+.root {
+  display: grid;
+  gap: 4rem;
+}
+
+/* ---------- 汇总 ---------- */
+
+.summary {
+  display: grid;
+  gap: 1rem;
+  padding: 2rem 1.75rem;
+  border: 1px solid rgba(201, 162, 75, 0.28);
+  border-radius: var(--g-radius);
+  background: var(--g-float);
+}
+
+.summaryNumbers {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.big {
+  font-family: var(--g-font-display);
+  font-size: clamp(2.75rem, 8vw, 4rem);
+  line-height: 1;
+  color: var(--g-gold-hi);
+  font-variant-numeric: tabular-nums;
+}
+
+.of {
+  font-size: 0.95rem;
+  color: var(--g-text-dim);
+}
+
+.meter {
+  height: 3px;
+  background: rgba(232, 220, 196, 0.12);
+  overflow: hidden;
+}
+
+.meterFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--g-cinnabar), var(--g-gold));
+  transition: width var(--g-dur-enter) var(--g-ease);
+}
+
+.summaryText {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--g-text);
+}
+
+/* ---------- 分区 ---------- */
+
+.section {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(232, 220, 196, 0.12);
+}
+
+.sectionTitle {
+  margin: 0 0 0.3rem;
+  font-family: var(--g-font-display);
+  font-size: clamp(1.15rem, 3vw, 1.4rem);
+  color: var(--g-text-hi);
+}
+
+.sectionCount {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--g-text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.complete {
+  color: var(--g-gold);
+}
+
+.loading {
+  opacity: 0.6;
+}
+
+.sectionLink {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.sectionLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- 卡牌 ---------- */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cardEarned,
+.cardBlank {
+  display: flex;
+  gap: 0.85rem;
+  padding: 1rem;
+  border-radius: var(--g-radius);
+  border: 1px solid rgba(232, 220, 196, 0.1);
+  background: var(--g-card);
+}
+
+.cardBlank {
+  /* 未解锁的卡刻意压暗但保持可读——提示文案是玩家去下一个展品的唯一线索 */
+  background: transparent;
+  border-style: dashed;
+  border-color: rgba(232, 220, 196, 0.14);
+}
+
+.stampEarned,
+.stampBlank {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid;
+  font-size: 0.85rem;
+}
+
+.stampBlank {
+  border-color: rgba(232, 220, 196, 0.18);
+  color: var(--g-text-dim);
+}
+
+.cardBody {
+  min-width: 0;
+}
+
+.cardName {
+  margin: 0 0 0.3rem;
+  font-family: var(--g-font-display);
+  font-size: 1rem;
+  color: var(--g-text-hi);
+}
+
+.cardBlank .cardName {
+  color: var(--g-text-dim);
+  font-weight: 400;
+}
+
+.cardText {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--g-text);
+}
+
+.cardBlank .cardText {
+  color: var(--g-text-dim);
+}
+
+.note {
+  margin: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(232, 220, 196, 0.1);
+  font-size: 0.82rem;
+  color: var(--g-text-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meterFill {
+    transition: none;
+  }
+}
+
+/* ---------- 分享 ---------- */
+
+.shareRow {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.shareBtn {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--g-gold);
+  border-radius: var(--g-radius);
+  background: transparent;
+  color: var(--g-gold-hi);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition:
+    background var(--g-dur-micro) var(--g-ease),
+    color var(--g-dur-micro) var(--g-ease);
+}
+
+.shareBtn:hover:not(:disabled) {
+  background: var(--g-gold);
+  color: var(--g-abyss);
+}
+
+.shareBtn:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.shareError {
+  font-size: 0.85rem;
+  color: var(--g-cinnabar-hi);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shareBtn {
+    transition: none;
+  }
+}

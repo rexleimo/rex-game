@@ -6,11 +6,12 @@ export const SITE_DISCLAIMER =
 export const SITE_NAV = [
   { href: '/#exhibits', label: '展品' },
   { href: '/culture/', label: '文化馆' },
+  { href: '/passport/', label: '护照' },
   { href: '/about/', label: '关于' },
 ] as const;
 
 export const TRUST_METRICS = [
-  { value: '4', label: '可玩文化展品' },
+  { value: '5', label: '可玩文化展品' },
   { value: '0', label: '下载安装' },
   { value: '本地', label: '进度保存' },
   { value: '免费', label: '即开即玩' },

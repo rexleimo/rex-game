@@ -32,6 +32,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.85,
     },
+    {
+      url: 'https://game.rexai.top/passport/',
+      lastModified,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    },
   ];
 
   for (const game of games) {

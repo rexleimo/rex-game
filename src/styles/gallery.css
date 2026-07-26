@@ -986,3 +986,83 @@ html:has(.theme-gallery) body {
     margin-top: 3.5rem;
   }
 }
+
+/* ============================================================
+   文化护照 —— 首页护照条与展品集卡角标
+   ============================================================ */
+
+.theme-gallery .exhibit__progress {
+  display: inline-block;
+  margin-left: 0.75em;
+  padding: 0.15em 0.6em;
+  border: 1px solid rgba(201, 162, 75, 0.4);
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--g-gold-hi);
+  vertical-align: middle;
+}
+
+.theme-gallery .exhibit__progress[data-complete] {
+  border-color: var(--g-cinnabar);
+  background: rgba(200, 46, 33, 0.16);
+  color: var(--g-text-hi);
+}
+
+.theme-gallery .hpb__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.75rem;
+  padding: 2rem 1.75rem;
+  border: 1px solid rgba(201, 162, 75, 0.24);
+  border-radius: var(--g-radius);
+  background: var(--g-float);
+}
+
+.theme-gallery .hpb__copy {
+  flex: 1 1 22rem;
+  min-width: 0;
+}
+
+.theme-gallery .hpb__title {
+  margin: 0 0 0.6rem;
+  font-family: var(--g-font-display);
+  font-size: clamp(1.3rem, 3.4vw, 1.85rem);
+  color: var(--g-text-hi);
+  font-variant-numeric: tabular-nums;
+}
+
+.theme-gallery .hpb__text {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--g-text);
+}
+
+.theme-gallery .hpb__side {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: stretch;
+  flex: 0 1 16rem;
+}
+
+.theme-gallery .hpb__meter {
+  height: 3px;
+  background: rgba(232, 220, 196, 0.12);
+  overflow: hidden;
+}
+
+.theme-gallery .hpb__meterFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--g-cinnabar), var(--g-gold));
+  transition: width var(--g-dur-enter) var(--g-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-gallery .hpb__meterFill {
+    transition: none;
+  }
+}

@@ -10,6 +10,8 @@ import {
   getEnemyCultureGuide,
 } from './core/culturalCombat';
 import {
+  LEGACY_PROGRESS_KEY,
+  PROGRESS_KEY,
   createInitialCampaignProgress,
   parseCampaignProgress,
   recordChapterOutcome,
@@ -31,8 +33,6 @@ import { trackGameFinish, trackGameStart } from '@/core/analytics';
 import '@/styles/game-shell.css';
 
 const SETTINGS_KEY = 'rex-game:yingge:settings:v1';
-const PROGRESS_KEY = 'rex-game:yingge:campaign:v2';
-const LEGACY_PROGRESS_KEY = 'rex-game:yingge:unlocked:v1';
 const DEFAULT_CONFIG: YinggeGameConfig = { latencyOffsetMs: 0, reducedMotion: false, muted: false };
 const GUIDE_ENEMY_KINDS: EnemyKind[] = ['ash-wisp', 'flanker', 'pouncer', 'swarm', 'tile-guard', 'miasma-chief'];
 

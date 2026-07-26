@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { GameMeta } from '@/core/gamesRegistry';
+import { ExhibitProgress } from './ExhibitProgress';
 import { Reveal } from './Reveal';
 
 const EXHIBIT_META: Record<
@@ -29,6 +30,13 @@ const EXHIBIT_META: Record<
     tags: '折剪展开 · 图鉴收集',
     playLabel: '开始创作',
     cultureLabel: '纹样里的吉祥话',
+  },
+  // 馆藏号按入馆先后固定，新展品排新号，不重排既有展品
+  'ershisi-jieqi': {
+    no: 'No.05',
+    tags: '排序配对 · 节气图鉴',
+    playLabel: '开始拼时',
+    cultureLabel: '一年如何分成 24 段',
   },
 };
 
@@ -71,6 +79,28 @@ function ExhibitGlyph({ id }: { id: string }) {
       </svg>
     );
   }
+  if (id === 'ershisi-jieqi') {
+    return (
+      <svg viewBox="0 0 72 72" role="img" aria-label="二十四节气圆盘">
+        <circle cx="36" cy="36" r="28" fill="none" stroke="#C9A24B" strokeWidth="2.5" />
+        <circle cx="36" cy="36" r="3" fill="#C9A24B" />
+        {/* 四立二分：十字刻度 */}
+        <path
+          d="M36 10 V18 M36 54 V62 M10 36 H18 M54 36 H62"
+          stroke="#C82E21"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
+        {/* 八节小刻 */}
+        <path
+          d="M18.5 18.5 L23 23 M49 23 L53.5 18.5 M53.5 53.5 L49 49 M23 49 L18.5 53.5"
+          stroke="#E8CF9A"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
   return (
     <svg viewBox="0 0 64 64" role="img" aria-label="剪纸红菱">
       <polygon points="32,2 62,32 32,62 2,32" fill="#C82E21" />
@@ -105,6 +135,7 @@ export function ExhibitSection({
         <p className="exhibit__no">
           展品 {meta.no}
           {meta.tags ? ` · ${meta.tags}` : ''}
+          <ExhibitProgress game={game.id} />
         </p>
         <h3 className="exhibit__name">{game.name}</h3>
         <p className="exhibit__tagline">{game.tagline}</p>
