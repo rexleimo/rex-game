@@ -14,7 +14,7 @@ export function createInitialProgress(): JiaguProgress {
     version: 1,
     knownIds: [],
     readIds: [],
-    runs: { match: 0, sense: 0, omen: 0, daily: 0, craft: 0, review: 0 },
+    runs: { match: 0, sense: 0, omen: 0, daily: 0, craft: 0, review: 0, reference: 0 },
     bestMatchMoves: null,
     correctTotal: 0,
     mistakeIds: [],
@@ -26,7 +26,7 @@ export function parseProgress(raw: string | null): JiaguProgress {
   try {
     const data = JSON.parse(raw) as Partial<JiaguProgress>;
     if (data.version !== 1) return createInitialProgress();
-    const runs = data.runs && typeof data.runs === 'object' ? (data.runs as Partial<Record<'match' | 'sense' | 'omen' | 'daily' | 'craft' | 'review', unknown>>) : {};
+    const runs = data.runs && typeof data.runs === 'object' ? (data.runs as Partial<Record<'match' | 'sense' | 'omen' | 'daily' | 'craft' | 'review' | 'reference', unknown>>) : {};
     return {
       version: 1,
       knownIds: Array.isArray(data.knownIds) ? data.knownIds.filter((x): x is string => typeof x === 'string') : [],
@@ -38,6 +38,7 @@ export function parseProgress(raw: string | null): JiaguProgress {
         daily: typeof runs.daily === 'number' ? runs.daily : 0,
         craft: typeof runs.craft === 'number' ? runs.craft : 0,
         review: typeof runs.review === 'number' ? runs.review : 0,
+        reference: typeof runs.reference === 'number' ? runs.reference : 0,
       },
       bestMatchMoves: typeof data.bestMatchMoves === 'number' ? data.bestMatchMoves : null,
       correctTotal: typeof data.correctTotal === 'number' ? data.correctTotal : 0,

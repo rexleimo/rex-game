@@ -1,6 +1,6 @@
 /** 《甲骨问契 · 字与卜》核心类型 */
 
-export type JiaguModeId = 'match' | 'sense' | 'omen' | 'daily' | 'craft' | 'review';
+export type JiaguModeId = 'match' | 'sense' | 'omen' | 'daily' | 'craft' | 'review' | 'reference';
 
 export interface OracleGlyph {
   id: string;
@@ -24,6 +24,50 @@ export interface OracleGlyph {
   viewBox?: string;
   /** 字形演变：甲骨文 → 金文 → 小篆 → 楷书 */
   evolution?: GlyphEvolution | null;
+}
+
+export type OracleReadingStatus = 'editorial-game-label' | 'source-label' | 'uncertain' | 'unread';
+
+export type OracleConfidence = 'high' | 'medium' | 'unreviewed';
+
+export interface OracleGlyphForm {
+  /** Stable source-local id for one attested or reference glyph form. */
+  id: string;
+  image: string;
+  sourceId: OracleSourceId;
+  /** The evidence class must stay visible when multiple variants share a headword. */
+  formType: 'teaching-rendering' | 'reference-glyph';
+  license?: string;
+  sourceRecordUrl?: string;
+  retrievedAt?: string;
+}
+
+export interface OracleHeadword {
+  /** Product-local concept id, distinct from individual glyph-form ids. */
+  id: string;
+  modern: string;
+  readingStatus: OracleReadingStatus;
+  confidence: OracleConfidence;
+  formIds: string[];
+  /** Only reviewed entries may be used to manufacture teaching questions. */
+  gameSafe: boolean;
+}
+
+export interface OracleCatalogForm extends OracleGlyphForm {
+  /** Upstream modern-character label; may be a scholarly reading rather than a settled identification. */
+  modern: string;
+}
+
+export type OracleSourceId = 'curriculum' | 'jgw-open' | 'xiaoxue';
+
+export interface OracleSource {
+  id: OracleSourceId;
+  name: string;
+  url: string;
+  license: string;
+  /** Exact role in the product: curriculum, browse-only reference, or import candidate. */
+  role: 'curriculum' | 'reference';
+  note: string;
 }
 
 export interface GlyphEvolution {
@@ -100,7 +144,7 @@ export interface JiaguProgress {
   /** 图鉴已读字 id */
   readIds: string[];
   /** 各模式完成次数 */
-  runs: { match: number; sense: number; omen: number; daily: number; craft: number; review: number };
+  runs: { match: number; sense: number; omen: number; daily: number; craft: number; review: number; reference: number };
   /** 辨形最佳步数（按题量归一化较难，MVP 只记 4 对局最佳原始步数） */
   bestMatchMoves: number | null;
   /** 累计正确题数 */

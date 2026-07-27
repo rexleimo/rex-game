@@ -1,0 +1,14 @@
+{
+  "source": "Xiaoxuetang Ancient-to-Modern Chinese Character Database",
+  "license": "CC0-1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "forms": [
+    {
+      "id": "xxt-example-0001",
+      "modern": "日",
+      "source_file": "images/xxt-example-0001.png",
+      "source_record_url": "https://xiaoxue.iis.sinica.edu.tw/",
+      "retrieved_at": "YYYY-MM-DD"
+    }
+  ]
+}

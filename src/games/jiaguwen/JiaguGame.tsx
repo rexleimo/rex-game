@@ -6,7 +6,7 @@ import { trackGameFinish, trackGameStart, trackStepComplete } from '@/core/analy
 import { GameChrome } from '@/components/game/GameChrome';
 import { FirstPlayGuide } from '@/components/game/FirstPlayGuide';
 import '@/styles/game-shell.css';
-import { GlyphImage } from './components/GlyphImage';
+import { Codex } from './modes/Codex';
 import type { JiaguProgress, JiaguModeId, ViewId, MatchRun, SenseRun, OmenRun, OracleGlyph } from './core/types';
 import {
   createInitialProgress,
@@ -16,13 +16,15 @@ import {
   saveProgress,
   shuffle,
 } from './core/progress';
-import { GLYPHS, getGlyph, SOURCES_NOTE } from './content/glyphs';
+import { GLYPHS, CURRICULUM_GLYPH_COUNT } from './content/glyphs';
 import { OMENS } from './content/omens';
+import { ORACLE_CATALOG_FORMS, ORACLE_CATALOG_FORM_COUNT } from './content/oracleCatalog';
 import { MatchMode } from './modes/MatchMode';
 import { SenseMode, buildSenseItems } from './modes/SenseMode';
 import { OmenMode } from './modes/OmenMode';
 import { CraftMode } from './modes/CraftMode';
 import { ReviewMode } from './modes/ReviewMode';
+import { ReferenceMode } from './modes/ReferenceMode';
 import styles from './JiaguGame.module.css';
 
 const EDITION: Record<ViewId, string> = {
@@ -33,6 +35,7 @@ const EDITION: Record<ViewId, string> = {
   omen: '卜辞填空',
   craft: '部件造字',
   review: '错题复习',
+  reference: '字形寻踪',
   codex: '字图鉴',
   result: '本局小结',
 };
@@ -45,7 +48,6 @@ export function JiaguGame() {
   useGameOpen('jiaguwen');
   const [view, setView] = useState<ViewId>('home');
   const [progress, setProgress] = useState<JiaguProgress>(() => createInitialProgress());
-  const [codexId, setCodexId] = useState<string>(GLYPHS[0]?.id ?? 'ri');
   const [result, setResult] = useState<{
     mode: JiaguModeId;
     title: string;
@@ -224,19 +226,37 @@ export function JiaguGame() {
     [commit],
   );
 
-  const openCodex = (id?: string) => {
-    if (id) {
-      setCodexId(id);
+  const onReferenceComplete = useCallback(
+    (payload: { correct: number; total: number }) => {
+      commit((prev) => ({
+        ...prev,
+        correctTotal: prev.correctTotal + payload.correct,
+        runs: { ...prev.runs, reference: prev.runs.reference + 1 },
+      }));
+      setResult({
+        mode: 'reference',
+        title: '字形寻踪完成',
+        detail: '你比看了公开字形样本与上游释读字头。它们是探索线索，不替代具体字例与学术释读。',
+        scoreLabel: `${payload.correct}/${payload.total}`,
+      });
+      trackGameFinish('jiaguwen', 'reference', payload.correct >= payload.total ? 'win' : 'pass');
+      setView('result');
+    },
+    [commit],
+  );
+
+  const openCodex = () => setView('codex');
+
+  const onCodexRead = useCallback(
+    (id: string) => {
       commit((prev) => {
         if (prev.readIds.includes(id)) return prev;
         return { ...prev, readIds: [...prev.readIds, id] };
       });
       trackStepComplete('jiaguwen', 'codex', 'glyph-read');
-    }
-    setView('codex');
-  };
-
-  const codexGlyph = getGlyph(codexId) ?? GLYPHS[0];
+    },
+    [commit],
+  );
 
   return (
     <main className={styles.root}>
@@ -257,16 +277,16 @@ export function JiaguGame() {
               <p className={styles.documentType}>契文与卜事</p>
               <h2>甲骨问契 · 字与卜</h2>
               <p className={styles.lead}>
-                从象形的线条里认出 24 个常用甲骨字，再读一句 3000 年前的卜辞。
+                从课程字认识象形线条，再在公开字形索引中对照更多异体与释读字头。
               </p>
               <dl className={styles.heroStats}>
                 <div>
-                  <dt>已识字</dt>
-                  <dd>{progress.knownIds.length}/24</dd>
+                  <dt>已识课程字</dt>
+                  <dd>{progress.knownIds.length}/{CURRICULUM_GLYPH_COUNT}</dd>
                 </div>
                 <div>
-                  <dt>图鉴</dt>
-                  <dd>{progress.readIds.length}/24 已读</dd>
+                  <dt>教学图鉴</dt>
+                  <dd>{progress.readIds.length}/{CURRICULUM_GLYPH_COUNT} 已读</dd>
                 </div>
               </dl>
             </section>
@@ -288,6 +308,10 @@ export function JiaguGame() {
                 <span className={styles.modeName}>卜辞填空</span>
                 <span className={styles.modeDesc}>读懂一句问事的短句</span>
               </button>
+              <button type="button" className={styles.modeCard} onClick={() => openMode('reference')}>
+                <span className={styles.modeName}>字形寻踪</span>
+                <span className={styles.modeDesc}>从 {ORACLE_CATALOG_FORM_COUNT.toLocaleString()} 个公开样本中辨认字头</span>
+              </button>
               <button type="button" className={styles.modeCard} onClick={() => openMode('craft')}>
                 <span className={styles.modeName}>部件造字</span>
                 <span className={styles.modeDesc}>用甲骨部件拼出合体字</span>
@@ -302,8 +326,8 @@ export function JiaguGame() {
 
             <section className={styles.codexTeaser}>
               <p className={styles.documentType}>字图鉴</p>
-              <p className={styles.lead}>已识 {progress.knownIds.length} 字，可随时回看字形与文化说明。</p>
-              <button type="button" className={styles.secondaryBtn} onClick={() => openCodex(progress.knownIds[0] ?? GLYPHS[0].id)}>
+              <p className={styles.lead}>教学图鉴已识 {progress.knownIds.length} 字；公开字形索引可检索 {ORACLE_CATALOG_FORM_COUNT.toLocaleString()} 个样本。</p>
+              <button type="button" className={styles.secondaryBtn} onClick={openCodex}>
                 打开图鉴 →
               </button>
             </section>
@@ -343,46 +367,12 @@ export function JiaguGame() {
           />
         )}
 
+        {view === 'reference' && (
+          <ReferenceMode forms={ORACLE_CATALOG_FORMS} itemCount={6} onComplete={onReferenceComplete} onBack={() => setView('home')} />
+        )}
+
         {view === 'codex' && (
-          <div className={styles.codex}>
-            <div className={styles.modeHead}>
-              <button type="button" className={styles.ghostBtn} onClick={() => setView('home')}>
-                返回
-              </button>
-              <div>
-                <p className={styles.eyebrow}>字图鉴</p>
-                <h2>{codexGlyph.modern}</h2>
-              </div>
-            </div>
-            <div className={styles.glyphBig}>
-              <GlyphImage glyph={codexGlyph} />
-            </div>
-            <p className={styles.shapeHint}>{codexGlyph.shapeHint}</p>
-            <p className={styles.lore}>{codexGlyph.lore}</p>
-            <p className={styles.sourceNote}>{SOURCES_NOTE}</p>
-            <ul className={styles.glyphList}>
-              {GLYPHS.map((g) => {
-                const known = progress.knownIds.includes(g.id);
-                const active = g.id === codexId;
-                return (
-                  <li key={g.id}>
-                    <button
-                      type="button"
-                      className={`${styles.glyphItem} ${active ? styles.glyphItemActive : ''} ${!known ? styles.glyphItemLocked : ''}`}
-                      onClick={() => openCodex(g.id)}
-                      disabled={!known}
-                      aria-label={known ? g.modern : '未解锁'}
-                    >
-                      <span className={styles.glyphItemSvg}>
-                      <GlyphImage glyph={g} />
-                      </span>
-                      <span className={styles.glyphItemLabel}>{known ? g.modern : '?'}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          <Codex knownIds={progress.knownIds} onRead={onCodexRead} onBack={() => setView('home')} />
         )}
 
         {view === 'result' && result && (

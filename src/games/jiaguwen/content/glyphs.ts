@@ -1,7 +1,7 @@
 import type { OracleGlyph, GlyphEvolution } from '../core/types.ts';
 
 /**
- * V1 60 字甲骨字库。
+ * 已审校的教学字表。
  * 字形图为 AI 生成的骨片刻痕风格；SVG 仅作为 fallback 占位，线上优先用图片。
  * 字段按内容卡规格，按主题分组，便于后续关卡与 passport 卡设计。
  */
@@ -122,4 +122,9 @@ export function listGlyphIdsByTag(tag: string): string[] {
   return GLYPHS.filter((g) => (g.tags as string[]).includes(tag)).map((g) => g.id);
 }
 
-export const SOURCES_NOTE = '字形为根据公开甲骨文字形图录与教材归纳的教学示意，非博物馆拓片摹本。';
+export const CURRICULUM_GLYPH_COUNT = GLYPHS.length;
+
+/** Only the reviewed teaching deck is eligible for game questions and unlocking. */
+export const TEACHING_GLYPHS = GLYPHS;
+
+export const SOURCES_NOTE = '课程字形为教学示意；公开参考字形另列来源与许可，浏览时不把上游释读自动当作定论。';

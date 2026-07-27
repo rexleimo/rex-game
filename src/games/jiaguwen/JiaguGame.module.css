@@ -464,10 +464,12 @@
   margin-bottom: 1.25rem;
 }
 
+.senseGlyph img,
 .senseGlyph svg {
   width: 8rem;
   height: 8rem;
   color: var(--jg-ink);
+  object-fit: contain;
 }
 
 .quizPrompt {
@@ -643,6 +645,91 @@
   line-height: 1.6;
 }
 
+.sourceNote a {
+  color: inherit;
+  text-decoration-color: var(--jg-line-strong);
+  text-underline-offset: 0.16em;
+}
+
+.codexControls {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0 0 1rem;
+  padding: 1rem;
+  border: 1px solid var(--jg-line);
+  background: var(--jg-bone-high);
+}
+
+.codexSearch {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--jg-ink-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.codexSearch input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0.6rem 0.75rem;
+  color: var(--jg-ink);
+  border: 1px solid var(--jg-line-strong);
+  background: var(--jg-bone);
+}
+
+.codexScopes,
+.codexPager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.codexScope,
+.codexScopeActive {
+  min-height: 36px;
+  padding: 0.4rem 0.7rem;
+  color: var(--jg-ink-soft);
+  cursor: pointer;
+  border: 1px solid var(--jg-line);
+  background: transparent;
+}
+
+.codexScopeActive {
+  color: var(--jg-bone-high);
+  border-color: var(--jg-ink);
+  background: var(--jg-ink);
+}
+
+.codexSummary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  color: var(--jg-ink-soft);
+  font-size: 0.82rem;
+}
+
+.codexPager {
+  margin-left: auto;
+}
+
+.codexEmpty {
+  padding: 1.25rem;
+  color: var(--jg-ink-soft);
+  border: 1px dashed var(--jg-line-strong);
+}
+
+.codexEmpty p {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.codexEmpty p + p {
+  margin-top: 0.6rem;
+}
+
 .glyphList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(4rem, 1fr));
@@ -747,6 +834,7 @@
     border-top: 1px solid var(--jg-line);
   }
 
+  .senseGlyph img,
   .senseGlyph svg {
     width: 6rem;
     height: 6rem;
