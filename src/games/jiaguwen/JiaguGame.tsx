@@ -6,19 +6,23 @@ import { trackGameFinish, trackGameStart, trackStepComplete } from '@/core/analy
 import { GameChrome } from '@/components/game/GameChrome';
 import { FirstPlayGuide } from '@/components/game/FirstPlayGuide';
 import '@/styles/game-shell.css';
-import type { JiaguProgress, JiaguModeId, ViewId, OracleGlyph } from './core/types';
+import { GlyphImage } from './components/GlyphImage';
+import type { JiaguProgress, JiaguModeId, ViewId, MatchRun, SenseRun, OmenRun, OracleGlyph } from './core/types';
 import {
   createInitialProgress,
   loadProgress,
   recordKnownIds,
+  clearMistakeIds,
   saveProgress,
   shuffle,
 } from './core/progress';
-import { GLYPHS, GLYPH_BY_ID, getGlyph } from './content/glyphs';
+import { GLYPHS, getGlyph, SOURCES_NOTE } from './content/glyphs';
 import { OMENS } from './content/omens';
 import { MatchMode } from './modes/MatchMode';
 import { SenseMode, buildSenseItems } from './modes/SenseMode';
 import { OmenMode } from './modes/OmenMode';
+import { CraftMode } from './modes/CraftMode';
+import { ReviewMode } from './modes/ReviewMode';
 import styles from './JiaguGame.module.css';
 
 const EDITION: Record<ViewId, string> = {
@@ -27,6 +31,8 @@ const EDITION: Record<ViewId, string> = {
   match: '辨形配对',
   sense: '契意三选一',
   omen: '卜辞填空',
+  craft: '部件造字',
+  review: '错题复习',
   codex: '字图鉴',
   result: '本局小结',
 };
@@ -113,7 +119,7 @@ export function JiaguGame() {
   );
 
   const onMatchComplete = useCallback(
-    (payload: { moves: number; knownIds: string[] }) => {
+    (payload: { moves: number; knownIds: string[]; missedIds?: string[] }) => {
       const title = '辨形完成';
       const detail = `用 ${payload.moves} 步完成配对。配对的字已加入已识字库。`;
       const scoreLabel = `${payload.moves} 步`;
@@ -125,6 +131,7 @@ export function JiaguGame() {
           bestMatchMoves: best,
           correctTotal: next.correctTotal + payload.knownIds.length,
           runs: { ...next.runs, match: next.runs.match + 1 },
+          mistakeIds: payload.missedIds?.length ? [...new Set([...next.mistakeIds, ...payload.missedIds])] : next.mistakeIds,
         };
       });
       setResult({ mode: 'match', title, detail, scoreLabel });
@@ -135,7 +142,7 @@ export function JiaguGame() {
   );
 
   const onSenseComplete = useCallback(
-    (payload: { correct: number; total: number; knownIds: string[] }) => {
+    (payload: { correct: number; total: number; knownIds: string[]; missedIds?: string[] }) => {
       const title = payload.correct >= payload.total ? '契意全对' : '契意完成';
       const detail = `${payload.correct}/${payload.total} 题正确。答对的字义已写入记忆。`;
       const scoreLabel = `${payload.correct}/${payload.total}`;
@@ -145,6 +152,7 @@ export function JiaguGame() {
           ...next,
           correctTotal: next.correctTotal + payload.correct,
           runs: { ...next.runs, sense: next.runs.sense + 1 },
+          mistakeIds: payload.missedIds?.length ? [...new Set([...next.mistakeIds, ...payload.missedIds])] : next.mistakeIds,
         };
       });
       setResult({ mode: 'sense', title, detail, scoreLabel });
@@ -155,7 +163,7 @@ export function JiaguGame() {
   );
 
   const onOmenComplete = useCallback(
-    (payload: { correct: number; total: number; knownIds: string[] }) => {
+    (payload: { correct: number; total: number; knownIds: string[]; missedIds?: string[] }) => {
       const title = payload.correct >= payload.total ? '卜辞通读' : '卜辞完成';
       const detail = '卜辞是古人向未知发问的短句。填对的字已加入已识字库。';
       const scoreLabel = `${payload.correct}/${payload.total}`;
@@ -165,10 +173,52 @@ export function JiaguGame() {
           ...next,
           correctTotal: next.correctTotal + payload.correct,
           runs: { ...next.runs, omen: next.runs.omen + 1 },
+          mistakeIds: payload.missedIds?.length ? [...new Set([...next.mistakeIds, ...payload.missedIds])] : next.mistakeIds,
         };
       });
       setResult({ mode: 'omen', title, detail, scoreLabel });
       trackGameFinish('jiaguwen', 'omen', payload.correct >= payload.total ? 'win' : 'pass');
+      setView('result');
+    },
+    [commit],
+  );
+
+  const onCraftComplete = useCallback(
+    (payload: { correct: number; total: number; knownIds: string[] }) => {
+      const title = payload.correct >= payload.total ? '部件通晓' : '部件造字完成';
+      const detail = `${payload.correct}/${payload.total} 题正确。拼对的部件字已加入已识字库。`;
+      const scoreLabel = `${payload.correct}/${payload.total}`;
+      commit((prev) => {
+        const next = recordKnownIds(prev, payload.knownIds);
+        return {
+          ...next,
+          correctTotal: next.correctTotal + payload.correct,
+          runs: { ...next.runs, craft: next.runs.craft + 1 },
+        };
+      });
+      setResult({ mode: 'craft', title, detail, scoreLabel });
+      trackGameFinish('jiaguwen', 'craft', payload.correct >= payload.total ? 'win' : 'pass');
+      setView('result');
+    },
+    [commit],
+  );
+
+  const onReviewComplete = useCallback(
+    (payload: { correct: number; total: number; knownIds: string[]; clearedIds: string[] }) => {
+      const title = payload.correct >= payload.total ? '错题清零' : '错题复习完成';
+      const detail = `${payload.correct}/${payload.total} 题正确。答对的字已移出错题本。`;
+      const scoreLabel = `${payload.correct}/${payload.total}`;
+      commit((prev) => {
+        const next = recordKnownIds(prev, payload.knownIds);
+        return {
+          ...next,
+          correctTotal: next.correctTotal + payload.correct,
+          runs: { ...next.runs, review: next.runs.review + 1 },
+          mistakeIds: clearMistakeIds(next, payload.clearedIds).mistakeIds,
+        };
+      });
+      setResult({ mode: 'review', title, detail, scoreLabel });
+      trackGameFinish('jiaguwen', 'review', payload.correct >= payload.total ? 'win' : 'pass');
       setView('result');
     },
     [commit],
@@ -238,6 +288,16 @@ export function JiaguGame() {
                 <span className={styles.modeName}>卜辞填空</span>
                 <span className={styles.modeDesc}>读懂一句问事的短句</span>
               </button>
+              <button type="button" className={styles.modeCard} onClick={() => openMode('craft')}>
+                <span className={styles.modeName}>部件造字</span>
+                <span className={styles.modeDesc}>用甲骨部件拼出合体字</span>
+              </button>
+              {progress.mistakeIds.length > 0 && (
+                <button type="button" className={`${styles.modeCard} ${styles.modeCardAlert}`} onClick={() => openMode('review')}>
+                  <span className={styles.modeName}>错题复习</span>
+                  <span className={styles.modeDesc}>{progress.mistakeIds.length} 个待复习的字</span>
+                </button>
+              )}
             </section>
 
             <section className={styles.codexTeaser}>
@@ -270,6 +330,19 @@ export function JiaguGame() {
           <OmenMode itemCount={3} onComplete={onOmenComplete} onBack={() => setView('home')} />
         )}
 
+        {view === 'craft' && (
+          <CraftMode itemCount={5} onComplete={onCraftComplete} onBack={() => setView('home')} />
+        )}
+
+        {view === 'review' && (
+          <ReviewMode
+            mistakeIds={progress.mistakeIds}
+            itemCount={Math.min(5, Math.max(3, progress.mistakeIds.length))}
+            onComplete={onReviewComplete}
+            onBack={() => setView('home')}
+          />
+        )}
+
         {view === 'codex' && (
           <div className={styles.codex}>
             <div className={styles.modeHead}>
@@ -282,11 +355,11 @@ export function JiaguGame() {
               </div>
             </div>
             <div className={styles.glyphBig}>
-              <GlyphSvg glyph={codexGlyph} />
+              <GlyphImage glyph={codexGlyph} />
             </div>
             <p className={styles.shapeHint}>{codexGlyph.shapeHint}</p>
             <p className={styles.lore}>{codexGlyph.lore}</p>
-            <p className={styles.sourceNote}>{codexGlyph.sourcesNote}</p>
+            <p className={styles.sourceNote}>{SOURCES_NOTE}</p>
             <ul className={styles.glyphList}>
               {GLYPHS.map((g) => {
                 const known = progress.knownIds.includes(g.id);
@@ -301,7 +374,7 @@ export function JiaguGame() {
                       aria-label={known ? g.modern : '未解锁'}
                     >
                       <span className={styles.glyphItemSvg}>
-                        <GlyphSvg glyph={g} />
+                      <GlyphImage glyph={g} />
                       </span>
                       <span className={styles.glyphItemLabel}>{known ? g.modern : '?'}</span>
                     </button>
@@ -330,14 +403,6 @@ export function JiaguGame() {
         )}
       </GameChrome>
     </main>
-  );
-}
-
-function GlyphSvg({ glyph }: { glyph: { svgPath: string; viewBox: string } }) {
-  return (
-    <svg viewBox={glyph.viewBox} className={styles.glyphSvg} role="img" aria-hidden>
-      <path d={glyph.svgPath} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }
 

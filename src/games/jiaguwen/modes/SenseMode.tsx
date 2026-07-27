@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import type { SenseItem, OracleGlyph } from '../core/types';
-import { GLYPHS, GLYPH_BY_ID } from '../content/glyphs';
+import { GLYPHS, getGlyph } from '../content/glyphs';
+import { GlyphImage } from '../components/GlyphImage';
 import { shuffle } from '../core/progress';
 import styles from '../JiaguGame.module.css';
 
@@ -10,7 +11,7 @@ export interface SenseModeProps {
   pool: OracleGlyph[];
   items?: SenseItem[];
   itemCount?: number;
-  onComplete: (payload: { correct: number; total: number; knownIds: string[] }) => void;
+  onComplete: (payload: { correct: number; total: number; knownIds: string[]; missedIds?: string[] }) => void;
   onBack: () => void;
 }
 
@@ -69,7 +70,8 @@ export function SenseMode({ pool, items, itemCount = 4, onComplete, onBack }: Se
     if (index + 1 >= deck.length) {
       const correct = finalPicks.filter((p, i) => p === deck[i].answer).length;
       const knownIds = deck.filter((_, i) => finalPicks[i] === deck[i].answer).map((d) => d.glyphId);
-      onComplete({ correct, total: deck.length, knownIds });
+      const missedIds = deck.filter((_, i) => finalPicks[i] !== deck[i].answer).map((d) => d.glyphId);
+      onComplete({ correct, total: deck.length, knownIds, missedIds });
       return;
     }
     setIndex((i) => i + 1);
@@ -105,7 +107,7 @@ export function SenseMode({ pool, items, itemCount = 4, onComplete, onBack }: Se
     );
   }
 
-  const glyph = GLYPH_BY_ID[current.glyphId];
+  const glyph = getGlyph(current.glyphId);
   const isRight = picked !== null && picked === current.answer;
 
   return (
@@ -127,16 +129,7 @@ export function SenseMode({ pool, items, itemCount = 4, onComplete, onBack }: Se
       <article className={styles.senseCard}>
         {glyph && (
           <div className={styles.senseGlyph}>
-            <svg viewBox={glyph.viewBox} role="img" aria-label={glyph.modern}>
-              <path
-                d={glyph.svgPath}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <GlyphImage glyph={glyph} />
           </div>
         )}
         <p className={styles.quizPrompt}>{current.prompt}</p>

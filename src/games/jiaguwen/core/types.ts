@@ -1,6 +1,6 @@
 /** 《甲骨问契 · 字与卜》核心类型 */
 
-export type JiaguModeId = 'match' | 'sense' | 'omen' | 'daily';
+export type JiaguModeId = 'match' | 'sense' | 'omen' | 'daily' | 'craft' | 'review';
 
 export interface OracleGlyph {
   id: string;
@@ -15,13 +15,22 @@ export interface OracleGlyph {
   /** 教学分层 1 入门 / 2 进阶 / 3 深入 */
   tier: 1 | 2 | 3;
   /** 标签分类 */
-  tags: Array<'nature' | 'body' | 'action' | 'ritual' | 'object'>;
-  /** SVG 路径字符串；如为 '' 则 fallback 绘制 */
-  svgPath: string;
+  tags: Array<'nature' | 'body' | 'action' | 'ritual' | 'object' | 'sky' | 'land' | 'animal' | 'direction' | 'tool' | 'building' | 'cloth' | 'vehicle' | 'power' | 'farm'>;
+  /** 字形图片路径（优先使用） */
+  image?: string;
+  /** SVG 路径字符串；无 image 时 fallback 绘制 */
+  svgPath?: string;
   /** 字形视图框 */
-  viewBox: string;
-  /** 来源声明 */
-  sourcesNote: string;
+  viewBox?: string;
+  /** 字形演变：甲骨文 → 金文 → 小篆 → 楷书 */
+  evolution?: GlyphEvolution | null;
+}
+
+export interface GlyphEvolution {
+  oracle?: string;
+  jinwen?: string;
+  xiaozhuan?: string;
+  kaishu?: string;
 }
 
 export interface SenseItem {
@@ -91,9 +100,25 @@ export interface JiaguProgress {
   /** 图鉴已读字 id */
   readIds: string[];
   /** 各模式完成次数 */
-  runs: { match: number; sense: number; omen: number; daily: number };
+  runs: { match: number; sense: number; omen: number; daily: number; craft: number; review: number };
   /** 辨形最佳步数（按题量归一化较难，MVP 只记 4 对局最佳原始步数） */
   bestMatchMoves: number | null;
   /** 累计正确题数 */
   correctTotal: number;
+  /** 答错或没有一次答对的字 id，用于错题复习 */
+  mistakeIds: string[];
+}
+
+export interface CompoundRecipe {
+  id: string;
+  /** 目标现代字 */
+  result: string;
+  /** 组成目标字所需的甲骨部件 id 列表 */
+  parts: string[];
+  /** 可选：目标字在甲骨文中是否真实存在 */
+  oracleExists?: boolean;
+  /** 提示说明 */
+  hint: string;
+  /** 文化/字理说明 */
+  lore: string;
 }

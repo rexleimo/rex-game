@@ -2,15 +2,16 @@
 
 import { useState } from 'react';
 import type { OmenItem } from '../core/types';
-import { GLYPH_BY_ID } from '../content/glyphs';
+import { getGlyph } from '../content/glyphs';
 import { OMENS } from '../content/omens';
+import { GlyphImage } from '../components/GlyphImage';
 import { shuffle } from '../core/progress';
 import styles from '../JiaguGame.module.css';
 
 export interface OmenModeProps {
   items?: OmenItem[];
   itemCount?: number;
-  onComplete: (payload: { correct: number; total: number; knownIds: string[] }) => void;
+  onComplete: (payload: { correct: number; total: number; knownIds: string[]; missedIds?: string[] }) => void;
   onBack: () => void;
 }
 
@@ -55,7 +56,8 @@ export function OmenMode({ items, itemCount = 3, onComplete, onBack }: OmenModeP
     if (index + 1 >= deck.length) {
       const correct = finalPicks.filter((p, i) => p === deck[i].answer).length;
       const knownIds = deck.filter((_, i) => finalPicks[i] === deck[i].answer).map((d) => d.blankId);
-      onComplete({ correct, total: deck.length, knownIds });
+      const missedIds = deck.filter((_, i) => finalPicks[i] !== deck[i].answer).map((d) => d.blankId);
+      onComplete({ correct, total: deck.length, knownIds, missedIds });
       return;
     }
     setIndex((i) => i + 1);
@@ -91,7 +93,7 @@ export function OmenMode({ items, itemCount = 3, onComplete, onBack }: OmenModeP
     );
   }
 
-  const glyph = GLYPH_BY_ID[current.blankId];
+  const glyph = getGlyph(current.blankId);
   const isRight = picked !== null && picked === current.answer;
 
   return (
@@ -116,7 +118,7 @@ export function OmenMode({ items, itemCount = 3, onComplete, onBack }: OmenModeP
 
         <div className={styles.omenOptions}>
           {current.options.map((opt, i) => {
-            const optGlyph = GLYPH_BY_ID[opt];
+            const optGlyph = getGlyph(opt);
             let cls = styles.omenOpt;
             if (revealed) {
               if (i === current.answer) cls += ` ${styles.omenOptRight}`;
@@ -127,16 +129,7 @@ export function OmenMode({ items, itemCount = 3, onComplete, onBack }: OmenModeP
             return (
               <button key={opt + i} type="button" className={cls} onClick={() => choose(i)} disabled={revealed}>
                 {optGlyph ? (
-                  <svg viewBox={optGlyph.viewBox} role="img" aria-label={optGlyph.modern}>
-                    <path
-                      d={optGlyph.svgPath}
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <GlyphImage glyph={optGlyph} alt={optGlyph.modern} />
                 ) : (
                   <span className={styles.omenOptText}>{opt}</span>
                 )}

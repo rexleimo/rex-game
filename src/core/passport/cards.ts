@@ -217,28 +217,12 @@ const JIEQI_CARDS: CardDef<'ershisi-jieqi'>[] = [
 
 const JIAGU_CARDS: CardDef<'jiaguwen'>[] = [
   {
-    id: 'jiagu-first-match',
+    id: 'jiagu-first-trio',
     game: 'jiaguwen',
-    name: '初识骨字',
-    blurb: '甲骨文的每一笔都不是装饰，而是轮廓的简化。',
-    hint: '在甲骨问契完成一次「辨形」配对。',
-    earned: (p) => p.runs.match >= 1,
-  },
-  {
-    id: 'jiagu-first-sense',
-    game: 'jiaguwen',
-    name: '见形象义',
-    blurb: '日像太阳、月像弯钩——字形本身就是答案。',
-    hint: '在甲骨问契完成一次「契意」选义。',
-    earned: (p) => p.runs.sense >= 1,
-  },
-  {
-    id: 'jiagu-first-omen',
-    game: 'jiaguwen',
-    name: '临骨而问',
-    blurb: '卜辞不是咒语，而是三千年前的人向时间发问的格式。',
-    hint: '在甲骨问契完成一次「卜辞」填空。',
-    earned: (p) => p.runs.omen >= 1,
+    name: '初识甲骨',
+    blurb: '辨形、契意、卜辞——三种读骨方式各走一次，才算真正入门。',
+    hint: '在甲骨问契中完成一次「辨形」「契意」「卜辞」。',
+    earned: (p) => p.runs.match >= 1 && p.runs.sense >= 1 && p.runs.omen >= 1,
   },
   {
     id: 'jiagu-daily-run',
@@ -252,9 +236,25 @@ const JIAGU_CARDS: CardDef<'jiaguwen'>[] = [
     id: 'jiagu-codex',
     game: 'jiaguwen',
     name: '字库通览',
-    blurb: '24 字不多，但足以建立「象形字不是抽象符号」的直觉。',
-    hint: '在字图鉴中浏览全部 24 个甲骨字。',
-    earned: (p) => p.readIds.length >= 24,
+    blurb: '60 字不多，但足以建立「象形字不是抽象符号」的直觉。',
+    hint: '在字图鉴中浏览全部 60 个甲骨字。',
+    earned: (p) => p.readIds.length >= 60,
+  },
+  {
+    id: 'jiagu-craft',
+    game: 'jiaguwen',
+    name: '部件拼字',
+    blurb: '甲骨文里合体字不多，但用部件会意正是后世形声字的源头。',
+    hint: '完成一次「部件造字」。',
+    earned: (p) => p.runs.craft >= 1,
+  },
+  {
+    id: 'jiagu-review',
+    game: 'jiaguwen',
+    name: '温故知新',
+    blurb: '错题本不是惩罚，是让「差一点」变成「记住了」。',
+    hint: '完成一次「错题复习」。',
+    earned: (p) => p.runs.review >= 1,
   },
 ];
 

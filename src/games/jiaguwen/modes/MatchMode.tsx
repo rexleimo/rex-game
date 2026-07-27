@@ -4,13 +4,14 @@ import { useCallback, useRef, useState } from 'react';
 import type { MatchCard } from '../core/types';
 import type { OracleGlyph } from '../core/types';
 import { shuffle } from '../core/progress';
-import { GLYPH_BY_ID } from '../content/glyphs';
+import { getGlyph } from '../content/glyphs';
+import { GlyphImage } from '../components/GlyphImage';
 import styles from '../JiaguGame.module.css';
 
 export interface MatchModeProps {
   pool: OracleGlyph[];
   pairCount: number;
-  onComplete: (payload: { moves: number; knownIds: string[] }) => void;
+  onComplete: (payload: { moves: number; knownIds: string[]; missedIds?: string[] }) => void;
   onBack: () => void;
 }
 
@@ -128,7 +129,7 @@ export function MatchMode({ pool, pairCount, onComplete, onBack }: MatchModeProp
       <div className={styles.matchGrid}>
         {cards.map((card) => {
           const open = card.flipped || card.matched;
-          const glyph = card.face === 'glyph' ? GLYPH_BY_ID[card.pairId] : undefined;
+          const glyph = card.face === 'glyph' ? getGlyph(card.pairId) : undefined;
           return (
             <button
               key={card.key}
@@ -143,24 +144,11 @@ export function MatchMode({ pool, pairCount, onComplete, onBack }: MatchModeProp
               <span className={styles.matchInner}>
                 {open ? (
                   <>
-                    {glyph && (
-                      <svg
-                        viewBox={glyph.viewBox}
-                        className={styles.cardGlyph}
-                        role="img"
-                        aria-hidden
-                      >
-                        <path
-                          d={glyph.svgPath}
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                    {glyph && card.face === 'glyph' ? (
+                      <GlyphImage glyph={glyph} alt={glyph.modern} />
+                    ) : (
+                      <strong>{card.label}</strong>
                     )}
-                    {!glyph && <strong>{card.label}</strong>}
                   </>
                 ) : (
                   <span className={styles.matchBack}>契</span>

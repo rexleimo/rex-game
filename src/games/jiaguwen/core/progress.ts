@@ -14,9 +14,10 @@ export function createInitialProgress(): JiaguProgress {
     version: 1,
     knownIds: [],
     readIds: [],
-    runs: { match: 0, sense: 0, omen: 0, daily: 0 },
+    runs: { match: 0, sense: 0, omen: 0, daily: 0, craft: 0, review: 0 },
     bestMatchMoves: null,
     correctTotal: 0,
+    mistakeIds: [],
   };
 }
 
@@ -25,7 +26,7 @@ export function parseProgress(raw: string | null): JiaguProgress {
   try {
     const data = JSON.parse(raw) as Partial<JiaguProgress>;
     if (data.version !== 1) return createInitialProgress();
-    const runs = data.runs && typeof data.runs === 'object' ? (data.runs as Partial<Record<'match' | 'sense' | 'omen' | 'daily', unknown>>) : {};
+    const runs = data.runs && typeof data.runs === 'object' ? (data.runs as Partial<Record<'match' | 'sense' | 'omen' | 'daily' | 'craft' | 'review', unknown>>) : {};
     return {
       version: 1,
       knownIds: Array.isArray(data.knownIds) ? data.knownIds.filter((x): x is string => typeof x === 'string') : [],
@@ -35,9 +36,12 @@ export function parseProgress(raw: string | null): JiaguProgress {
         sense: typeof runs.sense === 'number' ? runs.sense : 0,
         omen: typeof runs.omen === 'number' ? runs.omen : 0,
         daily: typeof runs.daily === 'number' ? runs.daily : 0,
+        craft: typeof runs.craft === 'number' ? runs.craft : 0,
+        review: typeof runs.review === 'number' ? runs.review : 0,
       },
       bestMatchMoves: typeof data.bestMatchMoves === 'number' ? data.bestMatchMoves : null,
       correctTotal: typeof data.correctTotal === 'number' ? data.correctTotal : 0,
+      mistakeIds: Array.isArray(data.mistakeIds) ? data.mistakeIds.filter((x): x is string => typeof x === 'string') : [],
     };
   } catch {
     return createInitialProgress();
@@ -66,6 +70,18 @@ export function saveProgress(p: JiaguProgress) {
 export function recordKnownIds(p: JiaguProgress, ids: string[]): JiaguProgress {
   const nextKnown = [...new Set([...p.knownIds, ...ids])];
   return { ...p, knownIds: nextKnown };
+}
+
+/** 记录错题 id（去重） */
+export function recordMistakeIds(p: JiaguProgress, ids: string[]): JiaguProgress {
+  const nextMistakes = [...new Set([...p.mistakeIds, ...ids])];
+  return { ...p, mistakeIds: nextMistakes };
+}
+
+/** 从错题本移除已掌握的字 */
+export function clearMistakeIds(p: JiaguProgress, ids: string[]): JiaguProgress {
+  const remove = new Set(ids);
+  return { ...p, mistakeIds: p.mistakeIds.filter((id) => !remove.has(id)) };
 }
 
 /** Fisher-Yates 洗牌 */

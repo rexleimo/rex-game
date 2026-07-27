@@ -104,9 +104,10 @@ export function emptyPassport(): PassportState {
       version: 1,
       knownIds: [],
       readIds: [],
-      runs: { match: 0, sense: 0, omen: 0, daily: 0 },
+      runs: { match: 0, sense: 0, omen: 0, daily: 0, craft: 0, review: 0 },
       bestMatchMoves: null,
       correctTotal: 0,
+      mistakeIds: [],
     },
     jianzhi: createInitialJianzhiProgress(),
     'shanhai-shiyi': {

@@ -1,8 +1,9 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { GLYPHS, GLYPH_BY_ID } from '../content/glyphs';
+import { GLYPHS, getGlyph, SOURCES_NOTE } from '../content/glyphs';
 import type { JiaguProgress } from '../core/types';
+import { GlyphImage } from '../components/GlyphImage';
 import styles from '../JiaguGame.module.css';
 
 export interface CodexProps {
@@ -17,7 +18,7 @@ export function Codex({ knownIds, readIds, onRead, onBack }: CodexProps) {
   const knownSet = useMemo(() => new Set(knownIds), [knownIds]);
   const readSet = useMemo(() => new Set(readIds), [readIds]);
 
-  const active = selectedId ? GLYPH_BY_ID[selectedId] : null;
+  const active = selectedId ? getGlyph(selectedId) ?? null : null;
   if (active) {
     if (!readSet.has(active.id)) onRead(active.id);
   }
@@ -30,9 +31,9 @@ export function Codex({ knownIds, readIds, onRead, onBack }: CodexProps) {
         </button>
         <div>
           <p className={styles.eyebrow}>字图鉴</p>
-          <h2>{active ? active.modern : '24 字甲骨图鉴'}</h2>
+          <h2>{active ? active.modern : '60 字甲骨图鉴'}</h2>
           <p className={styles.lead}>
-            {active ? '点选左侧可切换其他字。' : '点击任意字查看释义、造字思路与来源说明。'}
+            {active ? '点选左侧可切换其他字。' : '点击任意字查看释义、造字思路与字形演变。'}
           </p>
         </div>
       </div>
@@ -56,16 +57,7 @@ export function Codex({ knownIds, readIds, onRead, onBack }: CodexProps) {
                   aria-label={locked ? `${g.modern}（未解锁）` : g.modern}
                 >
                   <span className={styles.glyphItemSvg}>
-                    <svg viewBox={g.viewBox} role="img" aria-hidden="true">
-                      <path
-                        d={g.svgPath}
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <GlyphImage glyph={g} />
                   </span>
                   <span className={styles.glyphItemLabel}>
                     {locked ? '？' : g.modern}
@@ -80,24 +72,33 @@ export function Codex({ knownIds, readIds, onRead, onBack }: CodexProps) {
           {active ? (
             <article>
               <div className={styles.glyphBig}>
-                <svg viewBox={active.viewBox} role="img" aria-label={active.modern}>
-                  <path
-                    d={active.svgPath}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <GlyphImage glyph={active} alt={`${active.modern} 甲骨字形`} />
               </div>
               <p className={styles.shapeHint}>
                 <strong>{active.modern}</strong> · {active.gloss}
               </p>
               <p className={styles.lore}>{active.shapeHint}</p>
               <p className={styles.lore}>{active.lore}</p>
+              <div className={styles.evolutionRow}>
+                <div className={styles.evolutionCell}>
+                  <span className={styles.evolutionLabel}>甲骨文</span>
+                  <GlyphImage glyph={active} alt="甲骨文" />
+                </div>
+                <div className={styles.evolutionCell}>
+                  <span className={styles.evolutionLabel}>金文</span>
+                  {active.evolution?.jinwen ? <img src={active.evolution.jinwen} alt="金文" className={styles.evolutionImg} /> : <span className={styles.evolutionMissing}>—</span>}
+                </div>
+                <div className={styles.evolutionCell}>
+                  <span className={styles.evolutionLabel}>小篆</span>
+                  {active.evolution?.xiaozhuan ? <img src={active.evolution.xiaozhuan} alt="小篆" className={styles.evolutionImg} /> : <span className={styles.evolutionMissing}>—</span>}
+                </div>
+                <div className={styles.evolutionCell}>
+                  <span className={styles.evolutionLabel}>楷书</span>
+                  <span className={styles.evolutionKaishu}>{active.evolution?.kaishu ?? active.modern}</span>
+                </div>
+              </div>
               <p className={styles.sourceNote}>
-                来源：{active.sourcesNote}
+                来源：{SOURCES_NOTE}
               </p>
             </article>
           ) : (
