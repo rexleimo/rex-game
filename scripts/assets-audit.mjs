@@ -44,6 +44,7 @@ const ALWAYS_KEEP = [
   /^\/robots\.txt$/,
   /^\/sitemap\.xml$/,
   /^\/llms\.txt$/,
+  /^\/BingSiteAuth\.xml$/,
   /^\/manifest\.webmanifest$/,
   /^\/apple-touch-icon/,
   /^\/fonts\//,
