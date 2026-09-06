@@ -48,3 +48,7 @@ AGENTS.md
 CLAUDE.md
 GEMINI.md
 opencode.json
+
+# local-only heavy artifacts (dev screenshots & vendor sources, regenerable)
+resources/shots/
+resources/yingge-src/
