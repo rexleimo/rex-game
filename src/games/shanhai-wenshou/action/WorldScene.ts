@@ -1580,7 +1580,7 @@ export class WorldScene extends Phaser.Scene {
       if (b.zone === 'elite') {
         this.eliteResolved = true;
       }
-      bus.emit('outcome', { ...outcome, title: b.title ?? b.name, isBoss: false });
+      bus.emit('outcome', { ...outcome, title: b.title ?? b.name, isBoss: false, quiet: kind === 'slain' });
       if (b.zone === 'elite') bus.emit('gateOpen', undefined);
     }
     if (this.target === b) {

@@ -8,6 +8,8 @@ import type { Difficulty } from './frameData.ts';
 import { VIEW_H, VIEW_W } from './frameData.ts';
 import type { BattleOutcome } from './rules.ts';
 import { buildLevel } from './levels.ts';
+import { getItem } from '../content/items.ts';
+import { getBeast } from '../content/beasts.ts';
 import { bus, resetTouch, sceneCmd, type BossHud, type HudState } from './bus.ts';
 import { setAudioMuted } from './audio.ts';
 import type { WorldScene, WorldConfig } from './WorldScene.ts';
@@ -21,6 +23,8 @@ import styles from '../ShanhaiWenshouGame.module.css';
 export interface OutcomePayload extends BattleOutcome {
   title: string;
   isBoss: boolean;
+  /** 普通击杀：不弹结算窗、不暂停，只飘 toast（收服/Boss/巡山仍走弹窗）。 */
+  quiet?: boolean;
 }
 
 export interface ActionGameProps {
@@ -127,8 +131,20 @@ export function ActionGame(props: ActionGameProps) {
       }),
       bus.on('outcome', (o) => {
         if (!o) return;
-        sceneCmd.paused = true;
-        outcomeRef.current(o);
+        // 普通击杀不弹窗不暂停——只飘结算 toast；收服/Boss/巡山仍走结算窗
+        const quiet = !o.isBoss && o.kind === 'slain' && !patrol;
+        if (quiet) {
+          const name = getBeast(o.beastId)?.name ?? o.beastId;
+          const label = o.title && o.title !== name ? `${o.title} · ${name}` : name;
+          const drops = o.drops.reduce<Map<string, number>>((m, d) => m.set(d, (m.get(d) ?? 0) + 1), new Map());
+          const parts = [`经验+${o.exp}`];
+          for (const [id, n] of drops) parts.push(n > 1 ? `${getItem(id)?.name ?? id} ×${n}` : getItem(id)?.name ?? id);
+          if (o.favorDelta !== 0) parts.push(`山望${o.favorDelta > 0 ? '+' : ''}${o.favorDelta}`);
+          setToast({ text: `了断「${label}」｜${parts.join(' · ')}`, at: Date.now() });
+        } else {
+          sceneCmd.paused = true;
+        }
+        outcomeRef.current(quiet ? { ...o, quiet } : o);
       }),
       bus.on('rite', () => {
         sceneCmd.paused = true;

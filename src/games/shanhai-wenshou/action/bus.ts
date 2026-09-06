@@ -40,7 +40,7 @@ export type SceneEvents = {
   /** NPC/碑文对话（冻结操作直到关闭）。 */
   dialog: { name: string; lines: string[] } | null;
   /** boss 结算：驯/杀。 */
-  outcome: (BattleOutcome & { title: string; isBoss: boolean }) | null;
+  outcome: (BattleOutcome & { title: string; isBoss: boolean; quiet?: boolean }) | null;
   /** 玩家倒下（回到祠座）。 */
   died: undefined;
   /** 走进山祠 → 请求祭礼仪式。 */

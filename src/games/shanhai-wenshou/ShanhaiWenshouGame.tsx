@@ -257,7 +257,8 @@ export function ShanhaiWenshouGame() {
       trackGameFinish('shanhai-wenshou', o.isBoss ? 'boss' : 'wild', o.kind === 'tamed' ? 'tamed' : 'win');
       if (o.kind === 'tamed') trackStepComplete('shanhai-wenshou', 'battle', 'tamed');
 
-      setOutcome({ ...o, lines: dialogLines });
+      // 普通击杀走飘条结算（ActionGame 已弹 toast），不打开结算窗
+      if (!o.quiet) setOutcome({ ...o, lines: dialogLines });
     },
     [save, mountain.id, commit, unseenBeats],
   );
