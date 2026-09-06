@@ -44,6 +44,12 @@ const EXHIBIT_META: Record<
     playLabel: '开始契字',
     cultureLabel: '字从象出，事因卜存',
   },
+  'shanhai-wenshou': {
+    no: 'No.07',
+    tags: '动作 RPG · 问兽收服',
+    playLabel: '踏入图志',
+    cultureLabel: '南山经的十座山',
+  },
 };
 
 function ExhibitGlyph({ id }: { id: string }) {
@@ -124,6 +130,24 @@ function ExhibitGlyph({ id }: { id: string }) {
           strokeLinecap="round"
           strokeLinejoin="round"
         />
+      </svg>
+    );
+  }
+  if (id === 'shanhai-wenshou') {
+    return (
+      <svg viewBox="0 0 72 72" role="img" aria-label="九尾狐与山">
+        <path
+          d="M8 54 L22 34 L32 46 L44 28 L58 46 L66 54 Z"
+          fill="none"
+          stroke="#C9A24B"
+          strokeWidth="2.5"
+          strokeLinejoin="round"
+        />
+        <g stroke="#C82E21" strokeWidth="2.5" fill="none" strokeLinecap="round">
+          <path d="M30 50 Q26 36 36 32 Q30 24 40 22" />
+          <path d="M38 50 Q34 40 42 36" />
+          <path d="M46 50 Q44 42 50 38" />
+        </g>
       </svg>
     );
   }

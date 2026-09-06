@@ -13,6 +13,7 @@ import {
 } from '../src/games/chaoshan-yingge/core/progress.ts';
 import { createInitialJianzhiProgress } from '../src/games/jianzhi/core/progress.ts';
 import { parseProgress as parseJiaobei, recordRun } from '../src/games/shantou-jiaobei/core/progress.ts';
+import { createInitialSave as createInitialWenshou } from '../src/games/shanhai-wenshou/core/save.ts';
 
 function blankSnapshot(): PassportSnapshot {
   return {
@@ -44,6 +45,7 @@ function blankSnapshot(): PassportSnapshot {
       quizRuns: 0,
       readTermIds: [],
     },
+    'shanhai-wenshou': createInitialWenshou(),
   };
 }
 
@@ -162,6 +164,20 @@ describe('passport derivation', () => {
       correctTotal: 24,
       mistakeIds: [],
     };
+    snapshot['shanhai-wenshou'] = {
+      ...createInitialWenshou(),
+      beasts: Object.fromEntries(
+        ['xingxing', 'baiyuan', 'fuchong', 'guaishe', 'lushu', 'xuangui', 'lu', 'lei', 'boyi', 'changfu', 'guanguan', 'chiru', 'jiuwei'].map(
+          (id) => [id, 1],
+        ),
+      ) as never,
+      mountains: {
+        zhaoyao: { cleared: true, gathered: [], npcs: [], gatePassed: true, bossDefeated: true, eliteDefeated: true },
+        qingqiu: { cleared: true, gathered: [], npcs: [], gatePassed: true, bossDefeated: true, eliteDefeated: true },
+      },
+      stats: { playtimeMs: 0, battlesWon: 99, tamedCount: 13, questionsCorrect: 50, startedAt: 0 },
+      chapterDone: true,
+    };
 
     const passport = buildPassport(snapshot);
     assert.equal(passport.visitedGames, PASSPORT_GAME_ORDER.length);
@@ -207,7 +223,7 @@ describe('yingge progress for passport', () => {
     const store = new Map<string, string>();
     store.set(LEGACY_PROGRESS_KEY, '4');
 
-    // @ts-expect-error minimal localStorage stub for node tests
+    // 最小 localStorage stub（node 测试无 DOM）
     globalThis.window = {
       localStorage: {
         getItem: (key: string) => store.get(key) ?? null,
@@ -217,8 +233,11 @@ describe('yingge progress for passport', () => {
         removeItem: (key: string) => {
           store.delete(key);
         },
+        length: 0,
+        clear: () => {},
+        key: () => null,
       },
-    };
+    } as unknown as typeof globalThis.window;
 
     try {
       assert.equal(store.has(PROGRESS_KEY), false, 'fixture 不应预先写入 v2 键');

@@ -11,7 +11,7 @@ export const SITE_NAV = [
 ] as const;
 
 export const TRUST_METRICS = [
-  { value: '6', label: '可玩文化展品' },
+  { value: '7', label: '可玩文化展品' },
   { value: '0', label: '下载安装' },
   { value: '本地', label: '进度保存' },
   { value: '免费', label: '即开即玩' },

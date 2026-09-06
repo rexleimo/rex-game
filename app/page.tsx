@@ -18,15 +18,16 @@ const CULTURE_BY_GAME: Record<string, string> = {
   'shantou-jiaobei': '/culture/jiaobei/',
   'chaoshan-yingge': '/culture/yingge/',
   jianzhi: '/culture/jianzhi/',
+  'shanhai-wenshou': '/games/shanhai-wenshou/',
 };
 
 export const metadata: Metadata = {
   title: { absolute: 'rex-game · 可玩的民俗文化馆' },
   description:
-    '一座可以玩的中国民艺馆:二十四节气、山海拾遗、潮汕圣杯、英歌与剪纸——文化展品无需下载即开即玩,边玩边学。',
+    '一座可以玩的中国民艺馆:山海问兽、甲骨问契、二十四节气、山海拾遗、潮汕圣杯、英歌与剪纸——七件文化展品无需下载即开即玩,边玩边学。',
   openGraph: {
     title: 'rex-game · 可玩的民俗文化馆',
-    description: '一座可以玩的中国民艺馆:节气农时、修器物读典故、掷筊问愿、英歌合槌、折剪生花。',
+    description: '一座可以玩的中国民艺馆:问兽识名、契字读卜、节气农时、修器物读典故、掷筊问愿、英歌合槌、折剪生花。',
     url: SITE_ORIGIN,
   },
 };

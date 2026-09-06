@@ -29,7 +29,7 @@ export function HomePassportBar() {
           <h2 id="passport-bar-title" className="hpb__title">
             {started
               ? `已集 ${passport.earnedCount} / ${passport.totalCount} 张文化卡`
-              : `五件展品，${passport.totalCount} 张文化卡`}
+              : `${passport.sections.length} 件展品，${passport.totalCount} 张文化卡`}
           </h2>
           <p className="hpb__text">
             {started

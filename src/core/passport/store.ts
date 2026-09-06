@@ -11,6 +11,7 @@ import {
 } from '../../games/jianzhi/core/progress.ts';
 import { loadProgress as loadShanhaiProgress } from '../../games/shanhai-shiyi/core/progress.ts';
 import { loadProgress as loadJiaobeiProgress } from '../../games/shantou-jiaobei/core/progress.ts';
+import { loadSave as loadWenshouSave, createInitialSave as createInitialWenshouSave } from '../../games/shanhai-wenshou/core/save.ts';
 import { games } from '../gamesRegistry.ts';
 import { PASSPORT_GAME_ORDER, cardsForGame } from './cards.ts';
 import type {
@@ -35,7 +36,7 @@ function loadJianzhiProgress() {
   }
 }
 
-/** 读取六个游戏的存档。仅在客户端有意义；SSR 期间各自返回初始值。 */
+/** 读取七个游戏的存档。仅在客户端有意义；SSR 期间各自返回初始值。 */
 export function readSnapshot(): PassportSnapshot {
   return {
     'shantou-jiaobei': loadJiaobeiProgress(),
@@ -44,6 +45,7 @@ export function readSnapshot(): PassportSnapshot {
     jianzhi: loadJianzhiProgress(),
     'shanhai-shiyi': loadShanhaiProgress(),
     'ershisi-jieqi': loadJieqiProgress(),
+    'shanhai-wenshou': loadWenshouSave(),
   };
 }
 
@@ -126,5 +128,6 @@ export function emptyPassport(): PassportState {
       quizRuns: 0,
       readTermIds: [],
     },
+    'shanhai-wenshou': createInitialWenshouSave(),
   });
 }

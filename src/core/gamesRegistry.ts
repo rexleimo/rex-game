@@ -10,6 +10,7 @@ export type GameId =
   | 'shanhai-shiyi'
   | 'ershisi-jieqi'
   | 'jiaguwen'
+  | 'shanhai-wenshou'
   | (string & {});
 
 export interface GameMeta {
@@ -29,6 +30,15 @@ export interface GameMeta {
 }
 
 export const games: GameMeta[] = [
+  {
+    id: 'shanhai-wenshou',
+    name: '山海问兽',
+    tagline: '横版动作 RPG——以杖问兽，以名定形。读招、识破、问名收服，走完《南山经》首脉十座山。',
+    cover: '/assets/shanhai-wenshou/cover.svg',
+    href: '/games/shanhai-wenshou',
+    badge: '新作',
+    accent: '#C9A24B',
+  },
   {
     id: 'jiaguwen',
     name: '甲骨问契 · 字与卜',

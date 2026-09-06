@@ -258,7 +258,51 @@ const JIAGU_CARDS: CardDef<'jiaguwen'>[] = [
   },
 ];
 
+const WENSHOU_CARDS: CardDef<'shanhai-wenshou'>[] = [
+  {
+    id: 'wenshou-first-tame',
+    game: 'shanhai-wenshou',
+    name: '初契',
+    blurb: '问兽问的是性，不是命——第一只低头蹭杖头的兽，是山给你的回礼。',
+    hint: '在山海问兽中收服第一只异兽。',
+    earned: (p) => p.stats.tamedCount >= 1,
+  },
+  {
+    id: 'wenshou-zhaoyao',
+    game: 'shanhai-wenshou',
+    name: '招摇问道',
+    blurb: '临西海之上，多桂，多金玉——南山经的第一座山，用「问」叩开了山祠。',
+    hint: '在山海问兽中走完招摇之山。',
+    earned: (p) => Boolean(p.mountains.zhaoyao?.cleared),
+  },
+  {
+    id: 'wenshou-jiuwei',
+    game: 'shanhai-wenshou',
+    name: '青丘识狐',
+    blurb: '「能食人，食者不蛊。」凶与祥写在同一句原文里，读全它的人不惧九尾。',
+    hint: '在山海问兽中收服或战胜青丘九尾。',
+    earned: (p) => (p.beasts.jiuwei ?? 0) > 0 || Boolean(p.mountains.qingqiu?.bossDefeated),
+  },
+  {
+    id: 'wenshou-codex',
+    game: 'shanhai-wenshou',
+    name: '鹊山图志',
+    blurb: '十三种异兽，各有一句「食之」「佩之」——原文记的是共生之约。',
+    hint: '在山海问兽中收录全部 13 种异兽。',
+    earned: (p) => Object.values(p.beasts).filter((n) => (n ?? 0) > 0).length >= 13,
+  },
+  {
+    id: 'wenshou-rite',
+    game: 'shanhai-wenshou',
+    name: '十山大祭',
+    blurb: '璋玉瘗毛、稌米为糈、白菅为席——把失了名的第十山，重新记进人间。',
+    hint: '在山海问兽中完成祭山大典。',
+    earned: (p) => p.chapterDone,
+  },
+];
+
 export const PASSPORT_CARDS: AnyCardDef[] = [
+  ...WENSHOU_CARDS,
   ...JIAGU_CARDS,
   ...JIEQI_CARDS,
   ...SHANHAI_CARDS,
@@ -268,6 +312,7 @@ export const PASSPORT_CARDS: AnyCardDef[] = [
 ];
 
 export const PASSPORT_GAME_ORDER: PassportGameId[] = [
+  'shanhai-wenshou',
   'jiaguwen',
   'ershisi-jieqi',
   'shanhai-shiyi',

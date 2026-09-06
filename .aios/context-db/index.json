@@ -1,9 +1,9 @@
 {
   "session": "(new)",
   "status": "running",
-  "updated": "2026-07-26T11:29:48.154Z",
+  "updated": "2026-09-06T03:06:19.157Z",
   "space": "default",
-  "agent": "hermes-agent",
+  "agent": "opencode-cli",
   "registryPath": ".aios/context-db/index.json",
   "sources": []
 }

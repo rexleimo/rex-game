@@ -6,13 +6,25 @@
 
 | 展品 | 路由 | 玩法 |
 | --- | --- | --- |
+| 🗡️ 山海问兽 | `/games/shanhai-wenshou/` | 横版动作 RPG——以杖问兽，以名定形；读招识破、问名收服或了断取材，走完《南山经》首脉十座山 |
 | 🌾 二十四节气 · 农时拼图 | `/games/ershisi-jieqi/` | 时序排序、物候配对、节气问答，附 24 节气图鉴 |
 | 🏺 山海拾遗 | `/games/shanhai-shiyi/` | 修复中原礼器，解锁文化卡片与多区域图志 |
 | 🪷 潮汕圣杯占卜 | `/games/shantou-jiaobei/` | 摄像头双手合十请愿 + Babylon.js 物理掷杯 + 杯象解读 |
 | 🥁 合槌成阵：潮汕英歌 | `/games/chaoshan-yingge/` | 跟鼓点落槌、随队形推进的横版节奏战斗 |
 | ✂️ 纸上生花：中国剪纸 | `/games/jianzhi/` | 读帖、折剪、展开，四幕纸上剧场与作品墙 |
+| 📜 甲骨问契 · 字与卜 | `/games/jiaguwen/` | 辨形配对、契意三选一、卜辞填空，60 字甲骨字表与公开字形索引 |
 
 另有文化导读集群 `/culture/`（4 个枢纽 + 长尾专题）与 `/about/`。
+
+## 日课系统
+
+`src/core/daily/` 是全站共享的「今日」基建：按本地日期播种的确定性随机（同一天全站一致）、
+连击（streak）账本与节气日期表（香港天文台数据，2024–2030）。山海问兽的「巡山 · 今日一遇」
+是第一个接入的展品；其余展品与首页「今日」板块按同一约定逐步接入。
+
+## 多游戏扩展
+
+每个游戏自包含于 `src/games/<id>/`，并在 `src/core/gamesRegistry.ts` 登记；新增游戏 = 加一条注册 + 创建 `app/games/<id>/page.tsx`。文化护照（`src/core/passport/`）把各游戏的里程碑存档折算成集卡。
 
 ## 技术栈
 
@@ -73,10 +85,6 @@ NEXT_PUBLIC_ANALYTICS_SITE_ID=<umami website id 或 plausible data-domain>
 - **GA4 会写 first-party cookie（`_ga`）**，并已开启 `anonymize_ip`。umami / plausible 分支则完全无 cookie。
 
 本地开发默认不加载任何三方脚本，事件打到 `console.debug`。玩家开启 Do Not Track 或 Global Privacy Control 时彻底静默。
-
-## 多游戏扩展
-
-每个游戏自包含于 `src/games/<id>/`，并在 `src/core/gamesRegistry.ts` 登记；新增游戏 = 加一条注册 + 创建 `app/games/<id>/page.tsx`。
 
 ## 部署
 

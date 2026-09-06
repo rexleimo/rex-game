@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="山海问兽主视觉">
+  <defs>
+    <radialGradient id="ws-glow" cx="30%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#c9a24b" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#c9a24b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ws-mtn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3c3524"/>
+      <stop offset="100%" stop-color="#17100b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#17100b"/>
+  <rect width="1200" height="630" fill="url(#ws-glow)"/>
+
+  <!-- 十山剪影 -->
+  <path d="M-20 630 L120 430 L240 560 L360 400 L500 590 L620 470 L760 600 L880 440 L1020 570 L1140 470 L1220 630 Z"
+        fill="url(#ws-mtn)" opacity="0.9"/>
+  <path d="M-20 630 L200 500 L420 610 L640 520 L860 620 L1080 540 L1220 630 Z"
+        fill="#241b10" opacity="0.85"/>
+
+  <!-- 鸟身龙首山神日轮 -->
+  <circle cx="880" cy="200" r="120" fill="none" stroke="#c9a24b" stroke-opacity="0.35" stroke-width="2"/>
+  <circle cx="880" cy="200" r="86" fill="none" stroke="#c9a24b" stroke-opacity="0.55" stroke-width="1.4"/>
+  <path d="M880 132 Q920 150 920 200 Q920 250 880 268 Q840 250 840 200 Q840 150 880 132 Z"
+        fill="#a6332b" fill-opacity="0.55"/>
+  <text x="880" y="186" text-anchor="middle" font-family="Noto Serif SC, Songti SC, serif" font-size="44" fill="#e4c479" font-weight="700">问</text>
+  <text x="880" y="238" text-anchor="middle" font-family="Noto Serif SC, Songti SC, serif" font-size="44" fill="#e4c479" font-weight="700">兽</text>
+
+  <!-- 九尾狐剪影（抽象弧线） -->
+  <g stroke="#e4c479" stroke-width="3" fill="none" opacity="0.8" stroke-linecap="round">
+    <path d="M220 400 Q200 340 250 320 Q230 280 280 270"/>
+    <path d="M250 400 Q240 350 285 335"/>
+    <path d="M280 400 Q275 358 315 348"/>
+    <path d="M310 400 Q310 365 345 360"/>
+    <path d="M340 400 Q344 372 372 370"/>
+  </g>
+  <path d="M180 430 Q170 380 220 365 Q260 355 280 380 Q300 360 330 372 Q360 385 350 415 Q345 440 300 445 Q230 452 180 430 Z"
+        fill="#d8a24e" fill-opacity="0.85"/>
+
+  <!-- 印章 -->
+  <rect x="60" y="72" width="14" height="76" fill="#a6332b" opacity="0.9"/>
+  <text x="94" y="102" font-family="Noto Serif SC, Songti SC, serif" font-size="30" fill="#f4ecd8" letter-spacing="6">山海问兽</text>
+  <text x="94" y="140" font-family="Noto Sans SC, sans-serif" font-size="16" fill="rgba(244,236,216,0.6)" letter-spacing="4">南山经 · 鹊山首脉十山</text>
+
+  <text x="600" y="592" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="18" fill="rgba(201,162,75,0.75)" letter-spacing="6">凡十山，二千九百五十里</text>
+</svg>
