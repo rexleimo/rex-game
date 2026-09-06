@@ -350,6 +350,27 @@ describe('shanhai level builder (GDD §5.2)', () => {
     }
   });
 
+  it('varies level structure across mountains (分层/顶棚/踏石)', () => {
+    for (const m of MOUNTAINS) {
+      const lv = buildLevel(m.id);
+      if (m.id === 'wuming') continue; // 终局走廊：遭遇池为空
+      // 有兽蹲守在高位（平台上/高台上）
+      assert.ok(lv.spawns.some((s) => s.y != null), `${m.name} 缺高位生成点`);
+      if (m.id === 'jishan' || m.id === 'qingqiu') {
+        // 夜山：石窟顶棚
+        assert.ok(lv.platforms.some((p) => p.y <= lv.groundY - 180 && p.w >= 400), `${m.name} 缺石窟顶棚`);
+      } else if (m.id !== 'yuanyi' && m.id !== 'danyuan') {
+        // 常规山：厚土高台（第二层陆地）
+        assert.ok(lv.platforms.some((p) => p.h >= 100 && p.thick), `${m.name} 缺厚土高台`);
+      }
+    }
+    // 临水之山：水湾里有踏石跳岛
+    for (const id of ['zhaoyao', 'niuyang', 'dishan', 'jiwei', 'danyuan'] as MountainId[]) {
+      const lv = buildLevel(id);
+      assert.ok(lv.platforms.some((p) => p.y > lv.groundY - 70 && p.y < lv.groundY - 30), `${id} 缺水湾踏石`);
+    }
+  });
+
   it('is deterministic per mountain (same seed → same layout)', () => {
     const a = buildLevel('niuyang');
     const b = buildLevel('niuyang');

@@ -14,6 +14,8 @@ export interface PlatformDef {
   h: number;
   /** 一侧可攀爬（猿翼/亶爰「不可以上」的补偿）。 */
   climbable?: boolean;
+  /** 厚土台：用地面砖渲染，读作“第二层陆地”而非薄板。 */
+  thick?: boolean;
 }
 
 export interface WaterDef {
@@ -24,6 +26,8 @@ export interface WaterDef {
 export interface SpawnDef {
   beastId: BeastId;
   x: number;
+  /** 生成基线（缺省=地面）。高台/平台上的生成点会先跳下来扑你。 */
+  y?: number;
   level: number;
   zone: 'wild' | 'elite' | 'boss';
   title?: string;
@@ -280,13 +284,20 @@ export function buildLevel(mountain: MountainId, opts?: { hidden?: boolean }): L
     if (!enc) break;
     const rare = i === wildCount - 1;
     const sx = seg2 + 260 + (i * (SCREEN - 460)) / Math.max(1, wildCount - 1);
-    spawns.push({
+    const sp: SpawnDef = {
       beastId: enc.beastId as BeastId,
       x: sx,
       level: wildLevelOf(m) + (rare ? 2 : 0),
       zone: 'wild',
       title: rare ? '异种' : undefined,
-    });
+    };
+    // 每三只里有一只蹲在平台上——从高处扑下来的遭遇
+    if (i % 3 === 1) {
+      const plat = platforms[(i + m.order) % platforms.length]!;
+      sp.x = Math.round(plat.x + plat.w / 2);
+      sp.y = plat.y;
+    }
+    spawns.push(sp);
   }
 
   // —— 拍三：变奏段（迹）——
@@ -300,26 +311,44 @@ export function buildLevel(mountain: MountainId, opts?: { hidden?: boolean }): L
     }
     platforms.push({ x: seg3 + SCREEN - 350, y: GROUND_Y - 380, w: 200, h: 22, climbable: true });
     pickups.push({ kind: 'jade', amount: 1, x: seg3 + 560, y: GROUND_Y - 390 });
+  } else if (flags.night) {
+    // 夜山石窟：岩棚顶盖压出一条幽暗隧道，兽在棚下阴影里等着
+    platforms.push({ x: seg3 + 120, y: GROUND_Y - 95, w: 130, h: 22 });
+    platforms.push({ x: seg3 + 180, y: GROUND_Y - 195, w: 640, h: 24 });
+    pickups.push({ kind: 'jade', amount: 1, x: seg3 + 620, y: GROUND_Y - 40 });
   } else {
-    for (let i = 0; i < 3; i += 1) {
-      const px = seg3 + 180 + i * 330;
-      const py = GROUND_Y - (75 + Math.floor(rng() * 35)); // 75–110，满跳必达
-      platforms.push({ x: px, y: py, w: 120 + Math.floor(rng() * 80), h: 22 });
-    }
+    // 厚土高台：错层陆地（h≥100 的土台，兽与山产都在台面上）
+    const tw = 300 + Math.floor(rng() * 120);
+    platforms.push({ x: seg3 + 220, y: GROUND_Y - 105, w: tw, h: 105, thick: true });
+    platforms.push({ x: seg3 + 220 + tw - 40, y: GROUND_Y - 95, w: 110, h: 22 });
+    platforms.push({ x: seg3 + 220 + tw + 90, y: GROUND_Y - 190, w: 260 + Math.floor(rng() * 80), h: 190, thick: true, climbable: true });
+    pickups.push({ kind: 'jade', amount: 1, x: seg3 + 300, y: GROUND_Y - 130 });
   }
-  if (flags.water) waters.push({ x: seg3 + 420, w: 260 });
+  if (flags.water) {
+    waters.push({ x: seg3 + 420, w: 260 });
+    // 水湾踏石：水面上的跳岛
+    platforms.push({ x: seg3 + 470, y: GROUND_Y - 46, w: 88, h: 22 });
+    platforms.push({ x: seg3 + 596, y: GROUND_Y - 62, w: 88, h: 22 });
+  }
   // 线索点 ×1（迹拍：爪迹/折桂/湿印）
   pickups.push({ kind: 'clue', amount: 1, x: seg3 + 320, y: GROUND_Y - 22 });
-  // 变奏段兽群 ×4：双前哨 + 双压阵，接住采集径的密度
+  // 变奏段兽群 ×4：双前哨 + 双压阵，接住采集径的密度；前哨里放一只在高处
   for (let i = 0; i < 4; i += 1) {
     const enc = deal();
     if (!enc) break;
-    spawns.push({
+    const sp: SpawnDef = {
       beastId: enc.beastId as BeastId,
       x: seg3 + 340 + i * 240,
       level: wildLevelOf(m) + (i % 2 === 0 ? 1 : 0),
       zone: 'wild',
-    });
+    };
+    const perches = platforms.filter((p) => p.y <= GROUND_Y - 100 && p.w >= 120 && !p.climbable);
+    if ((i === 0 || i === 2) && perches.length > 0) {
+      const perch = perches[(i + m.order) % perches.length]!;
+      sp.x = Math.round(Math.max(perch.x + 60, Math.min(perch.x + perch.w - 60, sp.x)));
+      sp.y = perch.y;
+    }
+    spawns.push(sp);
   }
 
   // —— 拍四：精英门（遇）——

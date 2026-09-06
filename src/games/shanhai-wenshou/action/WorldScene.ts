@@ -85,6 +85,8 @@ interface BeastEnt {
   aggro: boolean;
   hitBySwing: number;
   hitPlayerThisMove: boolean;
+  /** 本招特效已出（落地尘/挥弧只放一次）。 */
+  moveFxDone: boolean;
   progress: InsightProgress;
   fakedOnce: boolean;
   enraged: boolean;
@@ -284,7 +286,8 @@ export class WorldScene extends Phaser.Scene {
       const r = this.add.rectangle(p.x + p.w / 2, p.y + p.h / 2, p.w, p.h);
       this.physics.add.existing(r, true);
       this.solids.add(r);
-      this.add.tileSprite(p.x + p.w / 2, p.y + p.h / 2, p.w, p.h, `pf_${m}`).setDepth(0);
+      // 厚土台用地面砖渲染，读作“第二层陆地”
+      this.add.tileSprite(p.x + p.w / 2, p.y + p.h / 2, p.w, p.h, p.thick ? `gd_${m}` : `pf_${m}`).setDepth(0);
     }
     for (const w of this.level.waters) {
       this.add.tileSprite(w.x + w.w / 2, groundY + 12, w.w, 40, `wt_${m}`).setDepth(1).setAlpha(0.85);
@@ -348,7 +351,7 @@ export class WorldScene extends Phaser.Scene {
 
     // —— 兽（二周目：等级按 ngBoost 强化）——
     const boost = this.cfg.ngBoost ?? 0;
-    for (const s of this.level.spawns) this.spawnBeast(s.beastId, s.x, s.level + boost, s.zone, s.title);
+    for (const s of this.level.spawns) this.spawnBeast(s.beastId, s.x, s.level + boost, s.zone, s.title, false, s.y);
     const gate = this.level.eliteGate;
     if (gate && !this.eliteResolved) {
       this.spawnBeast(gate.spawn.beastId, gate.spawn.x, gate.spawn.level + boost, 'elite', gate.spawn.title);
@@ -419,7 +422,7 @@ export class WorldScene extends Phaser.Scene {
 
   /* ================= 兽生成 ================= */
 
-  private spawnBeast(beastId: BeastId, x: number, level: number, zone: 'wild' | 'elite' | 'boss', title?: string, isWuming = false): BeastEnt {
+  private spawnBeast(beastId: BeastId, x: number, level: number, zone: 'wild' | 'elite' | 'boss', title?: string, isWuming = false, y?: number): BeastEnt {
     const def = getBeast(beastId)!;
     const scaled = scaleBeast(def.base, level, zone !== 'wild');
     // 野生猪兽血量加厚：太薄的血条会让「问名窗口」被连段直接跳过
@@ -432,14 +435,15 @@ export class WorldScene extends Phaser.Scene {
       ancient: [78, 70, zone === 'boss' ? 0.82 : 0.72],
     };
     const [bw, bh, , ] = sizeByWeight[weight];
-    const body = this.physics.add.sprite(x, this.level.groundY - bh, 'px').setVisible(false);
+    const baseY = y ?? this.level.groundY;
+    const body = this.physics.add.sprite(x, baseY - bh, 'px').setVisible(false);
     bodyOf({ body }).setSize(bw, bh);
     body.setCollideWorldBounds(true);
     this.physics.add.collider(body, this.solids);
     const sprScale = (weight === 'light' ? 0.92 : weight === 'fierce' ? 1.18 : zone === 'boss' ? 1.75 : 1.5);
     const img = this.add.sprite(0, 0, 'beasts', (BEAST_INDEX[beastId] ?? 0) * 2).setOrigin(0.5, 1).setScale(sprScale);
-    const rig = this.add.container(x, this.level.groundY, [img]).setDepth(4);
-    const label = this.add.text(x, this.level.groundY - 128, '', { fontFamily: "'Noto Serif SC', serif", fontSize: '14px', color: '#ffb0a0' }).setOrigin(0.5).setDepth(9).setAlpha(0);
+    const rig = this.add.container(x, baseY, [img]).setDepth(4);
+    const label = this.add.text(x, baseY - 128, '', { fontFamily: "'Noto Serif SC', serif", fontSize: '14px', color: '#ffb0a0' }).setOrigin(0.5).setDepth(9).setAlpha(0);
     const hpbar = this.add.graphics().setDepth(5);
     const progress = initInsight();
     const ent: BeastEnt = {
@@ -455,6 +459,7 @@ export class WorldScene extends Phaser.Scene {
       body, rig, img, label, ring: null, hpbar,
       spawn: { x, level },
       aggroSpeed: weight === 'light' ? 150 : weight === 'fierce' ? 118 : 92,
+      moveFxDone: false,
     };
     this.beasts.push(ent);
     return ent;
@@ -1012,22 +1017,24 @@ export class WorldScene extends Phaser.Scene {
       case 'chase': {
         b.dir = dx > 0 ? 1 : -1;
         const speed = b.aggroSpeed * (b.phase === 2 ? b.moveset.phase2?.speedMult ?? 1 : 1) * (b.enraged ? 1.25 : 1);
-        const keep = 46 + (b.zone === 'boss' ? 20 : 0);
+        // 凶性越旺贴得越紧（kiter 型兽保持中距离）
+        const keep = 26 + (1 - b.moveset.aggression) * 60 + (b.zone === 'boss' ? 20 : 0);
         if (b.zone === 'wild' && !b.aggro) {
-          // 未仇恨的野兽只在巢边踱步
-          body.setVelocityX(Math.abs(b.body.x - b.homeX) > 90 ? (b.body.x > b.homeX ? -1 : 1) * speed * 0.3 : 0);
+          // 未仇恨的野兽只在巢边踱步（幅度收敛，少从平台边摔下去）
+          body.setVelocityX(Math.abs(b.body.x - b.homeX) > 64 ? (b.body.x > b.homeX ? -1 : 1) * speed * 0.3 : 0);
           break;
         }
         if (adx > keep) body.setVelocityX(b.dir * speed);
         else body.setVelocityX(body.velocity.x * 0.7);
-        // 挑招：冷却完毕且够得着
+        // 挑招：冷却完毕且够得着，再按距离与凶性加权——近身出近战，远距才投掷
         const ready = b.moveset.moves.filter((mv) => (b.cds.get(mv.id) ?? 0) <= 0 && adx <= mv.range);
         if (ready.length > 0 && body.blocked.down) {
-          const mv = ready[Math.floor(Math.random() * ready.length)]!;
+          const mv = this.pickMove(b, ready, adx);
           b.move = mv;
           b.state = 'windup';
           b.stateF = 0;
           b.hitPlayerThisMove = false;
+          b.moveFxDone = false;
           b.cds.set(mv.id, mv.cd);
           // 声兆：预备即出声（听音辨招）
           playCue(mv.cue);
@@ -1053,6 +1060,12 @@ export class WorldScene extends Phaser.Scene {
         const mv = b.move;
         if (!mv) { b.state = 'recover'; b.stateF = 0; break; }
         if (mv.kind === 'dash' || mv.kind === 'leap') {
+          // 跃砸落地尘土（一次性）
+          if (mv.kind === 'leap' && !b.moveFxDone && body.blocked.down && b.stateF > 2) {
+            b.moveFxDone = true;
+            this.emitters.ink.explode(10, b.body.x, b.body.y - 2);
+            this.cameras.main.shake(60, 0.002);
+          }
           this.beastContactCheck(b, mv);
         } else if (mv.kind === 'melee' || mv.kind === 'aoe') {
           // 原地招式：在判定中点出一次判定
@@ -1139,16 +1152,43 @@ export class WorldScene extends Phaser.Scene {
     }
   }
 
+  /** 距离感知选招：近身偏爱近战/跃砸，远距才投掷/突进；凶性放大近战倾向。 */
+  private pickMove(b: BeastEnt, ready: BeastMove[], adx: number): BeastMove {
+    const aggression = b.moveset.aggression;
+    const scored = ready.map((mv) => {
+      let s = 1;
+      if (mv.kind === 'melee' || mv.kind === 'aoe' || mv.kind === 'howl' || mv.kind === 'leap') {
+        s += (adx < mv.range * 0.75 ? 2.4 : 0.4) * (0.6 + aggression);
+      } else if (mv.kind === 'projectile') {
+        s += adx > 190 ? 1.6 : 0.1;
+      } else if (mv.kind === 'dash') {
+        s += adx > 190 ? 1.8 : 0.5;
+      }
+      if (mv.kind === 'heal' || mv.kind === 'fakeDeath' || mv.kind === 'summon') s = 1.1;
+      return { mv, s: s * (0.75 + Math.random() * 0.5) };
+    });
+    scored.sort((a, c) => c.s - a.s);
+    return scored[0]!.mv;
+  }
+
   private beastMoveActive(b: BeastEnt): void {
     const mv = b.move!;
     const body = bodyOf(b);
     const dx = this.playerBody.x - b.body.x;
     b.dir = dx > 0 ? 1 : -1;
     switch (mv.kind) {
-      case 'dash':
+      case 'dash': {
         body.setVelocityX(b.dir * (b.aggroSpeed * 2.4));
         if (mv.id === 'xx_dash' || mv.id === 'by_hop') body.setVelocityY(-160);
+        // 突进拖尾
+        if (!b.moveFxDone) {
+          b.moveFxDone = true;
+          const trail = this.add.image(b.body.x - b.dir * 18, b.body.y - 20, TEX.swoosh)
+            .setDepth(7).setScale(1.6, 0.7).setAlpha(0.55).setTint(0xd8b48a).setFlipX(b.dir < 0);
+          this.tweens.add({ targets: trail, alpha: 0, x: trail.x - b.dir * 46, duration: 300, onComplete: () => trail.destroy() });
+        }
         break;
+      }
       case 'leap':
         body.setVelocityY(-480);
         body.setVelocityX(b.dir * Math.min(360, Math.abs(dx) * 1.6));
@@ -1164,6 +1204,26 @@ export class WorldScene extends Phaser.Scene {
         if (b.ring) b.ring.destroy();
         b.ring = this.add.image(b.body.x, b.body.y - 10, TEX.ring).setDepth(7).setScale(0.3).setAlpha(0.8);
         this.tweens.add({ targets: b.ring, scale: (mv.range * 2) / 72, alpha: 0, duration: (mv.windup + mv.active) * STEP_MS });
+        break;
+      }
+      case 'melee': {
+        // 近战挥击弧光（之前近战完全无视觉，观感像“只会远程”）
+        if (!b.moveFxDone) {
+          b.moveFxDone = true;
+          const arc = this.add.image(b.body.x + b.dir * 36, b.body.y - 22, TEX.swoosh)
+            .setDepth(7).setScale(1.05).setAlpha(0.9).setTint(0xff9a6a).setFlipX(b.dir < 0);
+          this.tweens.add({ targets: arc, alpha: 0, scaleX: arc.scaleX * 1.35, x: arc.x + b.dir * 14, duration: 260, onComplete: () => arc.destroy() });
+        }
+        break;
+      }
+      case 'aoe': {
+        if (!b.moveFxDone) {
+          b.moveFxDone = true;
+          const shock = this.add.image(b.body.x, b.body.y - 6, TEX.ring)
+            .setDepth(7).setScale(0.4).setAlpha(0.85).setTint(0xe8b45a);
+          this.tweens.add({ targets: shock, scale: Math.max(1.2, mv.range / 34), alpha: 0, duration: 380, onComplete: () => shock.destroy() });
+          this.emitters.ink.explode(6, b.body.x, b.body.y - 4);
+        }
         break;
       }
       default: break;
